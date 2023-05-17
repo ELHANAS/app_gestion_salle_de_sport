@@ -1,0 +1,139 @@
+#menu{
+height: 100%;
+background: white;
+    position: relative;
+    bottom:0;
+    left: 0;
+    width: 100%;
+color:   black;
+border-right: 2px solid black;
+z-index: 2;
+}
+body{
+    padding: 0;
+}
+#app{
+    position: fixed;
+    height: 100%;
+    width: 100%;
+
+}
+.Ajouter{
+    position: absolute;
+    width: 50%;
+    height: 90%;
+    top: 5%;
+    left: 25%;
+    opacity: 1;
+    border-radius: 10px;
+    background: white;
+    border: 3px solid black;
+}
+
+
+#login{
+    background-image: url("images/ouvrir-une-salle-de-sport.webp");
+}
+#menu a{
+    color: black;
+    display: block;
+    width: 100%;
+}
+
+#back{
+    right: 70px;
+    display: block;
+}
+#params,#back,#notif{
+    width:    40px;
+    height: 40px;
+    display: inline-block;
+
+border-radius: 50%;
+position: absolute;
+
+top:5px;
+border: 2px solid black;
+box-shadow: -3px 3px 3px #363636;
+}
+#main{
+    height: 100%;
+
+
+    position: relative;
+    width: 100%;
+
+
+}
+#main>div{
+    position: relative;
+    height: 100%;
+    padding: 2%;
+}
+
+
+
+#menu span{
+    width: 60%;
+    padding: 5px;
+    display: inline-block;
+
+}
+.profil{
+    border: 1px solid yellow;
+    color: black;
+    padding: 10px;
+    height: 100%;
+}
+#downUl{
+    height: 60px;
+    padding: 0;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+}
+
+#header{
+    background: #6b7b8c;
+height: 7%;
+    color:#1f1f1f;
+
+    width: 100%;
+
+    box-shadow: 10px 5px 10px #1f1f1f;
+}
+#content
+{
+    position: relative;
+z-index: 1;
+
+
+
+
+}
+
+a{
+    text-decoration: none;
+}
+
+root{
+    margin: 0;
+    padding: 0;
+}
+
+ul{
+    list-style: none;
+    padding: 0;
+}
+
+@media only screen and (max-width: 600px) {
+    .Ajouter{
+
+        width: 90%;
+
+        left: 5%;
+
+    }
+
+}
