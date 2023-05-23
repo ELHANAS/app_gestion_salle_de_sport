@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Abonnement;
+use App\Models\Discipline;
+use App\Models\Membre;
+use App\Models\Paiement;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,7 +18,12 @@ class userController extends Controller
      */
     public function index()
     {
-        return User::all() ;
+        Abonnement::changeEtat();
+        return ["user"=>User::all() ,
+                "membre" => Membre::all(),
+                "Abonnement" => Abonnement::getAbonnement(),
+                    "discipline" => Discipline::all(),
+                        "paiement" => Paiement::getPaiement()] ;
     }
 
     /**
@@ -28,15 +37,31 @@ class userController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store()
+    public function store(Request $request)
     {
 
-        $credentials = request(['name','email', 'password','cin','salaire','fonction']);
-        $credentials['password'] = bcrypt($credentials['password']);
+        $user = new User() ;
+        $user->name = $request->name ;
+        $user->email = $request->email ;
+        $user->salaire = $request->salaire;
+        $user->cin = $request->cin ;
+        if($request->tel){
+            $user->tel = $request->tel ;
+        }else{
+            $user->tel = "aucun numéro";
+        }
 
+        $user->fonction = $request->fonction ;
+        $user->password =Hash::make($request->password)  ;
 
-        User::create($credentials);
-        return "registre est terminé avec succes" ;
+        if($request->has("photo")){
+            $image = $request->file('photo') ;
+            $name = $request->name.time()."." . $image->extension() ;
+            $image->move("users" , $name);
+            $user->photo =$name ;
+        }
+        $user->save() ;
+        return "registre est terminé avec succes"  ;
 
     }
 
@@ -55,6 +80,17 @@ class userController extends Controller
     public function edit(string $id)
     {
         //
+    }
+    public  function  updateImage(Request  $request,$id){
+        $user = User::find($id) ;
+        if($request->has("photo")){
+            $image = $request->file('photo') ;
+            $name = $request->name.time()."." . $image->extension() ;
+            $image->move("users" , $name);
+            $user->photo =$name ;
+        }
+        $user->save() ;
+        return "image a enregister" ;
     }
 
     /**

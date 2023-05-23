@@ -30,7 +30,15 @@ export default function AuthUser(){
         baseURL :"/api" ,
         headers:{
             "Content-Type" :"application/json",
-            "Authorization" : `${token}`
+
+
+        }
+    });
+    const httpData = axios.create({
+        baseURL :"/api" ,
+        headers:{
+            "Content-Type" :"multipart/form-data",
+
 
         }
     });
@@ -44,6 +52,7 @@ export default function AuthUser(){
         user,
         getToken,
         logout,
-        http
+        http ,
+        httpData
     }
 }

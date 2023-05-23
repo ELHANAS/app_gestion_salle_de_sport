@@ -1,61 +1,71 @@
 #menu{
 height: 100%;
-background: white;
+
     position: relative;
     bottom:0;
     left: 0;
     width: 100%;
 color:   black;
-border-right: 2px solid black;
-z-index: 2;
+box-shadow: 2px 0 4px  gray;
+
 }
 body{
     padding: 0;
+    font-family: 'Trebuchet MS', sans-serif;
+
 }
 #app{
     position: fixed;
     height: 100%;
     width: 100%;
 
+
 }
 .Ajouter{
     position: absolute;
-    width: 50%;
+    width: 70%;
     height: 90%;
     top: 5%;
-    left: 25%;
+    left: 15%;
     opacity: 1;
     border-radius: 10px;
     background: white;
     border: 3px solid black;
 }
-
-
+#btnBurgr{
+    width: 70px;
+    height: 70px;
+}
+#btnBurgr:hover{
+    background: #efaa73;
+}
 #login{
     background-image: url("images/ouvrir-une-salle-de-sport.webp");
 }
+#menu li:hover{
+    background: #ee9b57;
+}
 #menu a{
+
+   margin: auto;
     color: black;
     display: block;
-    width: 100%;
+    width: 90%;
+    border-top: 2px solid black;
+}
+tr:hover{
+    background: #fbcba0;
+   cursor: pointer;
+}
+#menu li:first-child a{
+    border-top: none;
 }
 
 #back{
     right: 70px;
     display: block;
 }
-#params,#back,#notif{
-    width:    40px;
-    height: 40px;
-    display: inline-block;
 
-border-radius: 50%;
-position: absolute;
-
-top:5px;
-border: 2px solid black;
-box-shadow: -3px 3px 3px #363636;
-}
 #main{
     height: 100%;
 
@@ -66,12 +76,16 @@ box-shadow: -3px 3px 3px #363636;
 
 }
 #main>div{
+
     position: relative;
     height: 100%;
     padding: 2%;
 }
 
-
+#main>div>div:last-child{
+    background: white;
+    border-radius: 10px 0;
+}
 
 #menu span{
     width: 60%;
@@ -79,8 +93,15 @@ box-shadow: -3px 3px 3px #363636;
     display: inline-block;
 
 }
+#rowHome>a{
+    height: 200px ;
+    display: block;
+    color: black;
+    box-shadow: 3px 3px 10px  black;
+    background-image: linear-gradient(to top right, #f9a25e,white) ;
+}
 .profil{
-    border: 1px solid yellow;
+    border-left: 2px solid black;
     color: black;
     padding: 10px;
     height: 100%;
@@ -93,19 +114,42 @@ box-shadow: -3px 3px 3px #363636;
     bottom: 0;
     left: 0;
 }
+.profil button,.profil a {
+    width: 45%;
+    margin-left:5px ;
+    background: #ee9b57;
+}
 
 #header{
-    background: #6b7b8c;
-height: 7%;
+    background: #ef9c57;
+height: 70px;
     color:#1f1f1f;
-
+position: fixed;
+    top: 0;
     width: 100%;
 
-    box-shadow: 10px 5px 10px #1f1f1f;
+    box-shadow: 0 5px 10px #1f1f1f;
+}
+#secondHeader{
+    border-bottom: 5px solid black;
+}
+#secondHeader button{
+    background: black;
+    color: white;
+}
+#header a,#header button{
+width:70px ;
+    color:black;
+    height:70px;
+    padding-top: 13px;
+}
+#header a:hover,#header button:hover{
+    background: #fbcda3;
 }
 #content
 {
     position: relative;
+    height: 100%;
 z-index: 1;
 
 
@@ -136,4 +180,7 @@ ul{
 
     }
 
+
 }
+
+

@@ -3,36 +3,38 @@ import AuthUser from "./authUser";
 import {useNavigate} from "react-router-dom"
 import axios from "axios";
 export default function AjouterParticipantes (store){
-const {http} = AuthUser() ;
-
+const {httpData} = AuthUser() ;
+    const navigate = useNavigate();
     const [email,setEmail] = useState('')
     const [name,setName] = useState('')
     const [tel,setTel] = useState('');
     const [dateNss,setDateNss] = useState('');
-    const [image,setImage] = useState();
+    const [image,setImage] = useState('');
     const [message , setMessage] = useState('');
 
 
-    function submite(e){
+    function submite(){
         const formD = new FormData();
         formD.append("image",image);
         formD.append("email",email);
         formD.append("name",name);
         formD.append("tel",tel);
         formD.append("dateNss",dateNss);
-        console.log(formD)
-        http.post('AjouterParticipant',formD).then(
+
+        httpData.post('AjouterParticipant',formD).then(
             (res)=> {
                 setMessage(res.data);
                 setTel("");
                 setDateNss("");
                 setName("");
                 setEmail("");
+                setImage(null);
             }
+        ).catch(
+            (err) => setMessage(err.data)
         );
 
 
-        e.preventDefault() ;
     }
     function  Annuler(){
         setMessage('');
@@ -40,6 +42,7 @@ const {http} = AuthUser() ;
         setDateNss("");
         setName("");
         setEmail("");
+        setImage(null);
     }
     return(
         <div style={{position:"relative",height:"100%",width:"100%"}}  className='container p-lg-3  px-lg-5'>
@@ -57,7 +60,7 @@ const {http} = AuthUser() ;
                     :null
                 }
                 <h2 className="h2 text-center my-4">Ajouter  un participant</h2>
-                <form onSubmit={(event) => submite(event)}>
+                <form >
 
                         <div className="form-group  py-2 row">
                             <label className="col-lg-4 col" htmlFor="name">Name : </label>
@@ -106,13 +109,13 @@ const {http} = AuthUser() ;
 
                     <div className="row border " style={{position:"absolute",width:"90%", bottom:"5px"}}>
                         <div className="col">
-                            <button  onClick={Annuler} style={{color:"#ef9d10f",background:"#3b4d61"}} className="btn  w-100">
+                            <button  onClick={Annuler} style={{color:"white",background:"#ee9b57"}} className="btn  w-100">
                                 Annuler
                             </button>
                         </div>
                         <div className="col">
 
-                            <button style={{color:"#ef9d10f",background:"#3b4d61"}} type="submit" className="btn  w-100" >
+                            <button onClick={submite} style={{color:"white",background:"#ee9b57"}}  type={"button"} className="btn  w-100" >
                                 Enregistrer
                             </button>
 

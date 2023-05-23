@@ -4,28 +4,33 @@ import Register from "./registre";
 import AuthUser from "./authUser";
 import axios from "axios";
 
-export default function Employe(store){
-    const [employe , setEmploye] = useState({});
+export default function Employe(prop){
+    const [employe , setEmploye] = useState(null);
+    const employes  =prop.employes;
 function getEmploye(id){
-    axios.post('/api/user/'+id).then(
-        (res)=> setEmploye(res.data)
-    )
+    const  emp = employes.find((emp) => emp.id === id);
+    setEmploye(emp);
 }
+
     return (
         <div >
-            <div style={{background:"yellow",borderBottom:"10px solid black"}}  className="row p-2 d-flex  justify-content-lg-start">
+            <div id={"secondHeader"}  className="row p-2 d-flex  justify-content-lg-start">
                 <div className="col-lg-3  col">
                     <div className="input-group w-100">
                         <div id="search-autocomplete" className="form-outline">
                             <input type="search" id="form1" placeholder="rechercher..." className="form-control"/>
                         </div>
-                        <button type="button" style={{background:"#3b4d61"}}  className="btn ">
-                            <i  style={{color:"white"}} className="fas  fa-search"></i>
+                        <button type="button"   className="btn ">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                 className="bi bi-search" viewBox="0 0 16 16">
+                                <path
+                                    d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                            </svg>
                         </button>
                     </div>
                 </div>
                 <div className={"col col-lg-3"}>
-                    <button onClick={()=>store.ajouterEmploye("Employe")} style={{color:"white",background:"#3b4d61"}} className="btn   ">
+                    <button onClick={()=>prop.ajouterEmploye("Employe")}  className="btn   ">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-person-fill-add" viewBox="0 0 16 16">
                             <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0Zm-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
                             <path d="M2 13c0 1 1 1 1 1h5.256A4.493 4.493 0 0 1 8 12.5a4.49 4.49 0 0 1 1.544-3.393C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4Z"/>
@@ -35,13 +40,13 @@ function getEmploye(id){
 
             </div>
             <div className="row  "  style={{height:"90%"}}>
-                <div className="col-lg-7 col"   style={{position:"relative"}}>
+                <div className="col-lg-8 col"   style={{position:"relative"}}>
                     <div style={{position:"absolute",width:"100%",height:"100%",overflow:"auto"}}  >
-                        <ListeEmlpoye  showEmploye = {getEmploye}/>
+                        <ListeEmlpoye  showEmploye = {getEmploye} employes= {employes}/>
                     </div>
 
                 </div>
-                <div className="col col-lg-5">
+                <div className="col col-lg-4">
                     <Profil employe = {employe}/>
                 </div>
             </div>
@@ -51,23 +56,9 @@ function getEmploye(id){
 }
 
 
-function ListeEmlpoye(store){
-    const [employes , setEmployes] =useState([]);
+function ListeEmlpoye(prop){
 
-    const {http} = AuthUser();
-    useEffect(()=>{
-            console.log("res");
-        axios.post('/api/users').then(
-            (res)=> {
-                setEmployes(res.data);
-            console.log(res)
 
-            }
-        );
-        }
-        ,[]
-    )
-    console.log(employes)
     return(
 
         <div>
@@ -80,8 +71,8 @@ function ListeEmlpoye(store){
                     </tr>
                 </thead>
                 <tbody >
-                {employes.map((emp) => {
-                    return <tr onClick={()=> store.showEmploye(emp.id)} key={emp.id}>
+                {prop.employes.map((emp) => {
+                    return <tr onClick={()=> prop.showEmploye(emp.id)} key={emp.id}>
                         <td>{emp.id}</td>
                         <td>{emp.name}</td>
                         <td>{emp.fonction}</td>
@@ -94,28 +85,32 @@ function ListeEmlpoye(store){
 }
 
 
-function Profil(store){
-    const employe = store.employe ;
+function Profil(prop){
+    const employe = prop.employe ;
     return (
         <div  className="profil">
         {employe?
-               <div>
-                    <p className={"h2 text-center"}>{employe.name}</p>
-                    <div className="row">
-                        <div className={"col"}>
-                            <div id="imageProf" className="border m-4" style={{width:"150px",height:"150px",borderRadius:"50%"}}>
-                                <img style={{width:"150px",height:"150px",borderRadius:"50%"}} src={"users/ANAS.JPG"} className="w-100" alt=""/>
-                            </div>
-                            <p className={"text-center"}>{employe.fonction}</p>
-                        </div>
-                        <div className={"col p-lg-5"}>
 
-                            <p>{employe.email}</p>
-                            <p>{employe.cin}</p>
-                            <p>{employe.salaire} dh</p>
-                        </div>
+                <div className="card text-center" style={{width: '100%'}}>
+                    <div className={"text-center"}>
+                        {employe.photo ?
+                            <img className="card-img-top "  style={{width:"200px",height:"200px"}} src={"users/" + employe.photo } alt="Card image cap" />
+                            :
+                            <img className="card-img-top "  style={{width:"200px",height:"200px"}} src="users/user.jpg" alt="Card image cap" />
+                        }
                     </div>
-               </div>
+                    <ul className="list-group list-group-flush">
+                        <li className="list-group-item">{employe.name}</li>
+                        <li className="list-group-item">{employe.email}</li>
+                        <li className="list-group-item">{employe.tel?employe.tel : "aucun telephone"}</li>
+                        <li className="list-group-item">{employe.fonction}</li>
+                    </ul>
+                    <div className="card-body">
+                        <button   className={"btn"}>Modifier</button>
+                        <button  className={"btn"}>non</button>
+                    </div>
+
+            </div>
                 :null
         }
         </div>

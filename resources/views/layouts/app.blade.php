@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>AGSS</title>
     <link rel="stylesheet" href="{{asset('./bootstrap.min.css')}}">
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -15,9 +15,13 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
     <!-- Scripts -->
-
+<style>
+    body{
+        background:  url({{url('images/4927320-abstrait-orange-et-blanc-couleur-fond-avec-forme-geometrique-vector-illustration-vectoriel.jpg')}});
+    }
+</style>
 </head>
-<body>
+<body >
 
 
     <div   id="root" >

@@ -1,24 +1,35 @@
-import React from "react";
+import React, {useState} from "react";
 import { Link } from "react-router-dom";
 
 
-export  default function Abonnement(store){
+export  default function Abonnement(prop){
+    const abonnements = prop.abonnements ;
+    const [paiements,setPaiements] = useState('');
+
+    function  getPaiments(id){
+        const paiement = prop.paiements.filter((pay) =>  pay.idAbonnement === id)  ;
+        setPaiements(paiement) ;
+    }
 
     return(
         <div>
-            <div style={{background:"#ef9d10f",borderBottom:"10px solid black"}} className="row p-2 d-flex  justify-content-lg-start">
+            <div id={"secondHeader"} className="row p-2 d-flex  justify-content-lg-start">
                 <div className="col-lg-3  col">
                     <div className="input-group w-100">
                         <div id="search-autocomplete" className="form-outline">
                             <input type="search" id="form1" placeholder="rechercher..." className="form-control"/>
                         </div>
                         <button type="button"  className="btn btn-dark">
-                            <i  style={{color:"#ef9d10f",background:"#3b4d61"}} className="fas  fa-search"></i>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                 className="bi bi-search" viewBox="0 0 16 16">
+                                <path
+                                    d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                            </svg>
                         </button>
                     </div>
                 </div>
                 <div className={"col col-lg-3"}>
-                    <button role="button" onClick={()=> store.ajouterAbonnement("abonnement")} className="btn btn-dark" style={{color:"#ef9d10f",background:"#3b4d61"}}>
+                    <button role="button" onClick={()=> prop.ajouterAbonnement("abonnement")} className="btn btn-dark" s>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                              className="bi bi-plus" viewBox="0 0 16 16">
                             <path
@@ -28,19 +39,19 @@ export  default function Abonnement(store){
                 </div>
                 <div className="col ">
                     <div className="input-group">
-                        <button  style={{color:"#ef9d10f"}} className=" btn btn-dark">jour</button>
+                        <button   className=" btn btn-dark">jour</button>
                         <input type="number" className="form-control " min="1" max="31"/>
                     </div>
                 </div>
                 <div className="col ">
                     <div className="input-group">
-                        <button  style={{color:"#ef9d10f"}} className="btn btn-dark">mois</button>
+                        <button   className="btn btn-dark">mois</button>
                         <input type="number" className="form-control" min="1" max="12"/>
                     </div>
                 </div>
                 <div className="col ">
                     <div className="input-group">
-                        <button   style={{color:"#ef9d10f"}} className="btn btn-dark">annee</button>
+                        <button    className="btn btn-dark">annee</button>
                         <input type="number" className="form-control" min="2010"  />
                     </div>
                 </div>
@@ -50,147 +61,67 @@ export  default function Abonnement(store){
             <div className="row  " style={{height:"90%"}}>
                 <div className="col-8"  style={{position:"relative"}} >
 
-                    <ListAbonnemt />
+                    <ListAbonnemt  abonnements={abonnements}  getPaiments = {getPaiments}/>
                 </div>
                 <div className="col-4">
-                    <Detail />
+                    <Detail paiements = {paiements} />
                 </div>
             </div>
         </div>
     )
 }
-function ListAbonnemt(){
+function ListAbonnemt(prop){
+    const abonnements = prop.abonnements ;
     return (
         <div style={{position:"absolute",width:"100%",height:"100%",overflow:"auto"}}>
-            <table className="table table-light">
+            <table className="table table-bordered">
                 <thead>
                 <tr>
                 <th>code</th>
                 <th>membre</th>
+                    <th>discipline</th>
                 <th>date création</th>
                 <th>duree</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                <td>1</td>
-                <td>mombre1</td>
-                <td>03/04/2023</td>
-                <td>3</td></tr>
-                <tr>
-                    <td>1</td>
-                    <td>mombre1</td>
-                    <td>03/04/2023</td>
-                    <td>3</td></tr>
-                <tr>
-                    <td>1</td>
-                    <td>mombre1</td>
-                    <td>03/04/2023</td>
-                    <td>3</td></tr>
-                <tr>
-                    <td>1</td>
-                    <td>mombre1</td>
-                    <td>03/04/2023</td>
-                    <td>3</td></tr>
-                <tr>
-                    <td>1</td>
-                    <td>mombre1</td>
-                    <td>03/04/2023</td>
-                    <td>3</td></tr>
-                <tr>
-                    <td>1</td>
-                    <td>mombre1</td>
-                    <td>03/04/2023</td>
-                    <td>3</td></tr>
-                <tr>
-                    <td>1</td>
-                    <td>mombre1</td>
-                    <td>03/04/2023</td>
-                    <td>3</td></tr>
-                <tr>
-                    <td>1</td>
-                    <td>mombre1</td>
-                    <td>03/04/2023</td>
-                    <td>3</td></tr>
-                <tr>
-                    <td>1</td>
-                    <td>mombre1</td>
-                    <td>03/04/2023</td>
-                    <td>3</td></tr>
-                <tr>
-                    <td>1</td>
-                    <td>mombre1</td>
-                    <td>03/04/2023</td>
-                    <td>3</td></tr>
-                <tr>
-                    <td>1</td>
-                    <td>mombre1</td>
-                    <td>03/04/2023</td>
-                    <td>3</td></tr>
-                <tr>
-                    <td>1</td>
-                    <td>mombre1</td>
-                    <td>03/04/2023</td>
-                    <td>3</td></tr>
-                <tr>
-                    <td>1</td>
-                    <td>mombre1</td>
-                    <td>03/04/2023</td>
-                    <td>3</td></tr>
-                <tr>
-                    <td>1</td>
-                    <td>mombre1</td>
-                    <td>03/04/2023</td>
-                    <td>3</td></tr>
-                <tr>
-                    <td>1</td>
-                    <td>mombre1</td>
-                    <td>03/04/2023</td>
-                    <td>3</td></tr>
-                <tr>
-                    <td>1</td>
-                    <td>mombre1</td>
-                    <td>03/04/2023</td>
-                    <td>3</td></tr>
-                <tr>
-                    <td>1</td>
-                    <td>mombre1</td>
-                    <td>03/04/2023</td>
-                    <td>3</td></tr>
-                <tr>
-                    <td>1</td>
-                    <td>mombre1</td>
-                    <td>03/04/2023</td>
-                    <td>3</td></tr>
-                <tr>
-                    <td>1</td>
-                    <td>mombre1</td>
-                    <td>03/04/2023</td>
-                    <td>3</td></tr>
-                <tr>
-                    <td>1</td>
-                    <td>mombre1</td>
-                    <td>03/04/2023</td>
-                    <td>3</td></tr>
+                {
+                    abonnements.map((abn)=>{
+                        return <tr key={abn.codeA} onClick={()=> prop.getPaiments(abn.codeA)}>
+                            <td>{abn.codeA}</td>
+                            <td>{abn.name}</td>
+                            <td>{abn.libelle}</td>
+                            <td>{abn.dateCreationA}</td>
+                            <td>{abn.duree} Moins</td>
+                        </tr>
+                    })
+                }
                 </tbody>
             </table>
         </div>
     )
 }
-function Detail(){
+function Detail(prop){
     return (
         <div  className="profil">
-            <p>anas elhandouz</p>
-            <p>03/03/2023</p>
-            <p>Durée :<span>3</span> Mois</p>
-            <p>Déscipines</p>
-            <ul>
-                <li>musculation   <span>130</span>dh</li>
-                <li>KARATE   <span>130</span>dh</li>
-                <li>box   <span>130</span>dh</li>
-            </ul>
-            <p>Totale : <span>1400</span></p>
-            <p>Date fin :</p>
+            {
+                prop.paiements.length ?
+                    <ul>
+                        {
+                            prop.paiements.map((pay) =>{
+                                return <li>
+                                    <ul className={'border-bottom p-3'}>
+                                        <li> date de paiment : {pay.datePaiement}</li>
+                                        <li>Montant payé : {pay.montantPaye} dh</li>
+                                        <li>Montant restant : {pay.montantRestant} dh</li>
+                                    </ul>
+                                </li>
+                            })
+                        }
+                    </ul>
+                    :<p>Aucun paiement</p>
+            }
+
         </div>
     )
 }

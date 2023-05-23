@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer("salaire")->nullable() ;
             $table->string("photo")->nullable() ;
             $table->string("cin") ;
+            $table->string("tel") ;
             $table->rememberToken();
             $table->timestamps();
         });

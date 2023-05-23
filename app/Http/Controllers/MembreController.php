@@ -12,7 +12,7 @@ class MembreController extends Controller
      */
     public function index()
     {
-        //
+        return Membre::all() ;
     }
 
     /**
@@ -28,7 +28,6 @@ class MembreController extends Controller
      */
     public function store(Request $request)
     {
-        return $request ;
         $membre = new Membre() ;
         $membre->name = $request->name ;
         $membre->email = $request->email ;
@@ -37,8 +36,8 @@ class MembreController extends Controller
 
         if($request->has("image")){
             $image = $request->file('image') ;
-
-            $name = $request->name."." . $image->getClientOriginalExtension();          $image->move("users" , $name);
+            $name = $request->name.time()."." . $image->extension() ;
+            $image->move("users" , $name);
             $membre->photo =$name ;
         }
         $membre->save() ;
@@ -50,7 +49,7 @@ class MembreController extends Controller
      */
     public function show(Membre $membre)
     {
-        //
+        return $membre ;
     }
 
     /**

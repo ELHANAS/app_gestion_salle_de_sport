@@ -1,42 +1,60 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { Link } from "react-router-dom";
+import AuthUser from "@/compenent/authUser";
+import axios from "axios";
 
-export default function Discipline(){
+
+export default function Discipline(prop){
+    const [detailDiscipline , setDetailDiscipline] = useState(null);
+    const Disciplines = prop.disciplines;
+const {http} = AuthUser() ;
+    function  getDiscipline(id){
+        const detail = Disciplines.find((disc) =>  disc.codeD === id)  ;
+        setDetailDiscipline(detail) ;
+    }
+
     return (
         <div >
-            <div style={{background:"yellow",borderBottom:"10px solid black"}} className="row p-2 d-flex  justify-content-lg-start">
+            <div id={"secondHeader"} className="row p-2 d-flex  justify-content-lg-start">
                 <div className="col-lg-3  col">
                     <div className="input-group w-100">
                         <div id="search-autocomplete" className="form-outline">
                             <input type="search" id="form1" placeholder="rechercher..." className="form-control"/>
                         </div>
                         <button type="button"  className="btn btn-dark">
-                            <i  style={{color:"yellow"}} className="fas  fa-search"></i>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                 className="bi bi-search" viewBox="0 0 16 16">
+                                <path
+                                    d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                            </svg>
                         </button>
                     </div>
                 </div>
                 <div className={"col col-lg-3"}>
-                    <button onClick={()=>store.ajouterEmploye("Employe")} style={{color:"yellow"}} className="btn  btn-dark ">
+                    <button onClick={()=>prop.ajouterEmploye("Employe")} style={{color:"yellow"}} className="btn  btn-dark ">
 
                         <span className={"ms-3"}> Ajouter </span>  </button>
                 </div>
 
             </div>
-
-                <div className="col "   style={{position:"relative",height:"90%"}}>
-                    <div className="border" style={{position:"absolute",width:"100%",height:"100%",overflow:"auto"}}>
-                        <ListDiscipline />
+    <div className="row" style={{height:"90%"}}>
+                <div className="col col-lg-8 "  style={{position:"relative"}}  >
+                    <div className="border"  style={{position:"absolute",width:"100%",height:"100%",overflow:"auto"}}>
+                        <ListDiscipline Disciplines = {Disciplines}  getDisciplines = {getDiscipline}   />
                     </div>
 
                 </div>
-
+            <div className="col col-lg-4">
+                <DetailDiscipline detail ={detailDiscipline}   />
+            </div>
+        </div>
 
         </div>
     )
 }
 
 
-function ListDiscipline(){
+function ListDiscipline(prop){
     return(
         <div  >
             <table className="table ">
@@ -44,142 +62,87 @@ function ListDiscipline(){
                 <tr>
                     <th>id</th>
                     <th>libélle</th>
-                    <th>Entrineur</th>
                     <th>Prix</th>
-                    <th>membres</th>
+
                 </tr>
                 </thead>
                 <tbody >
-                <tr>
-                    <td>1</td>
-                    <td>musculation</td>
-                    <td>meryem ibraihmen</td>
-                    <td>230 </td>
-                    <td>200</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>musculation</td>
-                    <td>meryem ibraihmen</td>
-                    <td>230 </td>
-                    <td>200</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>musculation</td>
-                    <td>meryem ibraihmen</td>
-                    <td>230 </td>
-                    <td>200</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>musculation</td>
-                    <td>meryem ibraihmen</td>
-                    <td>230 </td>
-                    <td>200</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>musculation</td>
-                    <td>meryem ibraihmen</td>
-                    <td>230 </td>
-                    <td>200</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>musculation</td>
-                    <td>meryem ibraihmen</td>
-                    <td>230 </td>
-                    <td>200</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>musculation</td>
-                    <td>meryem ibraihmen</td>
-                    <td>230 </td>
-                    <td>200</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>musculation</td>
-                    <td>meryem ibraihmen</td>
-                    <td>230 </td>
-                    <td>200</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>musculation</td>
-                    <td>meryem ibraihmen</td>
-                    <td>230 </td>
-                    <td>200</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>musculation</td>
-                    <td>meryem ibraihmen</td>
-                    <td>230 </td>
-                    <td>200</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>musculation</td>
-                    <td>meryem ibraihmen</td>
-                    <td>230 </td>
-                    <td>200</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>musculation</td>
-                    <td>meryem ibraihmen</td>
-                    <td>230 </td>
-                    <td>200</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>musculation</td>
-                    <td>meryem ibraihmen</td>
-                    <td>230 </td>
-                    <td>200</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>musculation</td>
-                    <td>meryem ibraihmen</td>
-                    <td>230 </td>
-                    <td>200</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>musculation</td>
-                    <td>meryem ibraihmen</td>
-                    <td>230 </td>
-                    <td>200</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>musculation</td>
-                    <td>meryem ibraihmen</td>
-                    <td>230 </td>
-                    <td>200</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>musculation</td>
-                    <td>meryem ibraihmen</td>
-                    <td>230 </td>
-                    <td>200</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>musculation</td>
-                    <td>meryem ibraihmen</td>
-                    <td>230 </td>
-                    <td>200</td>
-                </tr>
+                {
+                    prop.Disciplines.map((disc) =>{
+                        return <tr onClick={() => prop.getDisciplines(disc.codeD)} key={disc.codeD} >
+                            <td>{disc.codeD}</td>
+                            <td>{disc.libelle}</td>
+                            <td>{disc.prix}</td>
+
+                        </tr>
+                    })
+                }
                 </tbody>
             </table>
         </div>
     );
+
+}
+
+
+
+function  DetailDiscipline(prop){
+const [entraineurs , setEntraineurs] = useState('') ;
+
+function  getEntrineurs(id){
+    if(id === "none"){
+        setEntraineurs('');
+    }else{
+        axios.post('/api/disciplineDetail/' + id).then(
+            (res) => setEntraineurs(res.data.entraineurs)
+        )
+    }
+
+}
+console.log(entraineurs)
+    return (
+        <>
+            {
+                prop.detail ?
+                    <div>
+                        {
+
+                                 <div className={"text-center"} >
+                                    <div  style={{width: '100%'}}>
+                                        <p className={"h2 text-center"}>{prop.detail.libelle}</p>
+                                    </div>
+                                     <button className={"btn"} onClick={()=>getEntrineurs(prop.detail.codeD)}>Afficher Entraineurs</button>
+                                     <button className={"btn"} onClick={()=>getEntrineurs("none")}>cacher Entraineurs</button>
+                                     {
+                                         entraineurs ?
+                                             entraineurs.map((entraineur)=>{
+                                                 return     <div className="card text-center" style={{width: '100%'}}>
+                                                     <div className={"text-center"}>
+                                                         {entraineur.photo ?
+                                                             <img className="card-img-top "  style={{width:"200px",height:"200px"}} src={"users/" + entraineur.photo } alt="Card image cap" />
+                                                             :
+                                                             <img className="card-img-top "  style={{width:"200px",height:"200px"}} src="users/user.jpg" alt="Card image cap" />
+                                                         }
+                                                     </div>
+                                                     <ul className="list-group list-group-flush">
+                                                         <li className="list-group-item">{entraineur.name}</li>
+
+                                                     </ul>
+                                                 </div>
+                                             })
+                                         :
+                                             null
+                                     }
+                                </div>
+
+                            }
+
+
+                    </div>:
+                    null
+            }
+        </>
+    )
 }
 
 

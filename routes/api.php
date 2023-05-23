@@ -21,7 +21,7 @@ Route::get('/{any}', [App\Http\Controllers\HomeController::class, 'index'])->whe
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return Auth::user()->name;
 });
-
+//authentification
 Route::post('login', [AuthController::class , 'login']);
 Route::group(['middleware','api'],function () {
 
@@ -30,8 +30,28 @@ Route::group(['middleware','api'],function () {
     Route::post('me', [AuthController::class , 'me']);
 
 }) ;
+
+//users
 Route::post('/registre', [userController::class , 'store']);
-Route::post('/AjouterParticipant', [\App\Http\Controllers\MembreController::class , 'store']);
-Route::post('/user/{id}', [userController::class , 'show']);
+
+
 Route::post('/users', [userController::class , 'index']);
+Route::post('/user/changePhoto/{id}', [userController::class , 'updateImage']);
+
+
+//membres
+Route::post('/AjouterParticipant', [\App\Http\Controllers\MembreController::class , 'store']);
+Route::post('/participants', [\App\Http\Controllers\MembreController::class , 'index']);
+Route::post('/participant/{membre}', [\App\Http\Controllers\MembreController::class , 'show']);
+
+//DISCIPLINE
+Route::post('/discipline', [\App\Http\Controllers\DisciplineController::class , 'index']);
+Route::post('/ajouteDiscipline', [\App\Http\Controllers\DisciplineController::class , 'store']);
+Route::post('/disciplineDetail/{discipline}', [\App\Http\Controllers\DisciplineController::class , 'show']);
+
+
+
+//ABONNEMENT
+Route::post('/abonnementparticipant/{membre}', [\App\Http\Controllers\AbonnementController::class , 'abonnementParParticipant']);
+Route::post('/ajouterAbonnement', [\App\Http\Controllers\AbonnementController::class , 'store']);
 

@@ -3,7 +3,7 @@ import "./login.css"
 import AuthUser from './authUser';
 import { useNavigate } from 'react-router-dom';
 export default function Register(store){
-    const {http} = AuthUser()
+    const {httpData} = AuthUser()
     const navigate = useNavigate();
     const [email,setEmail] = useState('')
     const [name,setName] = useState('')
@@ -11,16 +11,18 @@ export default function Register(store){
     const [fonction,setFonction] = useState('');
     const [salaire,setSalaire] = useState('');
     const [cin,setCin] = useState('');
-    const [photo,setPhoto] = useState();
+    const [photo,setPhoto] = useState('');
+    const [tel,setTel] = useState('');
     const [message , setMessage] = useState('');
     function submite(e){
-            http.post('/registre',{
+            httpData.post('/registre',{
                 name:name,
                 email : email,
                 password:password,
                 fonction : fonction,
                 salaire : salaire ,
                 cin : cin,
+                tel:tel,
                 photo : photo
             }).then(
                 (res)=> {
@@ -61,12 +63,14 @@ export default function Register(store){
             }
 
                 <h2 className="h2 text-center my-4">Ajouter employé</h2>
-                 <form onSubmit={(event)=>submite(event)}>
+                 <form className={"row"}  onSubmit={(event)=>submite(event)}>
+                     <div className={"col-lg-6 col-12"}>
+
                      <div className="row">
                          <label className="col-lg-4 py-3">Nom & prénom :</label>
                          <input type="text" placeholder="nom & prénom"
                                 value={name}
-                                className=" col form-control my-3  "
+                                className=" col form-control my-lg-3  "
                                 name="name"  onChange={(event)=> setName(event.target.value)}
                                 required  autoFocus />
                      </div>
@@ -74,12 +78,12 @@ export default function Register(store){
                          <label className="col-lg-4 py-3">Email :</label>
                         <input type="email" placeholder="Email Address"
                                value={email}
-                        className="form-control col  my-3 "
+                        className="form-control col  my-lg-3 "
                          name="email"  onChange={(event)=> setEmail(event.target.value)}
                          required   />
                      </div>
                      <div className="row">
-                         <label className="col-lg-4 py-3">Mot de pass :</label>
+                         <label className="col-lg-4 py-lg-3">Mot de pass :</label>
                           <input  type="password" className="form-control col my-3 "
                                   value={password}
                                   placeholder="mot de passe"
@@ -89,15 +93,17 @@ export default function Register(store){
                      </div>
                      <div className="row">
                          <label className="col-lg-4 py-3">Salaire :</label>
-                     <input  type="text" className="form-control col my-3 "
+                     <input  type="text" className="form-control col my-lg-3 "
                              placeholder="000 000"
                              value={salaire}
                              name="salaire"
                              onChange={(event)=> setSalaire(event.target.value)}
                      />
                      </div>
+                     </div>
+                     <div className={"col-lg-6 col-12"}>
                      <div className="row">
-                         <label className="col-lg-4 py-3">Cin :</label>
+                         <label className="col-lg-4 py-lg-3">Cin :</label>
                      <input  type="text" className="form-control col  my-3"
                              name="cin"
                              value={cin}
@@ -106,10 +112,19 @@ export default function Register(store){
                      />
                      </div>
                      <div className="row">
+                         <label className="col-lg-4 py-3">Numéro de téléphone:</label>
+                         <input  type="text" className="form-control col  my-lg-3"
+                                 name="tel"
+                                 value={tel}
+                                 placeholder={"00 00 00 00 00"}
+                                 onChange={(event)=> setTel(event.target.value)}
+                         />
+                     </div>
+                     <div className="row">
                          <label className="col-lg-4 py-3">Fonction:</label>
-                         <div className="col my-3 p-0">
-                             <select className="form-select" onChange={(event)=> setFonction(event.target.value)}>
-                                 <option >choisir un fonction</option>
+                         <div className="col my-lg-3 p-0">
+                             <select className="form-select" value={"choisir un fonction"} onChange={(event)=> setFonction(event.target.value)}>
+
                                  <option value={"Réceptionniste"}>Réceptionniste</option>
                                  <option value={"entraîneur"}>entraîneur</option>
                                  <option value={"admin"}>admin</option>
@@ -118,21 +133,21 @@ export default function Register(store){
 
                      </div>
                      <div className="row">
-                         <label className="col-lg-4 col py-3">Photo:</label>
-                         <input type="file" className="form-control col my-3 " onChange={(event)=> setPhoto(event.target.value)} name="photo"/>
+                         <label className="col-lg-4 col py-lg-3">Photo:</label>
+                         <input type="file" className="form-control col my-lg-3 " onChange={(event)=> setPhoto(event.target.files[0])} name="photo"/>
 
                      </div>
+                     </div>
 
-
-                            <div className="row border " style={{position:"absolute",width:"90%", bottom:"5px"}}>
+                            <div className="row  " style={{position:"absolute",width:"90%", bottom:"5px"}}>
                                 <div className="col">
-                                    <button onClick={Annuler} style={{color:"yellow"}} className="btn btn-dark w-100">
+                                    <button onClick={Annuler} style={{color:"white",background:"#ee9b57"}} className="btn  w-100">
                                         Annuler
                                     </button>
                                 </div>
                                 <div className="col">
 
-                                    <button style={{color:"yellow"}} type="submit" className="btn btn-dark w-100" >
+                                    <button style={{color:"white",background:"#ee9b57"}} type="submit" className="btn  w-100" >
                                         Enregistrer
                                     </button>
 
