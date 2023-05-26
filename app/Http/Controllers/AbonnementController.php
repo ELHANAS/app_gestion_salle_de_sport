@@ -14,7 +14,7 @@ class AbonnementController extends Controller
      */
     public function index()
     {
-        return Abonnement::all() ;
+        return [ "Abonnement" => Abonnement::getAbonnement()] ;
     }
 
     /**
@@ -71,7 +71,10 @@ class AbonnementController extends Controller
         //
     }
 
-
+public  function  getAbonnementParId($id){
+        $abn = Abonnement::getAbonnementParId($id);
+        return $abn ;
+}
     public function abonnementParParticipant(string $id){
         $idA = intval($id) ;
         $abonnemets =  DB::table('abonnements')
@@ -79,5 +82,12 @@ class AbonnementController extends Controller
             ->where('idMembre', $idA)
             ->get();
         return $abonnemets ;
+    }
+    public  function getPaiements($id){
+        Abonnement::changeEtat();
+        $paiements = Abonnement::getPaiements($id) ;
+        $abonnement = Abonnement::getAbonnementParId($id) ;
+        return ['paiements' => $paiements ,
+                'abonnements' => $abonnement ];
     }
 }

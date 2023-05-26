@@ -19,11 +19,7 @@ class userController extends Controller
     public function index()
     {
         Abonnement::changeEtat();
-        return ["user"=>User::all() ,
-                "membre" => Membre::all(),
-                "Abonnement" => Abonnement::getAbonnement(),
-                    "discipline" => Discipline::all(),
-                        "paiement" => Paiement::getPaiement()] ;
+        return ["user"=>User::all() ];                 ;
     }
 
     /**
@@ -112,5 +108,11 @@ class userController extends Controller
         $user = ["user" => Auth::user()] ;
 
         return  $user;
+    }
+    public function getNumberUsers(){
+        return[
+            'users' => count(User::all()),
+            'participant' => count(Membre::all())
+        ]  ;
     }
 }

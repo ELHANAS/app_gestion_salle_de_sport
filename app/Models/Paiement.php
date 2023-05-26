@@ -21,7 +21,7 @@ class Paiement extends Model
             ->join('abonnements', 'abonnements.codeA', '=', 'paiements.idAbonnement')
             ->join('disciplines', 'disciplines.codeD', '=', 'abonnements.idDiscipline')
             ->join('membres', 'membres.id', '=', 'abonnements.idMembre')
-            ->select('paiements.*','disciplines.libelle','membres.name','abonnements.duree')
+            ->select('paiements.*','disciplines.*','membres.name','abonnements.duree')
             ->get();
         return $paiement ;
     }

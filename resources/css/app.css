@@ -42,23 +42,37 @@ body{
 #login{
     background-image: url("images/ouvrir-une-salle-de-sport.webp");
 }
-#menu li:hover{
+#menu li:hover,#menu a:hover{
     background: #ee9b57;
+    color: #ffffff;
 }
+::-webkit-scrollbar {
+    width: 10px;
+
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #ee9b57; /* Couleur de la poignée */
+    border-radius: 5px; /* Coins arrondis */
+}
+
+
 #menu a{
 
    margin: auto;
     color: black;
     display: block;
     width: 90%;
-    border-top: 2px solid black;
+    border-bottom: 2px solid #7e7979;
+    font-size: 15px;
 }
 tr:hover{
     background: #fbcba0;
    cursor: pointer;
 }
-#menu li:first-child a{
-    border-top: none;
+
+#menu li:last-child a{
+    border-bottom: none;
 }
 
 #back{
@@ -107,7 +121,7 @@ tr:hover{
     height: 100%;
 }
 #downUl{
-    height: 60px;
+    height: 40px;
     padding: 0;
     position: absolute;
     width: 100%;

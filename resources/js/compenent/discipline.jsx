@@ -6,8 +6,12 @@ import axios from "axios";
 
 export default function Discipline(prop){
     const [detailDiscipline , setDetailDiscipline] = useState(null);
-    const Disciplines = prop.disciplines;
-const {http} = AuthUser() ;
+    const [Disciplines , setDisciplines] = useState([]);
+    useEffect(()=>{
+        axios.post('/api/disciplines').then(
+            (res) => setDisciplines(res.data.discipline)
+        )
+    },[])
     function  getDiscipline(id){
         const detail = Disciplines.find((disc) =>  disc.codeD === id)  ;
         setDetailDiscipline(detail) ;
@@ -31,9 +35,9 @@ const {http} = AuthUser() ;
                     </div>
                 </div>
                 <div className={"col col-lg-3"}>
-                    <button onClick={()=>prop.ajouterEmploye("Employe")} style={{color:"yellow"}} className="btn  btn-dark ">
+                    <button onClick={()=> prop.ajouter("discipline")}  className="btn  btn-dark ">
 
-                        <span className={"ms-3"}> Ajouter </span>  </button>
+                        <span className={"ms-3"}> + Ajouter Discipline</span>  </button>
                 </div>
 
             </div>

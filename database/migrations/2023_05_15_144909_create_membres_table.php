@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string("tel")->nullable();
             $table->date("dateNss");
             $table->string("photo")->nullable();
+            $table->boolean('etat')->default(0) ;
             $table->timestamps();
         });
     }

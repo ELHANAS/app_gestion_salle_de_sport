@@ -20,10 +20,89 @@ import {Profil} from "./compenent/profil";
 import axios from "axios";
 import AbonnementsdeParticipant from "@/compenent/AbonnementsdeParticipant";
 import Paiement from "@/compenent/paiement";
+import AjouterPaiement from "@/compenent/ajouterPaiement";
+import AjouterDiscipline from "@/compenent/AjouterDicipline";
 
 
  function App(){
     const {getToken} = AuthUser();
+     const [showE ,setShowE] = useState("none");
+     const [showParticipant ,setShowParticipant] = useState("none");
+     const [showAbennement ,setShowAbennement] = useState("none");
+     const [showDiscipline ,setShowDiscipline] = useState("none");
+     const [showPaiement ,setShowPaiement] = useState("none");
+     const [opacity ,setOpacity] = useState("1");
+     const  [showMenu , setShowMenu] = useState({display: "none"});
+
+     const [numbers , setNumbers] = useState({});
+
+     const [idparticipant , setIdParticipant] = useState(null) ;
+     const [idAbonnement , setIdAbonnement] = useState() ;
+     function  ShowMenu(){
+         if(showMenu.display === "none"){
+             setShowMenu({display: "block",
+                 background: "white", zIndex: "2",position:"absolute",width:"200px",height:"93%"})
+         }else {
+             setShowMenu({display: "none"}) ;
+         }
+
+     }
+useEffect(()=>{
+    axios.post('/api/numberUsers').then(
+        (res)=> setNumbers(res.data)
+    )
+},[])
+     function ajouter(style){
+
+         if(style === "Employe"){
+             setShowE("block");
+             setOpacity("0.2");
+         }
+         else if(style === "participant"){
+             setShowParticipant("block");
+             setOpacity("0.2");
+         }
+         else if(style === "discipline"){
+             setShowDiscipline("block");
+             setOpacity("0.2");
+         }
+         else {
+             setShowE("none");
+             setShowDiscipline("none")
+             setShowAbennement("none")
+             setShowParticipant("none");
+             setOpacity("1");
+         }
+
+
+     }
+     function  ajouterAbonnement(id){
+         setIdParticipant(id)
+         if(id){
+             setShowAbennement("block");
+             setOpacity("0.2");
+         }else {
+             setShowE("none");
+             setShowAbennement("none")
+             setShowParticipant("none");
+             setOpacity("1");
+         }
+     }
+     function ajouterPiement(id){
+         setIdAbonnement(id) ;
+         if (id){
+
+
+             setShowPaiement("block");
+             setOpacity("0.2");
+         }else{
+             setShowPaiement("none");
+             setShowE("none");
+             setShowAbennement("none")
+             setShowParticipant("none");
+             setOpacity("1");
+         }
+     }
 
     if(!getToken()){
        return (
@@ -31,80 +110,13 @@ import Paiement from "@/compenent/paiement";
        )
     }else{
 
-        const [showE ,setShowE] = useState("none");
-        const [showParticipant ,setShowParticipant] = useState("none");
-        const [showAbennement ,setShowAbennement] = useState("none");
-        const [opacity ,setOpacity] = useState("1");
-        const  [showMenu , setShowMenu] = useState({display: "none"});
-        const [employes , setEmployes] = useState([]);
-        const [participants , setParticipants] = useState([]);
-        const [disciplines , setDisciplines] = useState([]);
-        const [abonnements , setAbonnements] = useState([]);
-        const [paiements , setPaiements] = useState([]);
-        const [idparticipant , setIdParticipant] = useState(null) ;
-        function  ShowMenu(){
-            if(showMenu.display === "none"){
-                setShowMenu({display: "block",
-                    background: "white", zIndex: "2",position:"absolute",width:"200px",height:"93%"})
-            }else {
-                setShowMenu({display: "none"}) ;
-            }
-
-        }
-        useEffect(()=> {
-
-                axios.post('/api/users').then(
-                    (res) => {
-                        setEmployes(res.data.user);
-                        setDisciplines(res.data.discipline);
-                        setParticipants(res.data.membre);
-                        setAbonnements(res.data.Abonnement);
-                        setPaiements(res.data.paiement);
-                    }
-                );
-
-
-            }
-            ,[]
-        )
-        function ajouter(style){
-
-            if(style === "Employe"){
-                setShowE("block");
-                setOpacity("0.2");
-            }
-            else if(style === "participant"){
-                setShowParticipant("block");
-                setOpacity("0.2");
-            }
-            else {
-                setShowE("none");
-                setShowAbennement("none")
-                setShowParticipant("none");
-                setOpacity("1");
-            }
-
-
-        }
-        function  ajouterAbonnement(id){
-            setIdParticipant(id)
-            if(id){
-                setShowAbennement("block");
-                setOpacity("0.2");
-            }else {
-                setShowE("none");
-                setShowAbennement("none")
-                setShowParticipant("none");
-                setOpacity("1");
-            }
-        }
 
     return (
         <div >
             <div id="app" style={{opacity:opacity,paddingTop:"70px"}}>
             <Header ShowMenu={ShowMenu} />
 
-        <div  style={{height:"100%",borderBottom:"5px solid orange"}}  className="row m-0 ">
+        <div  style={{height:"100%",borderBottom:"10px solid #ee9b57"}}  className="row m-0 ">
             <div className={"col-lg-2   d-lg-block  p-0 "} style={showMenu}
             >
                 <Menu />
@@ -115,15 +127,15 @@ import Paiement from "@/compenent/paiement";
 
                     <div id="main" className="m-0 ">
                         <Routes>
-                                <Route  path="/" element= {<Home participants = {participants} mployes={employes} />} />
-                                <Route path="/Employe" element= {<Employe employes={employes}  ajouterEmploye={ajouter}/>} />
+                                <Route  path="/" element= {<Home numbers = {numbers} />} />
+                                <Route path="/Employe" element= {<Employe   ajouterEmploye={ajouter}/>} />
                                 <Route path="/registre" element= {<Register />} />
-                            <Route path="/participant" element= {<Participant participants = {participants} ajouterParticipant={ajouter}/>} />
-                            <Route path="/abonnement" element= {<Abonnement paiements = {paiements} abonnements={abonnements}  ajouterAbonnement={ajouter}/>} />
-                            <Route path="/disciplines" element= {<Discipline disciplines = {disciplines} />} />
+                            <Route path="/participant" element= {<Participant   ajouterParticipant={ajouter}/>} />
+                            <Route path="/abonnement" element= {<Abonnement    ajouterAbonnement={ajouter}/>} />
+                            <Route path="/disciplines" element= {<Discipline  ajouter={ajouter}/>}  />
                             <Route path="/profil" element= {<Profil />} />
-                            <Route path="/Paiement" element= {<Paiement paiements = {paiements} />} />
-                            <Route path="/ListeAbonnement/:id" element= {<AbonnementsdeParticipant participants = {participants} abonnements={abonnements}  ajouterAbonnement ={ajouterAbonnement}/>} />
+                            <Route path="/Paiement" element= {<Paiement  />} />
+                            <Route path="/ListeAbonnement/:id" element= {<AbonnementsdeParticipant   ajouterPiement = {ajouterPiement}  ajouterAbonnement ={ajouterAbonnement}/>} />
 
                             </Routes>
 
@@ -141,8 +153,14 @@ import Paiement from "@/compenent/paiement";
             </div>
 
                 <div className="Ajouter" style={{display:showAbennement,overflow:"auto"}}>
-                    <AjouterAbonnement none={ajouterAbonnement} id={idparticipant} disciplines = {disciplines} />
+                    <AjouterAbonnement none={ajouterAbonnement} id={idparticipant}  />
                 </div>
+            <div className="Ajouter" style={{display:showDiscipline,overflow:"auto"}}>
+                <AjouterDiscipline none={ajouter} />
+            </div>
+            <div className="Ajouter" style={{display:showPaiement,overflow:"auto"}}>
+                <AjouterPaiement   none = {ajouterPiement}  idAbonnement = {idAbonnement}/>
+            </div>
 
 
         </div>

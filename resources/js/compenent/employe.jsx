@@ -6,7 +6,12 @@ import axios from "axios";
 
 export default function Employe(prop){
     const [employe , setEmploye] = useState(null);
-    const employes  =prop.employes;
+    const [employes , setEmployes]  = useState([]);
+    useEffect(()=>{
+        axios.post('/api/users').then(
+            (res) => setEmployes(res.data.user)
+    )
+    },[])
 function getEmploye(id){
     const  emp = employes.find((emp) => emp.id === id);
     setEmploye(emp);

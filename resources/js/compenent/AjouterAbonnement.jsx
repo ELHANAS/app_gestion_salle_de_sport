@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 export default function AjouterAbonnement (prop){
@@ -7,6 +7,12 @@ export default function AjouterAbonnement (prop){
     const [message,setMessage] = useState('')
     const [idDiscipline,setIdDiscipline] = useState('')
     const [duree,setDuree] = useState('')
+    const [desciplines,setDesciplines] = useState([])
+    useEffect(()=>{
+        axios.post('/api/disciplines').then(
+            (res) => setDesciplines(res.data.discipline)
+        )
+    },[])
     function handlSubmite(){
         axios.post('/api/ajouterAbonnement',{
             'dateCreationA' : dateCreationA ,
@@ -16,7 +22,7 @@ export default function AjouterAbonnement (prop){
         }).then(
             (res)=> {
                 setMessage(res.data);
-            navigate('/ListeAbonnement/' + prop.id )
+            navigate(0 )
             }
 
         )
@@ -42,8 +48,9 @@ export default function AjouterAbonnement (prop){
                         <div className="form-group  py-3 row">
                             <label htmlFor="dat_naiss" className="col-lg-4"> Decipline  menu :</label>
                             <select className="form-select col" name={idDiscipline} onChange={(event)=>setIdDiscipline(event.target.value)}>
+                                <option>choisir la discipline</option>
                                 {
-                                    prop.disciplines.map((disc)=>{
+                                    desciplines.map((disc)=>{
                                         return   <option key={disc.codeD} value={disc.codeD}>{disc.libelle}</option>
                                     })
                                 }

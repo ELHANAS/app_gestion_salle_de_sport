@@ -1,14 +1,20 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 
 export  default function Abonnement(prop){
-    const abonnements = prop.abonnements ;
+    const [abonnements,setAbonnements] = useState([]) ;
     const [paiements,setPaiements] = useState('');
-
+    useEffect(()=>{
+        axios.post('/api/abonnements').then(
+            (res) => setAbonnements(res.data.Abonnement)
+        )
+    },[])
     function  getPaiments(id){
-        const paiement = prop.paiements.filter((pay) =>  pay.idAbonnement === id)  ;
-        setPaiements(paiement) ;
+        axios.post('/api/getPaiements/' + id).then(
+            (res) => setPaiements(res.data.paiements)
+        )
     }
 
     return(
@@ -29,13 +35,13 @@ export  default function Abonnement(prop){
                     </div>
                 </div>
                 <div className={"col col-lg-3"}>
-                    <button role="button" onClick={()=> prop.ajouterAbonnement("abonnement")} className="btn btn-dark" s>
+                    <Link to={"/participant"} role="button"  className="btn btn-dark" s>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                              className="bi bi-plus" viewBox="0 0 16 16">
                             <path
                                 d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
                         </svg>
-                        Ajouter abonnement</button>
+                        Ajouter abonnement</Link>
                 </div>
                 <div className="col ">
                     <div className="input-group">

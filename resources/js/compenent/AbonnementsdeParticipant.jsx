@@ -5,32 +5,37 @@ import axios from "axios";
 
 export  default function AbonnementsdeParticipant(prop){
     const idA = useParams() ;
-    const id = parseInt(idA.id)
+    const [id,setId] = useState(parseInt(idA.id));
 const [participant,setParticipant] = useState('')
-    const [abonnemets , setAbonnemets] = useState() ;
+    const [abonnemets , setAbonnemets] = useState([]) ;
 
     useEffect(()=>{
-       const  abns = prop.abonnements.filter((abn) =>abn.idMembre === id  );
-const  participant = prop.participants.find((prt)=> prt.id === id) ;
-setAbonnemets(abns) ;
-        setParticipant(participant) ;
+
+       axios.post('/api/getAbonnement/' + id).then(
+           (res)=> {
+               setAbonnemets(res.data.abonnements);
+               setParticipant(res.data.participant);
+               console.log(res.data)
+           }
+       )
 
     },[]) ;
     return (<div>
-        <div id={"secondHeader"} className="row p-2 d-flex  justify-content-lg-start">
-
+        <div id={"secondHeader"} className="row p-2 d-flex  justify-content-between">
             <div className={"col col-lg-4"}>
-                <button onClick={()=>prop.ajouterAbonnement(id)} style={{color:"yellow"}} className="btn  btn-dark ">
+                <h2 style={{borderLeft:"6px solid #ee9b57"}} className={"text-start ps-2"}>{participant.name}</h2>
+            </div>
+            <div className={"col col-lg-4 text-end"}>
+                <button onClick={()=>prop.ajouterAbonnement(id)}  className="btn  ">
 
-                    <span className={"ms-3"}> Ajouter </span>  </button>
+                    <span className={"ms-3"}> Ajouter  Abonnement</span>  </button>
             </div>
-            <div className={"col col-lg-4"}>
-             <h2>{participant.name}</h2>
-            </div>
+
 
         </div>
+        <div style={{height:"90%"}}>
         {
-            abonnemets ?
+            abonnemets.length ?
                 <div>
                     <table className={"table table-bordered"}>
                         <thead>
@@ -53,7 +58,7 @@ setAbonnemets(abns) ;
                                  <td>{abn.dateCreationA}</td>
                                  <td>{abn.duree}</td>
                                 <td>
-                                    <button  className={"btn w-75 text-center "}
+                                    <button onClick={()=> prop.ajouterPiement(abn.codeA)} className={"btn w-75 text-center "}
                                              style={{
                                                  color: abn.etat ===1? 'white' : abn.etat ===2? 'green': 'red',
                                                 backgroundColor:" #ef9c57",
@@ -72,5 +77,6 @@ setAbonnemets(abns) ;
                 </div>
                 :null
         }
+        </div>
     </div>)
 }

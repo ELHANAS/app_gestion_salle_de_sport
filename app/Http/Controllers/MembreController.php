@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Membre;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class MembreController extends Controller
 {
@@ -12,7 +13,7 @@ class MembreController extends Controller
      */
     public function index()
     {
-        return Membre::all() ;
+        return [ "membre" => Membre::getMembers()] ;
     }
 
     /**
@@ -74,5 +75,20 @@ class MembreController extends Controller
     public function destroy(Membre $membre)
     {
         //
+    }
+    public  function  getAbonnement($id){
+        $abonnements = Membre::getAbonnement($id) ;
+        $participant = Membre::find($id) ;
+        return ['abonnements' => $abonnements,
+                'participant' => $participant   ]    ;
+    }
+
+    public  function  search(Request $request){
+        $participants = DB::table('membres')
+                            ->where('name','like','%'.$request->search.'%' )
+                            ->select('*')
+                            ->limit(20)
+                            ->get();
+        return $participants ;
     }
 }

@@ -5,8 +5,22 @@ import axios from "axios";
 
 export default function Participant(prop){
     const [participant, setParticipant] = useState(null) ;
-    const participants  =prop.participants;
+    const [participants, setParticipants] =useState([]);
+    const [search,setSearch] = useState();
+    function Search(){
+        if (search){
+            axios.post('/api/member/search',{'search' : search}).then(
+                (res) => setParticipants(res.data)
+            )
+        }else{
 
+        }
+    }
+useEffect(()=>{
+    axios.post('/api/participants').then(
+        (res) => setParticipants(res.data.membre)
+    )
+},[])
     function getParticipant(id){
         const part = participants.find((part) => part.id === id) ;
         setParticipant(part) ;
@@ -18,9 +32,9 @@ export default function Participant(prop){
                 <div className="col-lg-3  col">
                     <div className="input-group w-100">
                         <div id="search-autocomplete" className="form-outline">
-                            <input type="search" id="form1" placeholder="rechercher..." className="form-control"/>
+                            <input type="text" id="form1" placeholder="rechercher..." onChange={(event)=> setSearch(event.target.value)} className="form-control"/>
                         </div>
-                        <button type="button"  className="btn btn-dark">
+                        <button type="button" onClick={Search} className="btn btn-dark">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                  className="bi bi-search" viewBox="0 0 16 16">
                                 <path
@@ -101,8 +115,8 @@ function Profil(prop){
                         </div>
                         <ul className="list-group list-group-flush">
                             <li className="list-group-item">{prop.participant.name}</li>
-                            <li className="list-group-item">{prop.participant.email}</li>
-                            <li className="list-group-item">{prop.participant.tel}</li>
+                            <li className="list-group-item">{prop.participant.email?prop.participant.email :  "aucun email"}</li>
+                            <li className="list-group-item">{prop.participant.tel?prop.participant.tel : "aucun telephone"}</li>
                             <li className="list-group-item">{prop.participant.dateNss}</li>
                         </ul>
                         <div className="card-body">

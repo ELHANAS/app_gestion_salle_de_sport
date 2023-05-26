@@ -34,7 +34,7 @@ Route::group(['middleware','api'],function () {
 //users
 Route::post('/registre', [userController::class , 'store']);
 
-
+Route::post('/numberUsers', [userController::class , 'getNumberUsers']);
 Route::post('/users', [userController::class , 'index']);
 Route::post('/user/changePhoto/{id}', [userController::class , 'updateImage']);
 
@@ -43,9 +43,11 @@ Route::post('/user/changePhoto/{id}', [userController::class , 'updateImage']);
 Route::post('/AjouterParticipant', [\App\Http\Controllers\MembreController::class , 'store']);
 Route::post('/participants', [\App\Http\Controllers\MembreController::class , 'index']);
 Route::post('/participant/{membre}', [\App\Http\Controllers\MembreController::class , 'show']);
+Route::post('/getAbonnement/{id}', [\App\Http\Controllers\MembreController::class , 'getAbonnement']);
+Route::post('/member/search', [\App\Http\Controllers\MembreController::class , 'search']);
 
 //DISCIPLINE
-Route::post('/discipline', [\App\Http\Controllers\DisciplineController::class , 'index']);
+Route::post('/disciplines', [\App\Http\Controllers\DisciplineController::class , 'index']);
 Route::post('/ajouteDiscipline', [\App\Http\Controllers\DisciplineController::class , 'store']);
 Route::post('/disciplineDetail/{discipline}', [\App\Http\Controllers\DisciplineController::class , 'show']);
 
@@ -54,4 +56,10 @@ Route::post('/disciplineDetail/{discipline}', [\App\Http\Controllers\DisciplineC
 //ABONNEMENT
 Route::post('/abonnementparticipant/{membre}', [\App\Http\Controllers\AbonnementController::class , 'abonnementParParticipant']);
 Route::post('/ajouterAbonnement', [\App\Http\Controllers\AbonnementController::class , 'store']);
+Route::post('/abonnements', [\App\Http\Controllers\AbonnementController::class , 'index']);
+Route::post('/getPaiements/{id}', [\App\Http\Controllers\AbonnementController::class , 'getPaiements']);
+Route::post('/getAbonnementParId/{id}', [\App\Http\Controllers\AbonnementController::class , 'getAbonnementParId']);
 
+//PAIEIEMENT
+Route::post('/ajouterPaiement', [\App\Http\Controllers\PaiementController::class , 'store']);
+Route::post('/paiements', [\App\Http\Controllers\PaiementController::class , 'index']);

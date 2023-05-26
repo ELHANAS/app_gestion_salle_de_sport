@@ -1,11 +1,63 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
+import axios from "axios";
+import {useNavigate} from "react-router-dom";
 
 
 
 export  default  function AjouterPaiement(prop){
+    const  idAbonnement = prop.idAbonnement ;
+    const  navigate = useNavigate();
     const [message , setMessage] = useState();
-    const [datePaiement , setDatePaiement]  = useState();   
+    const [id,setId] = useState();
+    const  [prix,setPrix] = useState() ;
+    const [datePaiement , setDatePaiement]  = useState();
+    const [montantPaye , setMontantPaye]  = useState();
+    const [montantRestant , setMontantRestant]  = useState();
+const  [somme , setSomme] = useState();
+function  handlSubmite(){
+    axios.post('/api/ajouterPaiement',{
+        montantRestant: montantRestant,
+        montantPaye : montantPaye,
+        datePaiement: datePaiement ,
+        idAbonnement: idAbonnement
+    }).then(
+        (res)=>  {
+            setMessage(res.data);
+            datePaiement('');
+            montantPaye(0);
 
+        }
+    )
+    navigate(0)
+}
+useEffect(()=>{
+    setMontantRestant(prix - montantPaye - somme) ;
+},[montantPaye])
+useEffect(()=> {
+    console.log(prop.idAbonnement);
+        axios.post('/api/getPaiements/' + idAbonnement).then(
+            (res) =>{
+                let numbers = res.data.paiements.map((pay) => pay.montantPaye);
+                let restes = res.data.paiements.map((pay) => pay.montantRestant);
+                console.log(  numbers)
+                if(restes.lastIndexOf(0) === restes.length -1 || res.data.abonnements[0].etat === 0){
+                    numbers = [0];
+                }
+                else if( restes.indexOf(0) !== -1 ){
+                    numbers = numbers.slice(restes.lastIndexOf(0) + 1);
+                    console.log("test2  " + restes.lastIndexOf(0))
+                }
+                console.log("test3  " + numbers)
+                const sum = numbers.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+
+
+                    setSomme(sum);
+
+                setPrix(res.data.abonnements[0].prix   * res.data.abonnements[0].duree);
+setId(res.data.abonnements[0].idMembre) ;
+            }
+        )
+})
     return(
         <div style={{position:"relative",height:"100%",width:"100%"}}  className='container p-lg-3  px-lg-5'>
             <button className="btn"  style={{position:"absolute",top:"0",right:"0"}} onClick={()=>prop.none(null)}>
@@ -24,17 +76,34 @@ export  default  function AjouterPaiement(prop){
 
                 <div>
 
-
                     <div className="form-group row py-3">
-                        <label htmlFor="dat_naiss" className="col col-lg-4"> Date de paiement :</label>
+                        <label htmlFor="totale" className="col col-lg-4"> Totale :</label>
+                        <input type="number" readOnly  className="form-control col" id="totale" name="totaletotale"
+                            value={prix}    />
+
+
+                    </div>
+                    <div className="form-group row py-3">
+                        <label htmlFor="mnPaye" className="col col-lg-4"> Montant déja payé :</label>
+                        <input type="number" readOnly  className="form-control col" id="mnPaye" name="mnPaye"
+                        value={somme} />
+
+
+                    </div>
+                    <div className="form-group row py-3">
+                        <label htmlFor="datePaiement" className="col col-lg-4"> Date de paiement :</label>
                         <input type="date"  className="form-control col" id="datePaiement" name="datePaiement"
-                               placeholder="entrer your email" />
+                            onChange={(event) => setDatePaiement(event.target.value)}    />
 
 
                     </div>
                     <div className="form-group row py-3">
                         <label className="form-label col col-lg-4 " htmlFor="password">le montant payé  :</label>
-                        <input type="number" className="form-control col" id="montantPaye" name="montantPaye"  />
+                        <input type="number" className="form-control col" id="montantPaye" name="montantPaye"  onChange={(event) => setMontantPaye(event.target.value)} />
+                    </div>
+                    <div className="form-group row py-3">
+                        <label className="form-label col col-lg-4 " htmlFor="montantRestant">le montant Restant  :</label>
+                        <input type="number" className="form-control col" id="montantRestant" name="montantRestant"  value={montantRestant} />
                     </div>
 
 
@@ -46,7 +115,7 @@ export  default  function AjouterPaiement(prop){
                         </div>
                         <div className="col">
 
-                            <button onClick={} style={{color:"white",background:"#ee9b57"}} type="button" className="btn  w-100" >
+                            <button onClick={handlSubmite}  style={{color:"white",background:"#ee9b57"}} type="button" className="btn  w-100" >
                                 Enregistrer
                             </button>
                         </div>

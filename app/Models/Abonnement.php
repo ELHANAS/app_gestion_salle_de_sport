@@ -22,14 +22,38 @@ class Abonnement extends Model
         $abonnements =  DB::table('abonnements')
             ->join('membres', 'membres.id', '=', 'abonnements.idMembre')
             ->join('disciplines', 'disciplines.codeD', '=', 'abonnements.idDiscipline')
-            ->select('abonnements.*','disciplines.libelle','membres.name')
+            ->select('abonnements.*','disciplines.*','membres.name')
+            ->orderBy('abonnements.codeA','DESC')
+            ->limit(20)
             ->get();
         return $abonnements ;
     }
-public  static  function  changeEtat(){
+    public  static  function getAbonnementParId($id){
+        $abonnements =  DB::table('abonnements')
+            ->join('membres', 'membres.id', '=', 'abonnements.idMembre')
+            ->join('disciplines', 'disciplines.codeD', '=', 'abonnements.idDiscipline')
+            ->select('abonnements.*','disciplines.*','membres.name')
+            ->where('abonnements.codeA',$id)
+            ->get();
+        return $abonnements ;
+    }
+
+    public  static  function  changeEtat(){
         $abonnements = Abonnement::all();
         foreach ($abonnements as $abonnement){
             DB::select('CALL changeEtatAbonnement( ?)', [$abonnement->codeA]);
         }
+}
+
+public static  function  getPaiements($id){
+        $paiement =   DB::table('paiements')
+            ->join('abonnements', 'abonnements.codeA', '=', 'paiements.idAbonnement')
+            ->join('disciplines', 'disciplines.codeD', '=', 'abonnements.idDiscipline')
+            ->join('membres', 'membres.id', '=', 'abonnements.idMembre')
+            ->select('paiements.*','disciplines.*','membres.name','abonnements.duree')
+            ->where('paiements.idAbonnement',$id)
+            ->get();
+
+        return $paiement ;
 }
 }

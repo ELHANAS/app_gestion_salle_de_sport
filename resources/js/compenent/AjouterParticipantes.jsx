@@ -29,11 +29,11 @@ const {httpData} = AuthUser() ;
                 setName("");
                 setEmail("");
                 setImage(null);
+                navigate(0)
             }
         ).catch(
             (err) => setMessage(err.data)
         );
-
 
     }
     function  Annuler(){

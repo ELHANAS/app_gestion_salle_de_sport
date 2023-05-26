@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Abonnement;
 use App\Models\Paiement;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,7 @@ class PaiementController extends Controller
      */
     public function index()
     {
-        //
+        return [ "paiement" => Paiement::getPaiement()] ;
     }
 
     /**
@@ -28,7 +29,15 @@ class PaiementController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $paiement =new Paiement();
+        $paiement->idAbonnement = $request->idAbonnement ;
+        $paiement->datePaiement = $request->datePaiement ;
+        $paiement->montantPaye = $request->montantPaye ;
+        $paiement->montantRestant = $request->montantRestant ;
+        $paiement->save() ;
+        Abonnement::changeEtat();
+return "saved" ;
+
     }
 
     /**

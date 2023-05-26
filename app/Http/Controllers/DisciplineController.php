@@ -12,7 +12,7 @@ class DisciplineController extends Controller
      */
     public function index()
     {
-        return Discipline::all() ;
+        return ["discipline" => Discipline::all()] ;
     }
 
     /**
@@ -31,6 +31,8 @@ class DisciplineController extends Controller
         $discipline = new Discipline() ;
         $discipline->libelle = $request->libelle ;
         $discipline->prix = $request->prix ;
+        $discipline->save();
+        return "saved" ;
     }
 
     /**
