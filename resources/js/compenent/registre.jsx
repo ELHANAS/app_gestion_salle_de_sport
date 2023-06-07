@@ -33,9 +33,9 @@ export default function Register(store){
                     setCin("");
                     setName("");
                     setEmail("");
+                    navigate(0)
                 }
             );
-            navigate('/Employe');
 
             e.preventDefault() ;
     }
@@ -112,7 +112,7 @@ export default function Register(store){
                      />
                      </div>
                      <div className="row">
-                         <label className="col-lg-4 py-3">Numéro de téléphone:</label>
+                         <label className="col-lg-4 py-3">N° téléphone:</label>
                          <input  type="text" className="form-control col  my-lg-3"
                                  name="tel"
                                  value={tel}
@@ -124,7 +124,7 @@ export default function Register(store){
                          <label className="col-lg-4 py-3">Fonction:</label>
                          <div className="col my-lg-3 p-0">
                              <select className="form-select" value={"choisir un fonction"} onChange={(event)=> setFonction(event.target.value)}>
-
+                                        <option >Choisir la fonction</option>
                                  <option value={"Réceptionniste"}>Réceptionniste</option>
                                  <option value={"entraîneur"}>entraîneur</option>
                                  <option value={"admin"}>admin</option>

@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Abonnement;
 use App\Models\Discipline;
 use App\Models\Membre;
+use App\Models\Notification;
 use App\Models\Paiement;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class userController extends Controller
@@ -64,9 +66,8 @@ class userController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(User $user)
     {
-        $user = User::find($id) ;
         return $user ;
     }
 
@@ -77,8 +78,8 @@ class userController extends Controller
     {
         //
     }
-    public  function  updateImage(Request  $request,$id){
-        $user = User::find($id) ;
+    public  function  updateImage(Request  $request,User $user){
+
         if($request->has("photo")){
             $image = $request->file('photo') ;
             $name = $request->name.time()."." . $image->extension() ;
@@ -112,7 +113,17 @@ class userController extends Controller
     public function getNumberUsers(){
         return[
             'users' => count(User::all()),
-            'participant' => count(Membre::all())
+            'participant' => count(Membre::all()) ,
+            'notification' => Notification::all()
         ]  ;
+    }
+
+    public  function  search(Request $request){
+        $users = DB::table('users')
+            ->where('name','like','%'.$request->search.'%' )
+            ->select('*')
+            ->limit(20)
+            ->get();
+        return $users ;
     }
 }

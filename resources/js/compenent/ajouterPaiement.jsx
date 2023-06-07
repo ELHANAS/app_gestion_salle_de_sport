@@ -1,18 +1,20 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
-import {useNavigate} from "react-router-dom";
+import {useNavigate ,useLocation} from "react-router-dom";
 
 
 
 export  default  function AjouterPaiement(prop){
+
     const  idAbonnement = prop.idAbonnement ;
     const  navigate = useNavigate();
     const [message , setMessage] = useState();
-    const [id,setId] = useState();
-    const  [prix,setPrix] = useState() ;
+
+    const  [Prix,setPrix] = useState() ;
     const [datePaiement , setDatePaiement]  = useState();
     const [montantPaye , setMontantPaye]  = useState();
     const [montantRestant , setMontantRestant]  = useState();
+
 const  [somme , setSomme] = useState();
 function  handlSubmite(){
     axios.post('/api/ajouterPaiement',{
@@ -28,26 +30,26 @@ function  handlSubmite(){
 
         }
     )
-    navigate(0)
+    navigate(0);
+
 }
-useEffect(()=>{
-    setMontantRestant(prix - montantPaye - somme) ;
-},[montantPaye])
+
 useEffect(()=> {
-    console.log(prop.idAbonnement);
+
         axios.post('/api/getPaiements/' + idAbonnement).then(
             (res) =>{
+
+
                 let numbers = res.data.paiements.map((pay) => pay.montantPaye);
                 let restes = res.data.paiements.map((pay) => pay.montantRestant);
-                console.log(  numbers)
+
                 if(restes.lastIndexOf(0) === restes.length -1 || res.data.abonnements[0].etat === 0){
                     numbers = [0];
                 }
                 else if( restes.indexOf(0) !== -1 ){
                     numbers = numbers.slice(restes.lastIndexOf(0) + 1);
-                    console.log("test2  " + restes.lastIndexOf(0))
                 }
-                console.log("test3  " + numbers)
+
                 const sum = numbers.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
 
 
@@ -58,6 +60,9 @@ setId(res.data.abonnements[0].idMembre) ;
             }
         )
 })
+    useEffect(()=>{
+        setMontantRestant(Prix - montantPaye - somme) ;
+    },[montantPaye])
     return(
         <div style={{position:"relative",height:"100%",width:"100%"}}  className='container p-lg-3  px-lg-5'>
             <button className="btn"  style={{position:"absolute",top:"0",right:"0"}} onClick={()=>prop.none(null)}>
@@ -79,7 +84,7 @@ setId(res.data.abonnements[0].idMembre) ;
                     <div className="form-group row py-3">
                         <label htmlFor="totale" className="col col-lg-4"> Totale :</label>
                         <input type="number" readOnly  className="form-control col" id="totale" name="totaletotale"
-                            value={prix}    />
+                            value={Prix}    />
 
 
                     </div>
@@ -107,7 +112,7 @@ setId(res.data.abonnements[0].idMembre) ;
                     </div>
 
 
-                    <div className="row border " style={{position:"absolute",width:"90%", bottom:"5px"}}>
+                    <div className="row  " style={{position:"absolute",width:"90%", bottom:"5px"}}>
                         <div className="col">
                             <button style={{color:"white",background:"#ee9b57"}} className="btn  w-100">
                                 Annuler

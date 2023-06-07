@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import AuthUser from "./authUser";
 
 export default function Menu(){
-    const {token,logout} = AuthUser();
+    const {token,logout,user} = AuthUser();
     function logoutUser(){
         if(token != undefined){
             logout();
@@ -24,18 +24,22 @@ export default function Menu(){
                       <span className={"ms-3"}  >Accueil</span>  </Link>
 
                 </li>
-                <li  >
-                    <Link className="p-2" style={location.pathname === '/Employe'? { borderBottom: "2px solid #ee9b57",color:"#fc7f11"}:{}}  to="/Employe">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                             className="bi bi-person-rolodex" viewBox="0 0 16 16">
-                            <path d="M8 9.05a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"/>
-                            <path
-                                d="M1 1a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h.5a.5.5 0 0 0 .5-.5.5.5 0 0 1 1 0 .5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5.5.5 0 0 1 1 0 .5.5 0 0 0 .5.5h.5a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H6.707L6 1.293A1 1 0 0 0 5.293 1H1Zm0 1h4.293L6 2.707A1 1 0 0 0 6.707 3H15v10h-.085a1.5 1.5 0 0 0-2.4-.63C11.885 11.223 10.554 10 8 10c-2.555 0-3.886 1.224-4.514 2.37a1.5 1.5 0 0 0-2.4.63H1V2Z"/>
-                        </svg>
-                        <span className={"ms-3"}> Employé </span></Link>
-                </li>
+             {
+                 user.fonction === "Admin"?
+                     <li  >
+                         <Link className="p-2" style={location.pathname === '/Employes'? { borderBottom: "2px solid #ee9b57",color:"#fc7f11"}:{}}  to="/Employes">
+                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                  className="bi bi-person-rolodex" viewBox="0 0 16 16">
+                                 <path d="M8 9.05a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"/>
+                                 <path
+                                     d="M1 1a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h.5a.5.5 0 0 0 .5-.5.5.5 0 0 1 1 0 .5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5.5.5 0 0 1 1 0 .5.5 0 0 0 .5.5h.5a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H6.707L6 1.293A1 1 0 0 0 5.293 1H1Zm0 1h4.293L6 2.707A1 1 0 0 0 6.707 3H15v10h-.085a1.5 1.5 0 0 0-2.4-.63C11.885 11.223 10.554 10 8 10c-2.555 0-3.886 1.224-4.514 2.37a1.5 1.5 0 0 0-2.4.63H1V2Z"/>
+                             </svg>
+                             <span className={"ms-3"}> Employé </span></Link>
+                     </li>:null
+             }
+
                 <li >
-                    <Link className="p-2" style={location.pathname === '/participant'? { borderBottom: "2px solid #ee9b57",color:"#fc7f11"}:{}}  to="/participant">
+                    <Link className="p-2" style={location.pathname === '/participants'? { borderBottom: "2px solid #ee9b57",color:"#fc7f11"}:{}}  to="/participants">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                              className="bi bi-person-lines-fill" viewBox="0 0 16 16">
                             <path
@@ -44,7 +48,7 @@ export default function Menu(){
                         <span className={"ms-3"}>Participant </span></Link>
                 </li>
                 <li>
-                    <Link className="p-2"  style={location.pathname === '/abonnement'?{ borderBottom: "2px solid #ee9b57",color:"#fc7f11"}:{}}  to="/abonnement" >
+                    <Link className="p-2"  style={location.pathname === '/abonnements'?{ borderBottom: "2px solid #ee9b57",color:"#fc7f11"}:{}}  to="/abonnements" >
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                              className="bi bi-union" viewBox="0 0 16 16">
                             <path
@@ -53,7 +57,7 @@ export default function Menu(){
                         <span className={"ms-3"}>Abonnement</span></Link>
                 </li>
              <li >
-                 <Link className="p-2" style={location.pathname === '/Paiement'? { borderBottom: "2px solid #ee9b57",color:"#fc7f11"}:{}}  to="/Paiement" >
+                 <Link className="p-2" style={location.pathname === '/paiements'? { borderBottom: "2px solid #ee9b57",color:"#fc7f11"}:{}}  to="/paiements" >
                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                           className="bi bi-currency-exchange" viewBox="0 0 16 16">
                          <path
@@ -63,24 +67,42 @@ export default function Menu(){
              </li>
                 <li >
                     <Link className="p-2" style={location.pathname === '/disciplines'?{ borderBottom: "2px solid #ee9b57",color:"#fc7f11"}:{}} to="/disciplines" >
-                    <i className='fas fa-baseball-ball' ></i>
-                        <span className={"ms-3"}> Déscipline de sport</span></Link>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                             className="bi bi-dribbble" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                  d="M8 0C3.584 0 0 3.584 0 8s3.584 8 8 8c4.408 0 8-3.584 8-8s-3.592-8-8-8zm5.284 3.688a6.802 6.802 0 0 1 1.545 4.251c-.226-.043-2.482-.503-4.755-.217-.052-.112-.096-.234-.148-.355-.139-.33-.295-.668-.451-.99 2.516-1.023 3.662-2.498 3.81-2.69zM8 1.18c1.735 0 3.323.65 4.53 1.718-.122.174-1.155 1.553-3.584 2.464-1.12-2.056-2.36-3.74-2.551-4A6.95 6.95 0 0 1 8 1.18zm-2.907.642A43.123 43.123 0 0 1 7.627 5.77c-3.193.85-6.013.833-6.317.833a6.865 6.865 0 0 1 3.783-4.78zM1.163 8.01V7.8c.295.01 3.61.053 7.02-.971.199.381.381.772.555 1.162l-.27.078c-3.522 1.137-5.396 4.243-5.553 4.504a6.817 6.817 0 0 1-1.752-4.564zM8 14.837a6.785 6.785 0 0 1-4.19-1.44c.12-.252 1.509-2.924 5.361-4.269.018-.009.026-.009.044-.017a28.246 28.246 0 0 1 1.457 5.18A6.722 6.722 0 0 1 8 14.837zm3.81-1.171c-.07-.417-.435-2.412-1.328-4.868 2.143-.338 4.017.217 4.251.295a6.774 6.774 0 0 1-2.924 4.573z"/>
+                        </svg>
+                        <span className={"ms-3  w-75"}>Déscipline de sport</span></Link>
                 </li>
+             {
+                 user.fonction === "Admin"?
+                     <li >
+                         <Link className="p-2" style={location.pathname === '/statistiques'? { borderBottom: "2px solid #ee9b57",color:"#fc7f11"}:{}}  to="/statistiques" >
+                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                  className="bi bi-bar-chart-line" viewBox="0 0 16 16">
+                                 <path
+                                     d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1V2zm1 12h2V2h-2v12zm-3 0V7H7v7h2zm-5 0v-3H2v3h2z"/>
+                             </svg>
+                             <span className={"ms-3"}>Statiqtique</span></Link>
+                     </li>
+
+                     :null
+             }
 
 
             </ul>
-            <ul id="downUl"  className="border-top text-start">
+            <div id="downUl"  className=" text-center">
 
-                <li className="p-3" >
 
+<button className={"btn btn-dark"} onClick={logoutUser}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-box-arrow-in-left" viewBox="0 0 16 16">
   <path fillRule="evenodd" d="M10 3.5a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-2a.5.5 0 0 1 1 0v2A1.5 1.5 0 0 1 9.5 14h-8A1.5 1.5 0 0 1 0 12.5v-9A1.5 1.5 0 0 1 1.5 2h8A1.5 1.5 0 0 1 11 3.5v2a.5.5 0 0 1-1 0v-2z"/>
   <path fillRule="evenodd" d="M4.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H14.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z"/>
 </svg>
-                    <span className={"ms-3"} onClick={logoutUser} role={"button"}>Logout</span>
-                </li>
+                    <span className={"ms-3"}  >déconnecte</span></button>
 
-            </ul>
+
+            </div>
             </div>
             </div>
     )

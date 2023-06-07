@@ -22,7 +22,7 @@ class Abonnement extends Model
         $abonnements =  DB::table('abonnements')
             ->join('membres', 'membres.id', '=', 'abonnements.idMembre')
             ->join('disciplines', 'disciplines.codeD', '=', 'abonnements.idDiscipline')
-            ->select('abonnements.*','disciplines.*','membres.name')
+            ->select('abonnements.*','disciplines.*','membres.*')
             ->orderBy('abonnements.codeA','DESC')
             ->limit(20)
             ->get();

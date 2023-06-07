@@ -33,10 +33,11 @@ Route::group(['middleware','api'],function () {
 
 //users
 Route::post('/registre', [userController::class , 'store']);
-
+Route::post('/user/search', [userController::class , 'search']);
 Route::post('/numberUsers', [userController::class , 'getNumberUsers']);
 Route::post('/users', [userController::class , 'index']);
-Route::post('/user/changePhoto/{id}', [userController::class , 'updateImage']);
+Route::post('/user/{user}', [userController::class , 'show']);
+Route::post('/user/changePhoto/{user}', [userController::class , 'updateImage']);
 
 
 //membres
@@ -45,6 +46,7 @@ Route::post('/participants', [\App\Http\Controllers\MembreController::class , 'i
 Route::post('/participant/{membre}', [\App\Http\Controllers\MembreController::class , 'show']);
 Route::post('/getAbonnement/{id}', [\App\Http\Controllers\MembreController::class , 'getAbonnement']);
 Route::post('/member/search', [\App\Http\Controllers\MembreController::class , 'search']);
+Route::post('/notification/destory/{notification}', [\App\Http\Controllers\MembreController::class , 'destroyNotification']);
 
 //DISCIPLINE
 Route::post('/disciplines', [\App\Http\Controllers\DisciplineController::class , 'index']);
@@ -63,3 +65,5 @@ Route::post('/getAbonnementParId/{id}', [\App\Http\Controllers\AbonnementControl
 //PAIEIEMENT
 Route::post('/ajouterPaiement', [\App\Http\Controllers\PaiementController::class , 'store']);
 Route::post('/paiements', [\App\Http\Controllers\PaiementController::class , 'index']);
+Route::post('/paiementStatistique/{year}', [\App\Http\Controllers\PaiementController::class , 'getPaiementParYear']);
+Route::post('/paiementStatistiqueMonth/{month}', [\App\Http\Controllers\PaiementController::class , 'getPaiementParMonth']);

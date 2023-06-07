@@ -92,7 +92,7 @@ function ListAbonnemt(prop){
                 </thead>
                 <tbody>
                 {
-                    abonnements.map((abn)=>{
+                    abonnements.length ? abonnements.map((abn)=>{
                         return <tr key={abn.codeA} onClick={()=> prop.getPaiments(abn.codeA)}>
                             <td>{abn.codeA}</td>
                             <td>{abn.name}</td>
@@ -100,7 +100,13 @@ function ListAbonnemt(prop){
                             <td>{abn.dateCreationA}</td>
                             <td>{abn.duree} Moins</td>
                         </tr>
-                    })
+                    }):
+                    <tr  >
+                    <td colSpan={"5)"} >
+                <div className={"text-center d-flex justify-content-center p-3"}>
+                    <div className="spinner-border mx-2"></div> Chargement..
+                </div>
+                </td> </tr>
                 }
                 </tbody>
             </table>

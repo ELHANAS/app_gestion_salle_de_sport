@@ -4,34 +4,35 @@
 
 .form-box {
 
-    margin: auto auto;
+    margin: auto 50%;
     padding: 40px;
     border-radius: 15px;
     box-shadow: 0 0 10px #000;
     position: absolute;
+    color: white;
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
     width: 500px;
-    height: 430px;
+    height: 500px;
 
 }
 .form-box:after{
     border-radius: 15px;
     content: "";
     position: absolute;
-    background: white;
+    background: black;
 
     z-index: -1;
     left: 0;
     right: 0;
     top: 0;
     bottom: 0;
-    opacity: 50%;
+    opacity: 40%;
 }
 .form-box:before {
-    background-image: url("images/ouvrir-une-salle-de-sport.webp");
+    background: url('images/pexels-pixabay-407511.jpg');
     width: 100%;
     height: 100%;
     background-size: cover;
@@ -80,8 +81,8 @@ label{
     font-size: 14px;
 }
 .form-box button {
-    background-color: orange;
-    color: black;
+    background-color: #ee9b57;
+    color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;

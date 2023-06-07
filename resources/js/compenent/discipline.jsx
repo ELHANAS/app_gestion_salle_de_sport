@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import { Link } from "react-router-dom";
+import {Link, useHref} from "react-router-dom";
 import AuthUser from "@/compenent/authUser";
 import axios from "axios";
 
@@ -72,14 +72,20 @@ function ListDiscipline(prop){
                 </thead>
                 <tbody >
                 {
-                    prop.Disciplines.map((disc) =>{
+                    prop.Disciplines.length ? prop.Disciplines.map((disc) =>{
                         return <tr onClick={() => prop.getDisciplines(disc.codeD)} key={disc.codeD} >
                             <td>{disc.codeD}</td>
                             <td>{disc.libelle}</td>
                             <td>{disc.prix}</td>
 
                         </tr>
-                    })
+                    }):
+                        <tr  >
+                            <td colSpan={"3"} >
+                                <div className={"text-center d-flex justify-content-center p-3"}>
+                                    <div className="spinner-border mx-2"></div> Chargement..
+                                </div>
+                            </td> </tr>
                 }
                 </tbody>
             </table>
@@ -105,11 +111,11 @@ function  getEntrineurs(id){
 }
 console.log(entraineurs)
     return (
-        <>
+        <div className={"w-100 h-100"}>
             {
                 prop.detail ?
                     <div>
-                        {
+
 
                                  <div className={"text-center"} >
                                     <div  style={{width: '100%'}}>
@@ -135,17 +141,19 @@ console.log(entraineurs)
                                                  </div>
                                              })
                                          :
-                                             null
+
+                                            null
+
                                      }
                                 </div>
-
-                            }
-
-
                     </div>:
-                    null
+                    <div style={{width:"100%",height:"100%"}} className={"   d-flex justify-content-center align-content-md-center"}>
+                        <img  src='images/GYM.png' style={{width:"100%",margin:"auto auto" }} alt="logo"/>
+
+                    </div>
+
             }
-        </>
+        </div>
     )
 }
 

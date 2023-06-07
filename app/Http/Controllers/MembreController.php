@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Membre;
+use App\Models\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -13,6 +14,7 @@ class MembreController extends Controller
      */
     public function index()
     {
+        Membre::changeEtat();
         return [ "membre" => Membre::getMembers()] ;
     }
 
@@ -90,5 +92,9 @@ class MembreController extends Controller
                             ->limit(20)
                             ->get();
         return $participants ;
+    }
+    public  function  destroyNotification(Notification $notification){
+        $notification->delete();
+        return 'notification à était suprimmer avec succés';
     }
 }

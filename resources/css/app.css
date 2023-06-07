@@ -9,6 +9,9 @@ color:   black;
 box-shadow: 2px 0 4px  gray;
 
 }
+#logo a:hover{
+    background: none;
+}
 body{
     padding: 0;
     font-family: 'Trebuchet MS', sans-serif;
@@ -21,11 +24,23 @@ body{
 
 
 }
+
+
+#notification{
+    position: absolute;
+    background: white;
+    top: 70px;
+    right: 0;
+    width: 350px;
+    height: 80%;
+    box-shadow: -1px 1px 5px gray;
+}
 .Ajouter{
     position: absolute;
     width: 70%;
     height: 90%;
     top: 5%;
+    font-size: 10px;
     left: 15%;
     opacity: 1;
     border-radius: 10px;
@@ -52,19 +67,27 @@ body{
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: #ee9b57; /* Couleur de la poignée */
+    background-color: #000000; /* Couleur de la poignée */
     border-radius: 5px; /* Coins arrondis */
-}
 
+}
+thead{
+    background: #ee9b57;
+    color: #000000;
+}
+thead tr:hover{
+    background: none;
+    color: none;
+}
 
 #menu a{
 
-   margin: auto;
+
     color: black;
     display: block;
     width: 90%;
-    border-bottom: 2px solid #7e7979;
-    font-size: 15px;
+    border-bottom: 2px solid #989292;
+    font-size: 79%;
 }
 tr:hover{
     background: #fbcba0;
@@ -115,7 +138,6 @@ tr:hover{
     background-image: linear-gradient(to top right, #f9a25e,white) ;
 }
 .profil{
-    border-left: 2px solid black;
     color: black;
     padding: 10px;
     height: 100%;
@@ -127,6 +149,13 @@ tr:hover{
     width: 100%;
     bottom: 0;
     left: 0;
+
+}
+#downUl button{
+    font-size: 70%;
+    width: 90%;
+
+ padding: 0;
 }
 .profil button,.profil a {
     width: 45%;
@@ -135,14 +164,14 @@ tr:hover{
 }
 
 #header{
-    background: #ef9c57;
+    background:linear-gradient(to left top, #d3a47e 10%,#ef9c57,#ef9c57,#ef9c57) ;
 height: 70px;
     color:#1f1f1f;
 position: fixed;
     top: 0;
     width: 100%;
 
-    box-shadow: 0 5px 10px #1f1f1f;
+    box-shadow: 0 1px 10px #1f1f1f;
 }
 #secondHeader{
     border-bottom: 5px solid black;
@@ -188,9 +217,9 @@ ul{
 @media only screen and (max-width: 600px) {
     .Ajouter{
 
-        width: 90%;
+        width: 100%;
 
-        left: 5%;
+        left: 0%;
 
     }
 

@@ -5,8 +5,10 @@ import AuthUser from "./authUser";
 export default function Header(prop){
 const  navigate = useNavigate();
     const {user} = AuthUser() ;
-
-
+const  [noitifcation , setNotification] = useState(prop.notification)
+function  change(){
+    setNotification([]);
+}
     return (
         <div id="header">
         <div  className="  row " >
@@ -16,22 +18,41 @@ const  navigate = useNavigate();
                     <path fillRule="evenodd"
                           d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
                 </svg></button>
+            <h1 className={"h1 col-lg-2 col p-0"} id={"logo"}>    <Link to={"/"}>
 
-        <h1 className="col-lg-6 col p-2 text-center">{
+    <img style={{width:"100%",height:"70px"}} src={useHref("images/logo.png")} alt="logo"/>
+  </Link></h1>
+
+        <h2 className="col-lg-7 col pt-2 d-none d-lg-block  h1 fs-1 text-center" style={{fontStyle:"italic",fontWeight:"bold"}}>{
             location.pathname.toString().slice(1,16) === "ListeAbonnement" ?
                 "Liste des abonnments"
-                :
-            location.pathname.toString().slice(1)
+                :location.pathname.toString().slice(1) === "Employes"?
+                    "Les employés"
+                :location.pathname.toString() === "/" ?
+                    "Gym management"
+                    :
+          "Les "+  location.pathname.toString().slice(1)
 
-        }</h1>
-        <div className="col-lg-6 col ">
+        }</h2>
+        <div className="col-lg-3 col ">
             <div id={"listHeader"} className="row d-flex justify-content-end ">
-                <button className="col-3  btn  text-center " >
+                <button className={"col-3  btn  text-center  "+
+                noitifcation.length?
+                    "text-danger btn"
+                :" btn"
+                }
+                        onClick={()=>{prop.setShowNotification();change()}}  style={{position:"relative"}}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
                      className="bi bi-bell-fill" viewBox="0 0 16 16">
                     <path
                         d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
                 </svg>
+                    {
+                        noitifcation.length?
+                            <div className={"text-danger bg-white"} style={{position:"absolute" , top:"20px",right:"10px",width:"20px",height:"20px",borderRadius:"50%",fontSize:"10px"}}> {prop.notification.length}</div>
+                            :null
+                    }
+
                 </button>
 
                 <button onClick={()=> navigate(-1)} className="col-3 btn   text-center " >

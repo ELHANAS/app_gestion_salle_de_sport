@@ -1,16 +1,20 @@
 import React, {useEffect, useState} from "react";
 import { Link } from "react-router-dom";
-import AuthUser from "@/compenent/authUser";
 import axios from "axios";
 
 export default function Participant(prop){
     const [participant, setParticipant] = useState(null) ;
     const [participants, setParticipants] =useState([]);
     const [search,setSearch] = useState();
+
     function Search(){
         if (search){
             axios.post('/api/member/search',{'search' : search}).then(
-                (res) => setParticipants(res.data)
+                (res) => {
+                    setParticipants(res.data);
+
+
+                }
             )
         }else{
 
@@ -18,7 +22,14 @@ export default function Participant(prop){
     }
 useEffect(()=>{
     axios.post('/api/participants').then(
-        (res) => setParticipants(res.data.membre)
+        (res) =>{
+            setParticipants(res.data.membre);
+            const  noAcfif = res.data.membre.filter((p)=> p.etat === 0);
+
+            noAcfif.forEach(paritipant =>{
+                console.log(paritipant);
+            })
+        }
     )
 },[])
     function getParticipant(id){
@@ -28,7 +39,7 @@ useEffect(()=>{
 
     return (
         <div >
-            <div id={"secondHeader"} className="row p-2 d-flex  justify-content-lg-start">
+            <div id={"secondHeader"} className="row p-2 d-flex  justify-content-between">
                 <div className="col-lg-3  col">
                     <div className="input-group w-100">
                         <div id="search-autocomplete" className="form-outline">
@@ -43,7 +54,7 @@ useEffect(()=>{
                         </button>
                     </div>
                 </div>
-                <div className={"col col-lg-3"}>
+                <div className={"col col-lg-3 text-end"}>
                     <button onClick={()=> prop.ajouterParticipant("participant")} to="#"  className="btn  btn-dark ">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-person-fill-add" viewBox="0 0 16 16">
                             <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0Zm-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
@@ -86,13 +97,19 @@ function ListeParticipant(prop){
                 </tr>
                 </thead>
                 <tbody >
-                {prop.participants.map((prt) => {
+                {prop.participants.length ?prop.participants.map((prt) => {
                     return <tr onClick={()=> prop.showPartcipant(prt.id)} key={prt.id}>
                         <td>{prt.id}</td>
                         <td>{prt.name}</td>
                         <td>{prt.dateNss}</td>
                     </tr>
-                })}
+                }):
+                    <tr  >
+                    <td colSpan={"3"} >
+                        <div className={"text-center d-flex justify-content-center p-3"}>
+                            <div className="spinner-border mx-2"></div> Chargement..
+                        </div>
+                </td> </tr>}
                 </tbody>
             </table>
         </div>
@@ -106,12 +123,16 @@ function Profil(prop){
             {prop.participant ?
                 <div  className="profil">
                     <div className="card text-center" style={{width: '100%'}}>
-                        <div className={"text-center"}>
+                        <div style={{position:"relative"}} className={"text-center"}>
                             {prop.participant.photo ?
                                 <img className="card-img-top "  style={{width:"200px",height:"200px"}} src={"users/" + prop.participant.photo } alt="Card image cap" />
                                 :
                             <img className="card-img-top "  style={{width:"200px",height:"200px"}} src="users/user.jpg" alt="Card image cap" />
                             }
+                            <div style={{width:"30px",height:"30px",position:"absolute",top:"10px",right:"10px"}}
+                                 className={prop.participant.etat=== 1?  "bg-success text-center" :prop.participant.etat=== 2? "bg-primary text-center"  :  "bg-danger text-center"}>
+
+                            </div>
                         </div>
                         <ul className="list-group list-group-flush">
                             <li className="list-group-item">{prop.participant.name}</li>
@@ -127,14 +148,8 @@ function Profil(prop){
                 </div>
                 :     <div  className="profil">
 
-                    <div className="card" style={{width: '100%'}}>
-                        <div className={"text-center"}>
-                        <img className="card-img-top " style={{width:"100px"}} src="users/user.jpg" alt="Card image cap" />
-                        </div>
-                            <ul className="list-group list-group-flush">
-                                <li className="list-group-item">Aucun profil selected</li>
-
-                            </ul>
+                    <div style={{width:"100%",height:"100%"}} className={"   d-flex justify-content-center align-content-md-center"}>
+                        <img  src='images/GYM.png' style={{width:"100%",margin:"auto auto" }} alt="logo"/>
 
                     </div>
                 </div>

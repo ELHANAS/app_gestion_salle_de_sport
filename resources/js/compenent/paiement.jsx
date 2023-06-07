@@ -50,7 +50,7 @@ function  ListePaieiement(prop){
             </thead>
             <tbody>
             {
-                prop.paiements.map((pay)=>{
+                prop.paiements.length? prop.paiements.map((pay)=>{
                     return <tr key={pay.codeP}>
                         <td>
                             <ul>
@@ -66,7 +66,13 @@ function  ListePaieiement(prop){
                         <td>{pay.montantRestant} dh</td>
                         <td>{pay.datePaiement}</td>
                     </tr>
-                })
+                }) :
+                    <tr  >
+                        <td colSpan={"4"} >
+                            <div className={"text-center d-flex justify-content-center p-3"}>
+                                <div className="spinner-border mx-2"></div> Chargement..
+                            </div>
+                        </td> </tr>
             }
             </tbody>
         </table>

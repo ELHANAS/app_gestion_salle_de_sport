@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import "./login.css"
 import AuthUser from './authUser';
+import {useHref} from "react-router-dom";
 export default function Login(){
     const {http,setToken} = AuthUser();
     const [email,setEmail] = useState('');
@@ -17,12 +18,19 @@ export default function Login(){
             e.preventDefault() ;
     }
     return (
-        <div style={{position:"fixed",top:"0",bottom:"0",left:"0",right:"0"}}>
+        <div  style={{position:"fixed",top:"0",bottom:"0",left:"0",right:"0"}}>
 
         <div  className='form-box'>
 
-            <h1 className="h1 text-center mb-5">Connexion</h1>
-                 <form onSubmit={(event)=>submite(event)}>
+            <h1 className="h1 text-center  mb-2">
+                <img style={{width:"100px"}} src={useHref('images/1685796041675.png')} alt="logo"/> <br/>
+                <small className={"h1"} style={{color:"#ef9c57"}}>B</small>ienvenue !
+
+
+            </h1>
+
+
+                 <form  style={{position:"absolute",bottom:"40px",right:"50px",left:"50px"}} onSubmit={(event)=>submite(event)}>
                      <label htmlFor={"email"}>Email :</label>
                         <input type="email" placeholder="Email Address"
                                id={"email"}
@@ -43,10 +51,10 @@ export default function Login(){
                              />
 
 
-                            <div  style={{position:"absolute",bottom:"0",right:"50px",left:"50px"}} className=" boreder mb-0">
+                            <div  className=" boreder mb-0">
 
                                     <button  type="submit" className="btn" >
-                                    connexion
+                                        connecté
                                     </button>
 
                             </div>

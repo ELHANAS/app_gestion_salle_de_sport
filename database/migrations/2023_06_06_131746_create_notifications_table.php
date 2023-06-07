@@ -11,14 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('membres', function (Blueprint $table) {
+        Schema::create('notifications', function (Blueprint $table) {
             $table->id();
-            $table->string("name");
-            $table->string("email")->nullable();
-            $table->string("tel")->nullable();
-            $table->date("dateNss");
-            $table->string("photo")->nullable();
-            $table->integer('etat')->default(0) ;
+            $table->integer("idMembre");
+            $table->text('message');
             $table->timestamps();
         });
     }
@@ -28,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('membres');
+        Schema::dropIfExists('notifications');
     }
 };

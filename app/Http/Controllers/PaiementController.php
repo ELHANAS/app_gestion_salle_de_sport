@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Abonnement;
+use App\Models\Membre;
 use App\Models\Paiement;
 use Illuminate\Http\Request;
 
@@ -39,7 +40,17 @@ class PaiementController extends Controller
 return "saved" ;
 
     }
+public  function  getPaiementParYear($year){
+    $paiement = Paiement::getPaiementParYear($year);
+    $membres = Membre::getMembreParYear($year);
+    return ['paiements'=> $paiement , "membres"=> $membres] ;
+}
 
+function  getPaiementParMonth($month){
+        $paiements = Paiement::getPaiementParMonth($month);
+    $membres = Membre::getMembreParMois($month) ;
+        return ['paiements' => $paiements , 'membres' => $membres] ;
+}
     /**
      * Display the specified resource.
      */

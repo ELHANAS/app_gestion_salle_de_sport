@@ -1,26 +1,31 @@
 import React, {useEffect, useState} from "react";
 import AuthUser from "./authUser";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+import axios from "axios";
 
 export  function Profil(){
 
     const {user,httpData} = AuthUser() ;
-
-    const [image,setImage] = useState('');
-
+const  navigate = useNavigate();
+    const [me,setMe] = useState('');
     function sendPhoto(e){
 
         httpData.post('/user/changePhoto/'+user.id,{photo:e.target.files[0]}).then(
-            (res) => console.log(res.data)
+            (res) => navigate(0)
         );
 
 
     }
+    useEffect(()=>{
+        axios.post(`/api/user/${user.id}`).then(
+            (res)=> setMe(res.data)
+        )
+    })
 
     return(
         <div style={{overflow:"auto"}}>
         {
-            user ?
+            me ?
 <div>
 
                 <div className={"row"}>
@@ -28,8 +33,8 @@ export  function Profil(){
                         <div className="card" style={{width: "100%"}}>
                             <div style={{position:"relative"}} className={"p-3"}>
                             {
-                                user.photo ?
-                            <img className="card-img-top" src={"users/" + user.photo}   style={{borderRadius:"10px",width:"50%",height:"50%",marginLeft:"25%"}}  alt="Card image cap" />
+                                me.photo ?
+                            <img className="card-img-top" src={"users/" + me.photo}   style={{borderRadius:"10px",width:"50%",height:"50%",marginLeft:"25%"}}  alt="Card image cap" />
                                 : <img className="card-img-top" src={"users/user.JPG"}  style={{borderRadius:"10px",width:"50%",height:"50%",marginLeft:"25%"}} alt="Card image cap" />
                                 }
                                 <div>
@@ -45,24 +50,21 @@ export  function Profil(){
                                     </label>
                                     <input onChange={(event) => {
                                         sendPhoto(event);
-                                        setImage(e.target.files[0]);
+
                                     }} hidden type={"file"} name={"image"} id={"image"}/>
                                 </div>
                             </div>
 
                                 <div className="card-body">
-                                    <h3 className="card-title">{user.name}</h3>
+                                    <h3 className="card-title">{me.name}</h3>
                                     <h4>{user.fonction}</h4>
                                 </div>
                                 <ul className="list-group list-group-flush">
-                                    <li className="list-group-item">{user.email}</li>
-                                    <li className="list-group-item">{user.cin}</li>
-                                    <li className="list-group-item">{user.salaire} DH</li>
+                                    <li className="list-group-item">{me.email}</li>
+                                    <li className="list-group-item">{me.cin}</li>
+                                    <li className="list-group-item">{me.salaire} DH</li>
                                 </ul>
-                                <div className="card-body">
-                                    <Link to="#" className="card-link">Card link</Link>
-                                    <Link to="#" className="card-link">Another link</Link>
-                                </div>
+
                         </div>
                             </div>
                 <div className={"col-lg-6"}></div>

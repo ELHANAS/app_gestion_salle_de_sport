@@ -70,7 +70,7 @@ export default function AjouterAbonnement (prop){
                         </div>
 
 
-                        <div className="row border " style={{position:"absolute",width:"90%", bottom:"5px"}}>
+                        <div className="row  " style={{position:"absolute",width:"90%", bottom:"5px"}}>
                             <div className="col">
                                 <button style={{color:"white",background:"#ee9b57"}} className="btn  w-100">
                                     Annuler

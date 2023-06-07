@@ -29,7 +29,7 @@ const {httpData} = AuthUser() ;
                 setName("");
                 setEmail("");
                 setImage(null);
-                navigate(0)
+                navigate('/participant')
             }
         ).catch(
             (err) => setMessage(err.data)
@@ -107,7 +107,7 @@ const {httpData} = AuthUser() ;
                             </div>
 
 
-                    <div className="row border " style={{position:"absolute",width:"90%", bottom:"5px"}}>
+                    <div className="row  " style={{position:"absolute",width:"90%", bottom:"5px"}}>
                         <div className="col">
                             <button  onClick={Annuler} style={{color:"white",background:"#ee9b57"}} className="btn  w-100">
                                 Annuler

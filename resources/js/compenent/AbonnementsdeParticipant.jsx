@@ -4,22 +4,21 @@ import axios from "axios";
 
 
 export  default function AbonnementsdeParticipant(prop){
-    const idA = useParams() ;
-    const [id,setId] = useState(parseInt(idA.id));
+    const {id} = useParams() ;
+
+
 const [participant,setParticipant] = useState('')
     const [abonnemets , setAbonnemets] = useState([]) ;
-
     useEffect(()=>{
 
-       axios.post('/api/getAbonnement/' + id).then(
+       axios.post('/api/getAbonnement/' +parseInt(id) ).then(
            (res)=> {
                setAbonnemets(res.data.abonnements);
                setParticipant(res.data.participant);
-               console.log(res.data)
            }
        )
 
-    },[]) ;
+    },[id]) ;
     return (<div>
         <div id={"secondHeader"} className="row p-2 d-flex  justify-content-between">
             <div className={"col col-lg-4"}>
@@ -28,7 +27,7 @@ const [participant,setParticipant] = useState('')
             <div className={"col col-lg-4 text-end"}>
                 <button onClick={()=>prop.ajouterAbonnement(id)}  className="btn  ">
 
-                    <span className={"ms-3"}> Ajouter  Abonnement</span>  </button>
+                    <span className={"ms-3"}>+ Ajouter  Abonnement</span>  </button>
             </div>
 
 
