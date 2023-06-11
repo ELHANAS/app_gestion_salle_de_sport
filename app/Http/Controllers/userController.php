@@ -114,7 +114,12 @@ class userController extends Controller
         return[
             'users' => count(User::all()),
             'participant' => count(Membre::all()) ,
-            'notification' => Notification::all()
+            'membresActif' => count( Membre::getMembresActif()),
+            'membresNoActif' =>count(Membre::getMembresNoActif()),
+            'membresNouvau' =>count(Membre::getMembresNouveau() ),
+            "abonnementPaye" => count(Abonnement::abonnementPaye()),
+            "abonnementNonPaye" => count(Abonnement::abonnementNonPaye()),
+            "abonnementEncours" => count(Abonnement::abonnementEncours())
         ]  ;
     }
 

@@ -56,4 +56,16 @@ public static  function  getPaiements($id){
 
         return $paiement ;
 }
+    public  static  function abonnementNonPaye(){
+        $abonnement = Abonnement::where('etat',0)->get();
+        return $abonnement ;
+    }
+    public  static  function abonnementPaye(){
+        $abonnement = Abonnement::where('etat',2)->get();
+        return $abonnement ;
+    }
+    public  static  function abonnementEncours(){
+        $abonnement = Abonnement::where('etat',1)->get();
+        return $abonnement ;
+    }
 }

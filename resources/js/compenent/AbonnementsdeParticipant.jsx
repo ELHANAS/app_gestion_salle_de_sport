@@ -9,6 +9,7 @@ export  default function AbonnementsdeParticipant(prop){
 
 const [participant,setParticipant] = useState('')
     const [abonnemets , setAbonnemets] = useState([]) ;
+
     useEffect(()=>{
 
        axios.post('/api/getAbonnement/' +parseInt(id) ).then(
@@ -18,23 +19,25 @@ const [participant,setParticipant] = useState('')
            }
        )
 
-    },[id]) ;
+    },[id,prop.random]) ;
     return (<div>
         <div id={"secondHeader"} className="row p-2 d-flex  justify-content-between">
-            <div className={"col col-lg-4"}>
+            <div className={"col col-lg-5"}>
                 <h2 style={{borderLeft:"6px solid #ee9b57"}} className={"text-start ps-2"}>{participant.name}</h2>
             </div>
-            <div className={"col col-lg-4 text-end"}>
+            <div className={"col col-lg-5 text-end"}>
                 <button onClick={()=>prop.ajouterAbonnement(id)}  className="btn  ">
 
                     <span className={"ms-3"}>+ Ajouter  Abonnement</span>  </button>
+
             </div>
+
 
 
         </div>
         <div style={{height:"90%"}}>
-        {
-            abonnemets.length ?
+
+
                 <div>
                     <table className={"table table-bordered"}>
                         <thead>
@@ -49,7 +52,7 @@ const [participant,setParticipant] = useState('')
                         </thead>
                         <tbody>
                     {
-                        abonnemets.map((abn) => {
+                        abonnemets.length ?  abonnemets.map((abn) => {
 
                             return <tr key={abn.codeA}>
 
@@ -69,13 +72,15 @@ const [participant,setParticipant] = useState('')
                                     </button>
                                 </td>
                             </tr>
-                        })
+                        }):
+                            <tr>
+                                <td className={"text-center"} colSpan={"4"}>Aucun abonnement</td>
+                            </tr>
                     }
                         </tbody>
                     </table>
                 </div>
-                :null
-        }
+
         </div>
     </div>)
 }

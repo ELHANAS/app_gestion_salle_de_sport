@@ -8,11 +8,14 @@ export  function Profil(){
     const {user,httpData} = AuthUser() ;
 const  navigate = useNavigate();
     const [me,setMe] = useState('');
+    const [random,setRandom] = useState('');
+
     function sendPhoto(e){
 
         httpData.post('/user/changePhoto/'+user.id,{photo:e.target.files[0]}).then(
-            (res) => navigate(0)
-        );
+            ()=> setRandom(Math.random() *10)
+        )
+
 
 
     }
@@ -23,13 +26,18 @@ const  navigate = useNavigate();
     })
 
     return(
-        <div style={{overflow:"auto"}}>
+       <div>
+        <div id={"secondHeader"}  className="row p-2 d-flex  justify-content-between">
+
+        </div>
+        <div style={{overflow:"auto",height:"90%",width:"100%"}}>
+
         {
             me ?
-<div>
+<div className={"w-100"}>
 
-                <div className={"row"}>
-                    <div className={"col-lg-4"}>
+                <div className={"row w-100 border "}>
+                    <div className={"col-lg-4 col-md-7 col-12  border"} >
                         <div className="card" style={{width: "100%"}}>
                             <div style={{position:"relative"}} className={"p-3"}>
                             {
@@ -70,8 +78,13 @@ const  navigate = useNavigate();
                 <div className={"col-lg-6"}></div>
             </div>
 </div>
-            :   <h2 className={"text-center"}>Loading..</h2>
+            :   <h2 className={"text-center h6"}>
+
+                        <div className="spinner-border mx-2"></div> Chargement..
+
+                </h2>
         }
 </div>
+       </div>
 )
 }

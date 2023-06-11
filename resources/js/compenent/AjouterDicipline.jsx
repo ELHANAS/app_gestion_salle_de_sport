@@ -20,7 +20,11 @@ export default function AjouterDiscipline(prop){
                 setMessage(res.data);
                 setLibelle("");
                 setPrix("");
-                navigate(0)
+                setTimeout(function() {
+
+                    setMessage('')
+
+                }, 9000);
             }
 
         )
@@ -42,7 +46,7 @@ export default function AjouterDiscipline(prop){
             </button>
             <div >
                 {message?
-                    <p className={"text-center border bg-success border-success p-1"} style={{position:"absolute",width:"90%",color:"white", top:"5px"}}>{message}</p>
+                    <p className={"text-center  fs-5  border-bottom  text-success border-success py-1"} style={{position:"absolute",width:"90%",left:"5%", top:"5px"}}>{message}</p>
                     :null
                 }
                 <h2 className="h2 text-center my-4">Ajouter un discipline</h2>

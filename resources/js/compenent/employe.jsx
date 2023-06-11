@@ -9,13 +9,14 @@ export default function Employe(prop){
     const [employe , setEmploye] = useState(null);
     const [employes , setEmployes]  = useState([]);
     const [search,setSearch] = useState(null);
+
     function Search(){
         if (search){
             axios.post('/api/user/search',{'search' : search}).then(
                 (res) => setEmployes(res.data)
             )
         }else{
-            navigate(0)
+            navigate('/Employes')
         }
     }
     useEffect(()=>{
@@ -23,7 +24,7 @@ export default function Employe(prop){
             (res) => setEmployes(res.data.user)
 
     )
-    },[])
+    },[prop.random])
 function getEmploye(id){
     const  emp = employes.find((emp) => emp.id === id);
     setEmploye(emp);
@@ -35,7 +36,8 @@ function getEmploye(id){
                 <div className="col-lg-3  col">
                     <div className="input-group w-100">
                         <div id="search-autocomplete" className="form-outline">
-                            <input type="search" id="form1" onChange={(event)=> setSearch(event.target.value)} placeholder="rechercher..." className="form-control"/>
+                            <input type="search" id="form1" onChange={(event)=> setSearch(event.target.value)}
+                                   placeholder="rechercher..." className="form-control"/>
                         </div>
                         <button type="button"  onClick={Search}  className="btn ">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -52,7 +54,8 @@ function getEmploye(id){
                             <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0Zm-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
                             <path d="M2 13c0 1 1 1 1 1h5.256A4.493 4.493 0 0 1 8 12.5a4.49 4.49 0 0 1 1.544-3.393C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4Z"/>
                         </svg>
-                        <span className={"ms-3"}> Ajouter Emlpyé</span>  </button>
+                        <span className={"ms-3 d-none d-lg-inline"}> Ajouter Emlpyé</span>  </button>
+
                 </div>
 
             </div>
@@ -82,7 +85,7 @@ function ListeEmlpoye(prop){
             <table className="table table-hover table-bordered " >
                 <thead>
                     <tr>
-                       <th>id</th>
+                       <th>#</th>
                        <th>Nom & prénom</th>
                        <th>Fonction</th>
                     </tr>

@@ -29,7 +29,11 @@ const {httpData} = AuthUser() ;
                 setName("");
                 setEmail("");
                 setImage(null);
-                navigate('/participant')
+                setTimeout(function() {
+
+                    setMessage('')
+
+                }, 9000);
             }
         ).catch(
             (err) => setMessage(err.data)
@@ -45,7 +49,7 @@ const {httpData} = AuthUser() ;
         setImage(null);
     }
     return(
-        <div style={{position:"relative",height:"100%",width:"100%"}}  className='container p-lg-3  px-lg-5'>
+        <div style={{position:"relative",height:"100%",width:"100%"}}  className='container p-0'>
             <button className="btn"  style={{position:"absolute",top:"0",right:"0"}} onClick={()=>store.none("none")}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-x"
                      viewBox="0 0 16 16">
@@ -54,15 +58,17 @@ const {httpData} = AuthUser() ;
                 </svg>
             </button>
 
-            <div >
+
                 {message?
                     <p className={"text-center border bg-success border-success p-1"} style={{position:"absolute",width:"90%",color:"white", top:"5px"}}>{message}</p>
                     :null
                 }
-                <h2 className="h2 text-center my-4">Ajouter  un participant</h2>
-                <form >
+                <h2 className="h2 text-center py-4" style={{height:"10%"}}>Ajouter  un participant</h2>
+                <form className={"p-0"}>
+                    <div style={{overflow:"auto",position:"absolute",height:"80%",top:"50px",width:"100%"}} className={" p-3"}>
+                        <div className={"p-2 w-100"} >
 
-                        <div className="form-group  py-2 row">
+                        <div className=" mt-3 row">
                             <label className="col-lg-4 col" htmlFor="name">Name : </label>
                             <input type="text" className="form-control  col" id="name"
                                    name="name" placeholder="entrer your  Name ..."
@@ -70,7 +76,7 @@ const {httpData} = AuthUser() ;
                                    onChange={(event)=> setName(event.target.value)}
                             />
                         </div>
-                        <div className="form-group py-3 row mt-3">
+                        <div className="  row mt-3">
                             <label htmlFor="dat_naiss" className="col-lg-4 col"> Email :</label>
                             <input type="email" className="form-control col" id="email" name="emailparticipant"
                                    placeholder="entrer your email"
@@ -79,14 +85,14 @@ const {httpData} = AuthUser() ;
 
 
                         </div>
-                        <div className="form-group row py-3">
+                        <div className=" row py-3">
                             <label className="form-label col-lg-4 col" htmlFor="tele">Telephone
                             :</label>
                             <input type="tel" className="form-control col" id="tel" name="tel"
                                    onChange={(event)=> setTel(event.target.value)}
                             value={tel}/>
                         </div>
-                        <div className="form-group row py-3">
+                        <div className=" row mt-3">
                             <label htmlFor="dat_naiss" className="col-lg-4 col">Date de Naissance :</label>
                             <input type="date" className="form-control col" id="dat_naiss" name="dat_naiss"
                                    placeholder="entrer your dat_naiss"
@@ -98,7 +104,7 @@ const {httpData} = AuthUser() ;
 
 
 
-                            <div className="form-group row py-3">
+                            <div className=" row mt-3">
                                 <label htmlFor="photo" className="col-lg-4 col">Photo :</label>
                                 <input type="file" className="form-control col" id="photo" name="photo"
                                        onChange={(event) => setImage(event.target.files[0])}
@@ -106,8 +112,9 @@ const {httpData} = AuthUser() ;
 
                             </div>
 
-
-                    <div className="row  " style={{position:"absolute",width:"90%", bottom:"5px"}}>
+                        </div>
+                    </div>
+                    <div className="row  p-0" style={{position:"absolute",width:"90%",height:"10%", bottom:"10px",right:"5%"}}>
                         <div className="col">
                             <button  onClick={Annuler} style={{color:"white",background:"#ee9b57"}} className="btn  w-100">
                                 Annuler
@@ -123,7 +130,7 @@ const {httpData} = AuthUser() ;
                         </div>
                     </div>
                 </form>
-            </div>
+
         </div>
     )
 }

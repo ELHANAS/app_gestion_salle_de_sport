@@ -47,11 +47,16 @@ Route::post('/participant/{membre}', [\App\Http\Controllers\MembreController::cl
 Route::post('/getAbonnement/{id}', [\App\Http\Controllers\MembreController::class , 'getAbonnement']);
 Route::post('/member/search', [\App\Http\Controllers\MembreController::class , 'search']);
 Route::post('/notification/destory/{notification}', [\App\Http\Controllers\MembreController::class , 'destroyNotification']);
+Route::post('/notifications', [\App\Http\Controllers\MembreController::class , 'getNofification']);
+
+
 
 //DISCIPLINE
 Route::post('/disciplines', [\App\Http\Controllers\DisciplineController::class , 'index']);
 Route::post('/ajouteDiscipline', [\App\Http\Controllers\DisciplineController::class , 'store']);
 Route::post('/disciplineDetail/{discipline}', [\App\Http\Controllers\DisciplineController::class , 'show']);
+Route::post('/discipline/participant', [\App\Http\Controllers\DisciplineController::class , 'getDisciplinesParticipant']);
+
 
 
 

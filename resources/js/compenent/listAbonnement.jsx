@@ -19,7 +19,7 @@ export  default function Abonnement(prop){
 
     return(
         <div>
-            <div id={"secondHeader"} className="row p-2 d-flex  justify-content-lg-start">
+            <div id={"secondHeader"} className="row p-2 d-flex  justify-content-between">
                 <div className="col-lg-3  col">
                     <div className="input-group w-100">
                         <div id="search-autocomplete" className="form-outline">
@@ -34,15 +34,7 @@ export  default function Abonnement(prop){
                         </button>
                     </div>
                 </div>
-                <div className={"col col-lg-3"}>
-                    <Link to={"/participant"} role="button"  className="btn btn-dark" s>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                             className="bi bi-plus" viewBox="0 0 16 16">
-                            <path
-                                d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-                        </svg>
-                        Ajouter abonnement</Link>
-                </div>
+
                 <div className="col ">
                     <div className="input-group">
                         <button   className=" btn btn-dark">jour</button>
@@ -61,7 +53,19 @@ export  default function Abonnement(prop){
                         <input type="number" className="form-control" min="2010"  />
                     </div>
                 </div>
+                <div className={"col col-lg-3"}>
 
+                    <Link to={"/participants"}    >
+                        <button className={"btn"}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                             className="bi bi-plus" viewBox="0 0 16 16">
+                            <path
+                                d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                        </svg>
+                        Ajouter abonnement
+                        </button>
+                        </Link>
+                </div>
             </div>
 
             <div className="row  " style={{height:"90%"}}>
@@ -83,7 +87,7 @@ function ListAbonnemt(prop){
             <table className="table table-bordered">
                 <thead>
                 <tr>
-                <th>code</th>
+                <th>#</th>
                 <th>membre</th>
                     <th>discipline</th>
                 <th>date création</th>

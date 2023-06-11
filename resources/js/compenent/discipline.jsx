@@ -11,7 +11,7 @@ export default function Discipline(prop){
         axios.post('/api/disciplines').then(
             (res) => setDisciplines(res.data.discipline)
         )
-    },[])
+    },[prop.random])
     function  getDiscipline(id){
         const detail = Disciplines.find((disc) =>  disc.codeD === id)  ;
         setDetailDiscipline(detail) ;
@@ -64,7 +64,7 @@ function ListDiscipline(prop){
             <table className="table ">
                 <thead>
                 <tr>
-                    <th>id</th>
+                    <th>#</th>
                     <th>libélle</th>
                     <th>Prix</th>
 

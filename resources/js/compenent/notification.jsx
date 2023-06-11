@@ -1,13 +1,20 @@
-import React from "react";
-import {Link, useNavigate} from "react-router-dom";
+import React, {useEffect, useState} from "react";
+import {Link} from "react-router-dom";
 
 import axios from "axios";
 
 export  default  function Notification(prop){
-const  navigate = useNavigate() ;
+const  [notification , setNotification] = useState([])
+    console.log("notification:" )
+    console.log(notification )
+useEffect(()=>{
+    setNotification(prop.notification )
+},[prop.notification])
 function  supprimerNot(id){
     axios.post("/api/notification/destory/"+ id).then(
-        ()=> navigate(0)
+        ()=> {
+            setNotification(notification.filter((not) => not.id !== id))
+        }
     )
 }
     return (
@@ -15,9 +22,9 @@ function  supprimerNot(id){
 
             <p className={"border border-bottom p-2"}style={{background:"#f9a25e"}}>notification</p>
             {
-                prop.notification.length?
+              notification.length?
                     <div  className={" w-100 bg-primary  text-end"}>
-                        {    prop.notification.map((not) => {
+                        {   notification.map((not) => {
                             return <div style={{background:'linear-gradient(to top right, #f9a25e,white)'}} className={"row w-100 border-bottom m-0 "} key={not.id}>
                                 <Link role={"button"} className={"col-10  p-3 "} onClick={()=>{prop.none()}} to={'/ListeAbonnement/' +not.idMembre} >{not.message}
                                 </Link>  <button className={"col-2 btn "} onClick={()=> supprimerNot(not.id)}>

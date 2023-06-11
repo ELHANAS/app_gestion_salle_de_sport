@@ -31,7 +31,7 @@ useEffect(()=>{
             })
         }
     )
-},[])
+},[prop.random])
     function getParticipant(id){
         const part = participants.find((part) => part.id === id) ;
         setParticipant(part) ;
@@ -91,7 +91,7 @@ function ListeParticipant(prop){
             <table className="table table-bordered">
                 <thead>
                 <tr>
-                    <th>id</th>
+                    <th>#</th>
                     <th>Nom & prénom</th>
                     <th>Date de naissance</th>
                 </tr>
@@ -130,7 +130,7 @@ function Profil(prop){
                             <img className="card-img-top "  style={{width:"200px",height:"200px"}} src="users/user.jpg" alt="Card image cap" />
                             }
                             <div style={{width:"30px",height:"30px",position:"absolute",top:"10px",right:"10px"}}
-                                 className={prop.participant.etat=== 1?  "bg-success text-center" :prop.participant.etat=== 2? "bg-primary text-center"  :  "bg-danger text-center"}>
+                                 className={prop.participant.etat=== 1?  "bg-success text-center" :prop.participant.etat=== 2? "bg-danger text-center"  :  "bg-light text-center"}>
 
                             </div>
                         </div>

@@ -70,4 +70,7 @@ class DisciplineController extends Controller
     {
         //
     }
+    public  function  getDisciplinesParticipant(){
+        return Discipline::getDisciplinesParticipant() ;
+    }
 }

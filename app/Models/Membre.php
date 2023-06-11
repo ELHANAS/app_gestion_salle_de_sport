@@ -107,4 +107,18 @@ public  static  function  getMembers(){
 
     }
     }
+
+    public static  function getMembresActif(){
+    $membress = Membre::where('etat',1)->get() ;
+    return $membress ;
+    }
+    public static  function getMembresNoActif(){
+        $membress = Membre::where('etat',2)->get() ;
+        return $membress ;
+    }
+    public static  function getMembresNouveau(){
+        $membress = Membre::where('etat',0)->get() ;
+        return $membress ;
+    }
+
 }

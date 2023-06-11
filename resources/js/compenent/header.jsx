@@ -9,38 +9,39 @@ const  [noitifcation , setNotification] = useState(prop.notification)
 function  change(){
     setNotification([]);
 }
+useEffect(()=>{
+    setNotification(prop.notification);
+},[prop.notification])
     return (
         <div id="header">
         <div  className="  row " >
-            <button  onClick={()=>prop.ShowMenu()}  className="border-0 d-lg-none btn d-inline-block"  >
+            <button  onClick={()=>prop.ShowMenu()}  className="border-0 d-lg-none col-1 btn d-inline-block"  >
                 <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
                      className="bi bi-list" viewBox="0 0 16 16">
                     <path fillRule="evenodd"
                           d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
                 </svg></button>
-            <h1 className={"h1 col-lg-2 col p-0"} id={"logo"}>    <Link to={"/"}>
+            <h1 className={"h1 col-lg-3 col "} id={"logo"}>    <Link to={"/"}>
 
-    <img style={{width:"100%",height:"70px"}} src={useHref("images/logo.png")} alt="logo"/>
+    <img className={"w-50"} src={useHref("images/logo.png")} alt="logo"/>
   </Link></h1>
 
-        <h2 className="col-lg-7 col pt-2 d-none d-lg-block  h1 fs-1 text-center" style={{fontStyle:"italic",fontWeight:"bold"}}>{
+        <h2 className="col-lg-6 col pt-2 d-none d-lg-block  h1 fs-1 text-center" style={{fontStyle:"italic",fontWeight:"bold"}}>{
             location.pathname.toString().slice(1,16) === "ListeAbonnement" ?
                 "Liste des abonnments"
                 :location.pathname.toString().slice(1) === "Employes"?
                     "Les employés"
                 :location.pathname.toString() === "/" ?
                     "Gym management"
-                    :
+            :location.pathname.toString() === "/profil" ?
+            "Profil"
+            :
           "Les "+  location.pathname.toString().slice(1)
 
         }</h2>
-        <div className="col-lg-3 col ">
+        <div className="col-lg-3  col-6 ">
             <div id={"listHeader"} className="row d-flex justify-content-end ">
-                <button className={"col-3  btn  text-center  "+
-                noitifcation.length?
-                    "text-danger btn"
-                :" btn"
-                }
+                <button className={"col-3  btn  text-center  "}
                         onClick={()=>{prop.setShowNotification();change()}}  style={{position:"relative"}}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
                      className="bi bi-bell-fill" viewBox="0 0 16 16">
@@ -49,7 +50,7 @@ function  change(){
                 </svg>
                     {
                         noitifcation.length?
-                            <div className={"text-danger bg-white"} style={{position:"absolute" , top:"20px",right:"10px",width:"20px",height:"20px",borderRadius:"50%",fontSize:"10px"}}> {prop.notification.length}</div>
+                            <div className={"text-white fw-bold bg-danger"} style={{position:"absolute" , top:"20px",right:"10px",width:"20px",height:"20px",borderRadius:"50%",fontSize:"10px"}}> {prop.notification.length}</div>
                             :null
                     }
 

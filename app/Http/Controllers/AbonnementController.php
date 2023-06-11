@@ -14,6 +14,8 @@ class AbonnementController extends Controller
      */
     public function index()
     {
+        Abonnement::changeEtat();
+        Membre::changeEtat();
         return [ "Abonnement" => Abonnement::getAbonnement()] ;
     }
 
@@ -30,13 +32,47 @@ class AbonnementController extends Controller
      */
     public function store(Request $request)
     {
+        $abonnementsDeM = Membre::getAbonnement($request->idMembre ) ;
+        $nams  = [] ;
+        $etat = [] ;
+        $dure = [];
+        foreach ( $abonnementsDeM as $abon){
+            if($abon->codeD == $request->idDiscipline){
+                array_push($nams , $abon->codeD) ;
+            }
+
+        }
+
+        foreach ( $abonnementsDeM as $abon){
+            if($abon->codeD == $request->idDiscipline) {
+                array_push($etat, $abon->etat);
+            }
+        }
+        foreach ( $abonnementsDeM as $abon){
+            if($abon->codeD == $request->idDiscipline) {
+                array_push($dure, $abon->duree);
+            }
+        }
+        if(count($nams)){
+
+            if( in_array(1,$etat) ||  in_array(1,$etat)){
+                return response()->json(["message" => "Cet abonnement existe déjà "  , "style" => 'danger']) ;
+
+            }elseif(in_array($request->duree , $dure)) {
+
+                return response()->json(["message" => "Changer la durée de l'abonnement", "style" => 'danger']) ;
+
+                }
+
+
+        };
         $abonnement = new Abonnement() ;
         $abonnement->duree = $request->duree ;
         $abonnement->idDiscipline = $request->idDiscipline ;
         $abonnement->idMembre = $request->idMembre ;
         $abonnement->dateCreationA = $request->dateCreationA ;
         $abonnement->save();
-        return "saved" ;
+        return response()->json(["message" => "l'abonnement est ajouter avec succés","nam" => $nams,"dd"=>$dure,"etat"=>$etat, "style" => 'success']) ;
     }
 
     /**

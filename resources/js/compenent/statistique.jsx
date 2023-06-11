@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from "react";
-import {Bar} from "react-chartjs-2";
+import {Bar, Pie} from "react-chartjs-2";
 import { Chart, registerables } from 'chart.js';
 import axios from "axios";
 Chart.register(...registerables);
 
-export default  function Statistique(){
+export default  function Statistique(prop){
+
 const [statistiqueLabels,setStatistiqueLabels] = useState([])
     const [statistiqueData,setStatistiqueData] = useState([])
     const [statistiqueLabelsM,setStatistiqueLabelsM] = useState([])
@@ -20,7 +21,45 @@ const [statistiqueLabels,setStatistiqueLabels] = useState([])
     const [totaleParticipant,setTotaleParticipant] = useState()
     const [max,setMax] = useState({})
     const [maxp,setMaxp] = useState({})
-    console.log(annee)
+    const [numbers , setNumbers] = useState({});
+    const [labelsDisciplin,setlabelsDisciplin] = useState();
+    const [dataDisciplin,setDataDisciplin] = useState();
+
+    const dataNumbers = {
+        labels: [
+            'Participants actif',
+            'Participants Non actif',
+            'Les nouvau participants'
+        ],
+        datasets: [{
+            label: 'statistique des paticipants',
+            data: [numbers.membresActif, numbers.membresNoActif, numbers.membresNouvau],
+            backgroundColor: [
+                'rgb(23,134,0)',
+                'rgb(231,0,0)',
+                'rgb(157,155,155)'
+            ],
+            hoverOffset: 4
+        }]
+    };
+    const dataAbonnements = {
+        labels: [
+            'Abonnements paye',
+            'Abonnements non paye',
+            'Abonnements encours'
+        ],
+        datasets: [{
+            label: 'statistique des paticipants',
+            data: [numbers.abonnementPaye, numbers.abonnementNonPaye, numbers.abonnementEncours],
+            backgroundColor: [
+                'rgb(23,134,0)',
+                'rgb(231,0,0)',
+                'rgb(157,155,155)'
+            ],
+            hoverOffset: 4,
+
+        }]
+    };
     const  data ={
         labels : statistiqueLabels,
         datasets :[
@@ -38,6 +77,17 @@ const [statistiqueLabels,setStatistiqueLabels] = useState([])
             {
                 label : "Les participants",
                 data : statistiqueDataM ,
+                backgroundColor : "BLACK"
+            },
+
+        ],
+    };
+    const  dataDiscip ={
+        labels : labelsDisciplin,
+        datasets :[
+            {
+                label : "Les discipline de sport",
+                data : dataDisciplin ,
                 backgroundColor : "BLACK"
             },
 
@@ -67,6 +117,15 @@ function  handlPeriode(e){
          setAnne(date.getFullYear())
         console.log(annee)
     }
+    useEffect(()=>{
+        axios.post('/api/discipline/participant').then(
+            (res) => {
+                console.log(res.data)
+                setlabelsDisciplin(res.data.map((d) => d.libelle));
+                setDataDisciplin(res.data.map((d)=> d.count))
+            }
+        )
+    },[]) ;
     useEffect(()=>{
         if(periode === 'annee'){
             axios.post('/api/paiementStatistique/'+ annee).then(
@@ -127,6 +186,15 @@ function  handlPeriode(e){
 
 
     },[periode,mois,annee])
+
+    useEffect(()=>{
+        axios.post('/api/numberUsers').then(
+            (res)=>{
+                setNumbers(res.data) ;
+                console.log(res.data)
+            }
+        );
+    },[])
     const getMonthName = (monthNumber) => {
         const date = new Date();
         date.setMonth(monthNumber - 1); // Les mois commencent à partir de 0, donc on soustrait 1
@@ -181,7 +249,7 @@ function  handlPeriode(e){
 
                                     </div>
                                     <div className={"col-lg-5 p-0  row"}>
-                                        <p className={"h4 text-white  col "} style={{backgroundColor:"#000000"}}><span className={"fs-6"}>Totale</span>  <br/> {totaleParticipant} pérsonne</p>
+                                        <p className={"h4 text-white  col "} style={{backgroundColor:"#000000"}}><span className={"fs-6"}>Totale</span>  <br/> {totaleParticipant} participants</p>
 
                                         {
                                             maxp.hasOwnProperty("month")?
@@ -211,7 +279,38 @@ function  handlPeriode(e){
 
                           </div>
 
+                                <div className={"row w-100 "}>
+                                    <div className="col-lg-3 col p-lg-3">
+                                        <div className={"card text-start  "} >
+                                            <Pie data={dataNumbers} />
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-3 col p-lg-3">
+                                        <div className={"card text-start  "} >
+                                            <Pie data={dataAbonnements} />
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-6 col p-lg-3">
+                                        <div className={"card text-start  "} >
+                                            <table className={'table w-100'}>
+                                               <tr >
+                                                   <th>Participants</th>
+                                                   <th>Employés</th>
+                                               </tr>
+                                                <tr>
+                                                    <td>{numbers.participant}</td>
+                                                    <td>{numbers.users}</td>
 
+                                                </tr>
+                                            </table>
+
+                                                <div className={"card  w-100"} >
+                                                    <Bar   data={dataDiscip}  />
+                                                </div>
+
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 

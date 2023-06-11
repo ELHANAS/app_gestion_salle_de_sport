@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Abonnement;
 use App\Models\Membre;
 use App\Models\Notification;
 use Illuminate\Http\Request;
@@ -96,5 +97,10 @@ class MembreController extends Controller
     public  function  destroyNotification(Notification $notification){
         $notification->delete();
         return 'notification à était suprimmer avec succés';
+    }
+    public  function  getNofification(){
+        Abonnement::changeEtat();
+        Membre::changeEtat();
+        return  Notification::all() ;
     }
 }

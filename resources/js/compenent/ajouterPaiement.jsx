@@ -7,8 +7,7 @@ import {useNavigate ,useLocation} from "react-router-dom";
 export  default  function AjouterPaiement(prop){
 
     const  idAbonnement = prop.idAbonnement ;
-    const  navigate = useNavigate();
-    const [message , setMessage] = useState();
+    const [message , setMessage] = useState('');
 
     const  [Prix,setPrix] = useState() ;
     const [datePaiement , setDatePaiement]  = useState();
@@ -16,6 +15,11 @@ export  default  function AjouterPaiement(prop){
     const [montantRestant , setMontantRestant]  = useState();
 
 const  [somme , setSomme] = useState();
+    setTimeout(function() {
+
+        setMessage('')
+
+    }, 9000);
 function  handlSubmite(){
     axios.post('/api/ajouterPaiement',{
         montantRestant: montantRestant,
@@ -27,18 +31,20 @@ function  handlSubmite(){
             setMessage(res.data);
             datePaiement('');
             montantPaye(0);
-
+            setTimeout(function() {
+                setMessage('')
+            }, 9000);
         }
     )
-    navigate(0);
+
 
 }
 
 useEffect(()=> {
 
+
         axios.post('/api/getPaiements/' + idAbonnement).then(
             (res) =>{
-
 
                 let numbers = res.data.paiements.map((pay) => pay.montantPaye);
                 let restes = res.data.paiements.map((pay) => pay.montantRestant);
@@ -56,13 +62,22 @@ useEffect(()=> {
                     setSomme(sum);
 
                 setPrix(res.data.abonnements[0].prix   * res.data.abonnements[0].duree);
-setId(res.data.abonnements[0].idMembre) ;
+                setId(res.data.abonnements[0].idMembre) ;
+                setMessage('');
             }
         )
-})
+},[prop.random])
+
+
     useEffect(()=>{
         setMontantRestant(Prix - montantPaye - somme) ;
     },[montantPaye])
+
+    function Annuler(){
+        setMessage('');
+        datePaiement('');
+        montantPaye(0);
+    }
     return(
         <div style={{position:"relative",height:"100%",width:"100%"}}  className='container p-lg-3  px-lg-5'>
             <button className="btn"  style={{position:"absolute",top:"0",right:"0"}} onClick={()=>prop.none(null)}>
@@ -74,10 +89,17 @@ setId(res.data.abonnements[0].idMembre) ;
             </button>
             <div >
                 {message?
-                    <p className={"text-center border bg-success border-success p-1"} style={{position:"absolute",width:"90%",color:"white", top:"5px"}}>{message}</p>
+                    <p className={"text-center alert alert-success   fs-5     py-lg-5 py-1"} style={{position:"absolute",width:"50%",left:"25%", top:"25%",zIndex:"3"}}>{message}
+                        <br/>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                             className="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                            <path
+                                d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                        </svg>
+                    </p>
                     :null
                 }
-                <h2 className="h2 text-center my-4">Ajouter  un paiement</h2>
+
 
                 <div>
 
@@ -97,24 +119,30 @@ setId(res.data.abonnements[0].idMembre) ;
                     </div>
                     <div className="form-group row py-3">
                         <label htmlFor="datePaiement" className="col col-lg-4"> Date de paiement :</label>
-                        <input type="date"  className="form-control col" id="datePaiement" name="datePaiement"
+                        <input type="date" value={datePaiement}  className="form-control col" id="datePaiement" name="datePaiement"
                             onChange={(event) => setDatePaiement(event.target.value)}    />
 
 
                     </div>
                     <div className="form-group row py-3">
                         <label className="form-label col col-lg-4 " htmlFor="password">le montant payé  :</label>
-                        <input type="number" className="form-control col" id="montantPaye" name="montantPaye"  onChange={(event) => setMontantPaye(event.target.value)} />
+                        <input type="number" max={(Prix - somme )} min={0} value={montantPaye} className={ montantPaye > (Prix -somme) ?"form-control col border border-danger":"form-control col border border-2"} id="montantPaye" name="montantPaye"  onChange={(event) =>
+                        {
+                            if (event.target.value <= (Prix -somme))
+                                setMontantPaye(event.target.value)
+
+
+                        }}/>
                     </div>
                     <div className="form-group row py-3">
                         <label className="form-label col col-lg-4 " htmlFor="montantRestant">le montant Restant  :</label>
-                        <input type="number" className="form-control col" id="montantRestant" name="montantRestant"  value={montantRestant} />
+                        <input type="number" className="form-control col" readOnly={true} id="montantRestant" name="montantRestant"  value={montantRestant} />
                     </div>
 
 
                     <div className="row  " style={{position:"absolute",width:"90%", bottom:"5px"}}>
                         <div className="col">
-                            <button style={{color:"white",background:"#ee9b57"}} className="btn  w-100">
+                            <button onClick={Annuler} style={{color:"white",background:"#ee9b57"}} className="btn  w-100">
                                 Annuler
                             </button>
                         </div>

@@ -37,10 +37,12 @@ import Notification from "@/compenent/notification";
      const  [showMenu , setShowMenu] = useState({display: "none"});
      const [showNotification , setShowNotification] = useState("none")
 
-     const [numbers , setNumbers] = useState({});
 
      const [idparticipant , setIdParticipant] = useState(null) ;
      const [idAbonnement , setIdAbonnement] = useState() ;
+     const  [random , setRandom] = useState() ;
+     const  [notification , setNotification] = useState([]) ;
+
      function handlShowNotification(){
          if(showNotification === "none"){
              setShowNotification("block")
@@ -58,14 +60,26 @@ import Notification from "@/compenent/notification";
 
      }
 useEffect(()=>{
-
-    axios.post('/api/numberUsers').then(
+    console.log("get notificaiton")
+    axios.post('/api/notifications').then(
         (res)=>{
-            setNumbers(res.data) ;
+            setNotification(res.data) ;
             console.log(res.data)
         }
-    )
+    );
+
 },[])
+
+     setTimeout(function() {
+         console.log("get notificaiton")
+         axios.post('/api/notifications').then(
+             (res)=>{
+                 setNotification(res.data) ;
+                 console.log(res.data)
+             }
+         );
+
+     }, 60000);
      function ajouter(style){
 
          if(style === "Employe"){
@@ -81,6 +95,7 @@ useEffect(()=>{
              setOpacity("0.2");
          }
          else {
+             setRandom(Math.random() * 10);
              setShowE("none");
              setShowDiscipline("none")
              setShowAbennement("none")
@@ -96,6 +111,7 @@ useEffect(()=>{
              setShowAbennement("block");
              setOpacity("0.2");
          }else {
+             setRandom(Math.random() * 10);
              setShowE("none");
              setShowAbennement("none")
              setShowParticipant("none");
@@ -106,10 +122,11 @@ useEffect(()=>{
          setIdAbonnement(id) ;
          if (id){
 
-
+             setRandom(Math.random() * 10);
              setShowPaiement("block");
              setOpacity("0.2");
          }else{
+             setRandom(Math.random() * 10);
              setShowPaiement("none");
              setShowE("none");
              setShowAbennement("none")
@@ -131,34 +148,34 @@ useEffect(()=>{
     return (
         <div className={"h-100 w-100"}>
             {
-                ! isObjectEmpty(numbers)?
+                1?
                     <>
                         <div id="app" style={{opacity:opacity,paddingTop:"70px"}}>
-                            <Header ShowMenu={ShowMenu} notification={numbers.notification} setShowNotification = {handlShowNotification}/>
+                            <Header ShowMenu={ShowMenu} notification={notification} setShowNotification = {handlShowNotification}/>
 
                             <div  style={{height:"100%",borderBottom:"10px solid #ee9b57"}}  className="row m-0 ">
-                                <div className={"col-lg-2   d-lg-block  p-0 "} style={showMenu}
+                                <div className={"col-lg-3 col-xl-2   d-lg-block  p-0 "} id={"divMenu"} style={showMenu}
                                 >
                                     <Menu />
                                 </div>
 
-                                <div id="content" className="col-lg-10 col  p-0 ">
+                                <div id="content" className="col-lg-9 col-xl-10 col  p-0 ">
 
 
                                     <div id="main" className="m-0 ">
                                         <Routes>
-                                            <Route  path="/" element= {<Home numbers = {numbers} />} />
+                                            <Route  path="/" element= {<Home  />} />
 
-                                                <Route path="/Employes" element= {<Employe   ajouterEmploye={ajouter}/>} />
-                                                <Route path="/statistiques" element= {<Statistique  />} />
+                                                <Route path="/Employes" element= {<Employe random={random}  ajouterEmploye={ajouter}/>} />
+                                                <Route path="/statistiques" element= {<Statistique   />} />
 
 
-                                            <Route path="/participants" element= {<Participant   ajouterParticipant={ajouter}/>} />
+                                            <Route path="/participants" element= {<Participant random={random}  ajouterParticipant={ajouter}/>} />
                                             <Route path="/abonnements" element= {<Abonnement    ajouterAbonnement={ajouter}/>} />
-                                            <Route path="/disciplines" element= {<Discipline  ajouter={ajouter}/>}  />
+                                            <Route path="/disciplines" element= {<Discipline random={random} ajouter={ajouter}/>}  />
                                             <Route path="/profil" element= {<Profil />} />
                                             <Route path="/paiements" element= {<Paiement  />} />
-                                            <Route path="/ListeAbonnement/:id" element= {<AbonnementsdeParticipant   ajouterPiement = {ajouterPiement}  ajouterAbonnement ={ajouterAbonnement}/>} />
+                                            <Route path="/ListeAbonnement/:id" element= {<AbonnementsdeParticipant  random={random}  ajouterPiement = {ajouterPiement}  ajouterAbonnement ={ajouterAbonnement}/>} />
                                         </Routes>
 
                                     </div>
@@ -181,10 +198,10 @@ useEffect(()=>{
                             <AjouterDiscipline none={ajouter} />
                         </div>
                         <div className="Ajouter" style={{display:showPaiement,overflow:"auto"}}>
-                            <AjouterPaiement   none = {ajouterPiement}  idAbonnement = {idAbonnement}/>
+                            <AjouterPaiement random={random}   none = {ajouterPiement}  idAbonnement = {idAbonnement}/>
                         </div>
                             <div id={"notification"} style={{display:showNotification,overflow:"auto"}}>
-                                <Notification notification={numbers.notification}  none = {handlShowNotification}/>
+                                <Notification notification={notification}  none = {handlShowNotification}/>
                             </div>
 
                     </>:

@@ -14,6 +14,7 @@ class PaiementController extends Controller
      */
     public function index()
     {
+
         return [ "paiement" => Paiement::getPaiement()] ;
     }
 
@@ -37,20 +38,22 @@ class PaiementController extends Controller
         $paiement->montantRestant = $request->montantRestant ;
         $paiement->save() ;
         Abonnement::changeEtat();
-return "saved" ;
+        Membre::changeEtat();
+return "Paiement effectué avec succès" ;
 
     }
-public  function  getPaiementParYear($year){
+    public  function  getPaiementParYear($year){
     $paiement = Paiement::getPaiementParYear($year);
     $membres = Membre::getMembreParYear($year);
     return ['paiements'=> $paiement , "membres"=> $membres] ;
 }
 
-function  getPaiementParMonth($month){
+    public  function  getPaiementParMonth($month){
         $paiements = Paiement::getPaiementParMonth($month);
     $membres = Membre::getMembreParMois($month) ;
         return ['paiements' => $paiements , 'membres' => $membres] ;
 }
+
     /**
      * Display the specified resource.
      */
