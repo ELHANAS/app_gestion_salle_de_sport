@@ -1,10 +1,8 @@
 import React, { useState } from 'react'
 import "./login.css"
 import AuthUser from './authUser';
-import { useNavigate } from 'react-router-dom';
 export default function Register(store){
     const {httpData} = AuthUser()
-    const navigate = useNavigate();
     const [email,setEmail] = useState('')
     const [name,setName] = useState('')
     const [password,setPassword] = useState('');
@@ -28,7 +26,7 @@ export default function Register(store){
             }).then(
                 (res)=> {
                     setMessage(res.data);
-                    Annuler
+                    Annuler()
                     setTimeout(function() {
 
                         setMessage('')
@@ -68,41 +66,42 @@ export default function Register(store){
                 :null
             }
 
-                <h2 className="h4 text-center m-auto  w-75 p-2 bg-white" style={{border:"2px solid black",borderTop:"none",borderRadius:"0 0 10px 10px "}} >Ajouter employé</h2>
+                <h2 className="h4 text-center m-auto  w-75 p-2 bg-light" style={{borderRadius:"0 0 10px 10px "}} >Ajouter employé</h2>
                  <form  onSubmit={(event)=>submite(event)}>
-                     <div style={{overflow:"auto",position:"absolute",height:"80%",top:"50px",width:"100%",zIndex:"2"}} className={"p-2 fs-6"}>
+                     <div style={{overflow:"auto",position:"absolute",height:"80%",top:"50px",width:"100%",zIndex:"2",fontSize:"5px"}} className={"p-2 "}>
                          <div className={"row w-100"} >
 
-                     <div className={"col-lg-6  col-12"}>
+                     <div className={"col-lg-6 p-lg-4  col-12"}>
 
-                     <div className="row  mt-3">
-                         <label className="col-lg-4 col ">Nom&prénom :</label>
-                         <input type="text" placeholder="nom & prénom"
+                     <div className="row  mt-3 mt-lg-5">
+                         <label className="col-lg-4 col text-start form-label ">Nom&prénom :</label>
+                         <input type="text"  placeholder="nom & prénom"
                                 value={name}
-                                className=" col form-control   "
+                                className=" col form-control  form-control-sm  "
                                 name="name"  onChange={(event)=> setName(event.target.value)}
                                 required  autoFocus />
                      </div>
-                     <div className="row mt-3">
-                         <label className="col-lg-4 col ">Email :</label>
-                        <input type="email" placeholder="Email Address"
+                     <div className="row mt-3 mt-lg-5">
+                         <label className="col-lg-4 col text-start form-label">Email :</label>
+                        <input type="email" aria-required={true} placeholder="Email Address"
                                value={email}
-                        className="form-control col   "
+                        className="form-control col  form-control-sm "
                          name="email"  onChange={(event)=> setEmail(event.target.value)}
-                         required   />
+                            />
                      </div>
-                     <div className="row mt-3">
-                         <label className="col-lg-4 col">Mot de pass :</label>
-                          <input  type="password" className="form-control col  "
+                     <div className="row mt-3 mt-lg-5">
+                         <label className="col-lg-4 col text-start form-label">Mot de pass :</label>
+                          <input  type="password" className="form-control col  form-control-sm"
                                   value={password}
+                                  aria-required={true}
                                   placeholder="mot de passe"
                            name="password"
                            onChange={(event)=> setPassword(event.target.value)}
                              />
                      </div>
-                     <div className="row mt-3">
-                         <label className="col-lg-4 col">Salaire :</label>
-                     <input  type="text" className="form-control col  "
+                     <div className="row mt-3 mt-lg-5">
+                         <label className="col-lg-4 col text-start form-label">Salaire :</label>
+                     <input  type="text" className="form-control form-control-sm col  "
                              placeholder="000 000"
                              value={salaire}
                              name="salaire"
@@ -110,30 +109,33 @@ export default function Register(store){
                      />
                      </div>
                      </div>
-                     <div className={"col-lg-6 col-12"}>
-                     <div className="row mt-3">
-                         <label className="col-lg-4 col">Cin :</label>
-                     <input  type="text" className="form-control col  "
+                     <div className={"col-lg-6 p-lg-4   col-12"}>
+                     <div className="row mt-3   mt-lg-5">
+                         <label className="col-lg-4 col text-start form-label">Cin :</label>
+                     <input  type="text" className="form-control form-control-sm col  "
                              name="cin"
                              value={cin}
+                             required={true}
                              placeholder={"AA00000"}
                              onChange={(event)=> setCin(event.target.value)}
                      />
                      </div>
-                     <div className="row mt-3">
-                         <label className="col-lg-4  col ">N° téléphone:</label>
-                         <input  type="text" className="form-control col   "
+                     <div className="row mt-3 mt-lg-5">
+                         <label className="col-lg-4  col text-start form-label">N° téléphone:</label>
+                         <input  type="text" className="form-control form-control-sm col   "
                                  name="tel"
                                  value={tel}
                                  placeholder={"00 00 00 00 00"}
                                  onChange={(event)=> setTel(event.target.value)}
                          />
                      </div>
-                     <div className="row mt-3  ">
-                         <label className="col-lg-4 col  ">Fonction:</label>
+                     <div className="row mt-3 mt-lg-5 ">
+                         <label className="col-lg-4 col text-start form-label ">Fonction:</label>
 
-                             <select className="form-select col"  onChange={(event)=> setFonction(event.target.value)}>
-                                        <option >Choisir la fonction</option>
+                             <select className="form-select col"
+                                     required={true}
+                                     onChange={(event)=> setFonction(event.target.value)}>
+                                        <option value={""}>Choisir la fonction</option>
                                  <option value={"Réceptionniste"}>Réceptionniste</option>
                                  <option value={"Entraîneur"}>entraîneur</option>
                                  <option value={"Admin"}>admin</option>
@@ -141,8 +143,8 @@ export default function Register(store){
 
 
                      </div>
-                     <div className="row mt-3 ">
-                         <label className="col-lg-4 col ">Photo:</label>
+                     <div className="row mt-3 mt-lg-5">
+                         <label className="col-lg-4 col text-start form-label">Photo:</label>
                          <input type="file" className="form-control col  " onChange={(event)=> setPhoto(event.target.files[0])} name="photo"/>
 
                      </div>
@@ -151,7 +153,7 @@ export default function Register(store){
 
                      </div>
                      </div>
-                     <div  className="row   " style={{width:"90%",right:"5%",position:"absolute",bottom:"10px"}}>
+                     <div  className="row  w-100  d-flex justify-content-between " style={{position:"absolute",left:"1%",bottom:"1%"}}>
                          <div className="col">
                              <button onClick={Annuler} style={{color:"white",background:"#ee9b57"}} className="btn  w-100">
                                  Annuler

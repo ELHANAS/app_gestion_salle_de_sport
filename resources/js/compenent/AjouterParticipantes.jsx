@@ -24,16 +24,12 @@ const {httpData} = AuthUser() ;
         httpData.post('AjouterParticipant',formD).then(
             (res)=> {
                 setMessage(res.data);
-                setTel("");
-                setDateNss("");
-                setName("");
-                setEmail("");
-                setImage(null);
+               Annuler();
                 setTimeout(function() {
 
                     setMessage('')
 
-                }, 9000);
+                }, 3000);
             }
         ).catch(
             (err) => setMessage(err.data)
@@ -41,7 +37,6 @@ const {httpData} = AuthUser() ;
 
     }
     function  Annuler(){
-        setMessage('');
         setTel("");
         setDateNss("");
         setName("");
@@ -59,19 +54,28 @@ const {httpData} = AuthUser() ;
             </button>
 
 
-                {message?
-                    <p className={"text-center border bg-success border-success p-1"} style={{position:"absolute",width:"90%",color:"white", top:"5px"}}>{message}</p>
-                    :null
-                }
-                <h2 className="h2 text-center py-4" style={{height:"10%"}}>Ajouter  un participant</h2>
+            {message?
+                <p className={"text-center alert alert-success   fs-5     py-lg-5 py-1"} style={{position:"absolute",width:"50%",left:"25%", top:"25%",zIndex:"3"}}>{message}
+                    <br/>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                         className="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                        <path
+                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                    </svg>
+                </p>
+                :null
+            }
+
+            <h2 className="h4 text-center m-auto  w-75 p-2 bg-light" style={{borderRadius:"0 0 10px 10px "}} >Ajouter participant(e)</h2>
                 <form className={"p-0"}>
                     <div style={{overflow:"auto",position:"absolute",height:"80%",top:"50px",width:"100%"}} className={" p-3"}>
-                        <div className={"p-2 w-100"} >
+                        <div className={"p-2 p-lg-5 w-100"} >
 
                         <div className=" mt-3 row">
                             <label className="col-lg-4 col" htmlFor="name">Name : </label>
                             <input type="text" className="form-control  col" id="name"
                                    name="name" placeholder="entrer your  Name ..."
+                                   required autoFocus
                             value={name}
                                    onChange={(event)=> setName(event.target.value)}
                             />
@@ -80,12 +84,13 @@ const {httpData} = AuthUser() ;
                             <label htmlFor="dat_naiss" className="col-lg-4 col"> Email :</label>
                             <input type="email" className="form-control col" id="email" name="emailparticipant"
                                    placeholder="entrer your email"
+                                   required
                                    onChange={(event)=> setEmail(event.target.value)}
                             value={email}/>
 
 
                         </div>
-                        <div className=" row py-3">
+                        <div className=" row mt-3">
                             <label className="form-label col-lg-4 col" htmlFor="tele">Telephone
                             :</label>
                             <input type="tel" className="form-control col" id="tel" name="tel"
@@ -96,6 +101,7 @@ const {httpData} = AuthUser() ;
                             <label htmlFor="dat_naiss" className="col-lg-4 col">Date de Naissance :</label>
                             <input type="date" className="form-control col" id="dat_naiss" name="dat_naiss"
                                    placeholder="entrer your dat_naiss"
+                                   required={true}
                                    onChange={(event)=> setDateNss(event.target.value)}
                             value={dateNss}/>
 
@@ -107,6 +113,7 @@ const {httpData} = AuthUser() ;
                             <div className=" row mt-3">
                                 <label htmlFor="photo" className="col-lg-4 col">Photo :</label>
                                 <input type="file" className="form-control col" id="photo" name="photo"
+
                                        onChange={(event) => setImage(event.target.files[0])}
                                       />
 
@@ -114,7 +121,7 @@ const {httpData} = AuthUser() ;
 
                         </div>
                     </div>
-                    <div className="row  p-0" style={{position:"absolute",width:"90%",height:"10%", bottom:"10px",right:"5%"}}>
+                    <div  className="row  w-100  d-flex justify-content-between " style={{position:"absolute",left:"1%",bottom:"1%"}}>
                         <div className="col">
                             <button  onClick={Annuler} style={{color:"white",background:"#ee9b57"}} className="btn  w-100">
                                 Annuler

@@ -68,4 +68,16 @@ public static  function  getPaiements($id){
         $abonnement = Abonnement::where('etat',1)->get();
         return $abonnement ;
     }
+    public static  function searchAbonnement($word){
+        $abonnements =  DB::table('abonnements')
+            ->join('membres', 'membres.id', '=', 'abonnements.idMembre')
+            ->join('disciplines', 'disciplines.codeD', '=', 'abonnements.idDiscipline')
+            ->where('membres.name','like','%'.$word.'%' )
+            ->orWhere('disciplines.libelle','like','%'.$word.'%',)
+            ->select('abonnements.*','disciplines.*','membres.*')
+            ->orderBy('abonnements.codeA','DESC')
+            ->limit(20)
+            ->get();
+        return $abonnements ;
+    }
 }

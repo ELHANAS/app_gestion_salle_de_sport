@@ -21,18 +21,18 @@ useEffect(()=>{
                     <path fillRule="evenodd"
                           d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
                 </svg></button>
-            <h1 className={"h1 col-lg-3 col "} id={"logo"}>    <Link to={"/"}>
+            <h1 className={"h1 col-lg-3 col  "} id={"logo"}>    <Link to={"/"}>
 
-    <img className={"w-50"} src={useHref("images/logo.png")} alt="logo"/>
+    <img className={"w-50"} src={useHref("images/logo.png")} style={{height:"50px",margin:"5px"}} alt="logo"/>
   </Link></h1>
 
-        <h2 className="col-lg-6 col pt-2 d-none d-lg-block  h1 fs-1 text-center" style={{fontStyle:"italic",fontWeight:"bold"}}>{
+        <h2 className="col-lg-6 col pt-2 d-none d-lg-block  h1 fs-1 text-center" style={{fontWeight:"bold"}}>{
             location.pathname.toString().slice(1,16) === "ListeAbonnement" ?
                 "Liste des abonnments"
                 :location.pathname.toString().slice(1) === "Employes"?
                     "Les employés"
                 :location.pathname.toString() === "/" ?
-                    "Gym management"
+                    ""
             :location.pathname.toString() === "/profil" ?
             "Profil"
             :
@@ -50,7 +50,7 @@ useEffect(()=>{
                 </svg>
                     {
                         noitifcation.length?
-                            <div className={"text-white fw-bold bg-danger"} style={{position:"absolute" , top:"20px",right:"10px",width:"20px",height:"20px",borderRadius:"50%",fontSize:"10px"}}> {prop.notification.length}</div>
+                            <div className={"text-white fw-bold px-1 bg-danger"} style={{position:"absolute" , top:"15px",right:"15px",display:'inline',borderRadius:"8px",height:"16px",fontSize:"10px"}}> {prop.notification.length}</div>
                             :null
                     }
 

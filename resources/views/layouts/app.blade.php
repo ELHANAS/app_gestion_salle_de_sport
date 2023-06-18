@@ -7,9 +7,9 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>AGSS</title>
+    <title>GYM MANAGEMENT</title>
     <link rel="stylesheet" href="{{asset('./bootstrap.min.css')}}">
-
+    <link rel="shortcut icon" href="images/1685796041675.png" type="image/x-icon">
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">

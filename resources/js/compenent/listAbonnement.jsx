@@ -6,6 +6,7 @@ import axios from "axios";
 export  default function Abonnement(prop){
     const [abonnements,setAbonnements] = useState([]) ;
     const [paiements,setPaiements] = useState('');
+    const [search,setSearch] = useState();
     useEffect(()=>{
         axios.post('/api/abonnements').then(
             (res) => setAbonnements(res.data.Abonnement)
@@ -16,45 +17,34 @@ export  default function Abonnement(prop){
             (res) => setPaiements(res.data.paiements)
         )
     }
-
+    function Search(){
+            axios.post('/api/searchAbonnement',{"search":search}).then(
+                (res)=>{
+                    setAbonnements(res.data);
+                    console.log(res.data.map((res)=>res.name)) ;
+                }
+            )
+    }
     return(
         <div>
             <div id={"secondHeader"} className="row p-2 d-flex  justify-content-between">
-                <div className="col-lg-3  col">
+                <div className="col-lg-3  col-8">
                     <div className="input-group w-100">
-                        <div id="search-autocomplete" className="form-outline">
-                            <input type="search" id="form1" placeholder="rechercher..." className="form-control"/>
-                        </div>
-                        <button type="button"  className="btn btn-dark">
+
+                        <button type="button"  onClick={Search} className="btn btn-dark">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                  className="bi bi-search" viewBox="0 0 16 16">
                                 <path
                                     d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
                             </svg>
                         </button>
+                        <div id="search-autocomplete" className="form-outline">
+                            <input type="search" id="form1" placeholder="rechercher..." onChange={(event)=> setSearch(event.target.value)} className="form-control"/>
+                        </div>
                     </div>
                 </div>
 
-                <div className="col ">
-                    <div className="input-group">
-                        <button   className=" btn btn-dark">jour</button>
-                        <input type="number" className="form-control " min="1" max="31"/>
-                    </div>
-                </div>
-                <div className="col ">
-                    <div className="input-group">
-                        <button   className="btn btn-dark">mois</button>
-                        <input type="number" className="form-control" min="1" max="12"/>
-                    </div>
-                </div>
-                <div className="col ">
-                    <div className="input-group">
-                        <button    className="btn btn-dark">annee</button>
-                        <input type="number" className="form-control" min="2010"  />
-                    </div>
-                </div>
-                <div className={"col col-lg-3"}>
-
+                <div className={"col col-lg-3 text-end"}>
                     <Link to={"/participants"}    >
                         <button className={"btn"}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -62,7 +52,7 @@ export  default function Abonnement(prop){
                             <path
                                 d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
                         </svg>
-                        Ajouter abonnement
+                      <span className={"d-none d-lg-inline"}>Ajouter abonnement</span>
                         </button>
                         </Link>
                 </div>
@@ -135,7 +125,7 @@ function Detail(prop){
                             })
                         }
                     </ul>
-                    :<p>Aucun paiement</p>
+                    :<p className={"p-5 text-center"}>Aucun paiement</p>
             }
 
         </div>

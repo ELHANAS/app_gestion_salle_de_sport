@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Bar, Pie} from "react-chartjs-2";
+import {Bar, Doughnut, Line, Pie} from "react-chartjs-2";
 import { Chart, registerables } from 'chart.js';
 import axios from "axios";
 Chart.register(...registerables);
@@ -49,7 +49,7 @@ const [statistiqueLabels,setStatistiqueLabels] = useState([])
             'Abonnements encours'
         ],
         datasets: [{
-            label: 'statistique des paticipants',
+            label: 'statistique des abonnement',
             data: [numbers.abonnementPaye, numbers.abonnementNonPaye, numbers.abonnementEncours],
             backgroundColor: [
                 'rgb(23,134,0)',
@@ -82,13 +82,28 @@ const [statistiqueLabels,setStatistiqueLabels] = useState([])
 
         ],
     };
+
+     const optionsDiscipline = {
+        responsive: true,
+        plugins: {
+            legend: {
+                position: 'top' ,
+            },
+            title: {
+                display: true,
+                text: 'Chart.js Line Chart',
+            },
+        },
+    };
     const  dataDiscip ={
         labels : labelsDisciplin,
         datasets :[
             {
+                fill: true,
                 label : "Les discipline de sport",
                 data : dataDisciplin ,
-                backgroundColor : "BLACK"
+                backgroundColor : 'rgba(255,142,34,0.5)',
+                borderColor:"#fc7f11"
             },
 
         ],
@@ -235,29 +250,29 @@ function  handlPeriode(e){
 
                                     <div className={"col-lg-5 p-0  row "}>
 
-                                        <p className={"h4 col text-white "} style={{backgroundColor:"#000000"}}><span className={"fs-6"}>Totale</span>  <br/> {totalePaiement} DH</p>
+                                        <p className={"h4 col text-white  m-1 p-1"} style={{backgroundColor:"#000000"}}> {totalePaiement} <span>DH</span> <br/> <span className={"fs-6 "}>Totale   </span> </p>
 
                                         {
                                             max.hasOwnProperty("month")?
-                                                <p className={"h4 col  text-white"} style={{backgroundColor:"#ee9b57"}}>
-                                                    <span className={"fs-6"}>{  max.month}</span>   <br/>{max.sum} DH
+                                                <p className={"h4 col  m-1 p-1 text-white fw-bold"} style={{backgroundColor:"#ee9b57"}}>
+                                                   {max.sum} <span>DH</span>  <br/> <span className={"fs-6"}>{  max.month}</span>
                                                 </p>
-                                                :  <p className={"h4  col text-white "}style={{backgroundColor:"#ee9b57"}}>
-                                                    <span className={"fs-6"}>{  max.day}</span>   <br/>{max.sum} DH
+                                                :  <p className={"h4  col m-1 p-1 text-white  fw-bold"}style={{backgroundColor:"#ee9b57"}}>
+                                                    {max.sum} <span>DH</span> <br/>   <span className={"fs-6"}>le jour   {  max.day}</span>
                                                 </p>
                                         }
 
                                     </div>
                                     <div className={"col-lg-5 p-0  row"}>
-                                        <p className={"h4 text-white  col "} style={{backgroundColor:"#000000"}}><span className={"fs-6"}>Totale</span>  <br/> {totaleParticipant} participants</p>
+                                        <p className={"h4 text-white m-1 p-1  col fw-bold"} style={{backgroundColor:"#000000"}}>  {totaleParticipant} <span className={"fw-normal"}>participants</span>  <br/> <span className={"fs-6 fw-normal"}>Totale</span> </p>
 
                                         {
                                             maxp.hasOwnProperty("month")?
-                                                <p className={"h4  col text-white "} style={{backgroundColor:"#ee9b57"}}>
-                                                    <span className={"fs-6"}>{  maxp.month}</span>   <br/>{maxp.sum} participants
+                                                <p className={"h4  col text-white m-1 p-1  fw-bold"} style={{backgroundColor:"#ee9b57"}}>
+                                                  {maxp.sum} <span className={"fw-normal"}>participants</span>   <br/>   <span className={"fs-6 fw-normal"}>{  maxp.month}</span>
                                                 </p>
-                                                :  <p className={"h4 col text-white "}style={{backgroundColor:"#ee9b57"}}>
-                                                    <span className={"fs-6"}>{  maxp.day}</span>   <br/>{maxp.sum} participants
+                                                :  <p className={"h4 col text-white m-1 p-1 fw-bold "} style={{backgroundColor:"#ee9b57"}}>
+                                                    {maxp.sum} <span className={"fw-normal"}>participants</span>   <br/>   <span className={"fs-6 fw-normal"}>{  maxp.day}</span>
                                                 </p>
                                         }
 
@@ -291,21 +306,21 @@ function  handlPeriode(e){
                                         </div>
                                     </div>
                                     <div className="col-lg-6 col p-lg-3">
-                                        <div className={"card text-start  "} >
-                                            <table className={'table w-100'}>
-                                               <tr >
-                                                   <th>Participants</th>
-                                                   <th>Employés</th>
-                                               </tr>
-                                                <tr>
-                                                    <td>{numbers.participant}</td>
-                                                    <td>{numbers.users}</td>
+                                        <div className={"card text-start  p-3"} >
+                                            <div className={"row"}>
+                                                <div className="col  m-1 text-white text-center" style={{background:"black"}}>
+                                                   <span className={"fw-bold fs-3"}>{numbers.participant}</span>  <br/>
+                                                    Participants
+                                                </div>
+                                                <div className="col m-1 text-white text-center" style={{background:"#ee9b57"}}>
+                                                   <span className={"fw-bold fs-3"}>{numbers.users}</span>  <br/>
+                                                    Employés
+                                                </div>
 
-                                                </tr>
-                                            </table>
+                                            </div>
 
                                                 <div className={"card  w-100"} >
-                                                    <Bar   data={dataDiscip}  />
+                                                    <Line options={optionsDiscipline}  data={dataDiscip}  />
                                                 </div>
 
                                         </div>

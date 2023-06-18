@@ -15,11 +15,7 @@ export  default  function AjouterPaiement(prop){
     const [montantRestant , setMontantRestant]  = useState();
 
 const  [somme , setSomme] = useState();
-    setTimeout(function() {
 
-        setMessage('')
-
-    }, 9000);
 function  handlSubmite(){
     axios.post('/api/ajouterPaiement',{
         montantRestant: montantRestant,
@@ -29,11 +25,14 @@ function  handlSubmite(){
     }).then(
         (res)=>  {
             setMessage(res.data);
-            datePaiement('');
-            montantPaye(0);
+            setMontantPaye('');
+            setDatePaiement('');
+
             setTimeout(function() {
+
                 setMessage('')
-            }, 9000);
+            }, 3000);
+
         }
     )
 
@@ -61,7 +60,7 @@ useEffect(()=> {
 
                     setSomme(sum);
 
-                setPrix(res.data.abonnements[0].prix   * res.data.abonnements[0].duree);
+                setPrix((res.data.abonnements[0].prix )  * (res.data.abonnements[0].duree));
                 setId(res.data.abonnements[0].idMembre) ;
                 setMessage('');
             }
@@ -74,12 +73,11 @@ useEffect(()=> {
     },[montantPaye])
 
     function Annuler(){
-        setMessage('');
         datePaiement('');
-        montantPaye(0);
+        montantPaye('');
     }
     return(
-        <div style={{position:"relative",height:"100%",width:"100%"}}  className='container p-lg-3  px-lg-5'>
+        <div style={{position:"relative",height:"100%",width:"100%",overflow:"hidden"}}  className='container p-0 '>
             <button className="btn"  style={{position:"absolute",top:"0",right:"0"}} onClick={()=>prop.none(null)}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-x"
                      viewBox="0 0 16 16">
@@ -87,7 +85,7 @@ useEffect(()=> {
                         d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
                 </svg>
             </button>
-            <div >
+
                 {message?
                     <p className={"text-center alert alert-success   fs-5     py-lg-5 py-1"} style={{position:"absolute",width:"50%",left:"25%", top:"25%",zIndex:"3"}}>{message}
                         <br/>
@@ -100,10 +98,12 @@ useEffect(()=> {
                     :null
                 }
 
+                <h2 className="h4 text-center m-auto  w-75 p-2 bg-light" style={{borderRadius:"0 0 10px 10px "}} >Ajouter paiement</h2>
 
-                <div>
+                <div style={{overflow:"auto",position:"absolute",height:"80%",top:"50px",width:"100%"}} className={" p-3 p-lg-5"}>
 
-                    <div className="form-group row py-3">
+
+                <div className="form-group row py-3">
                         <label htmlFor="totale" className="col col-lg-4"> Totale :</label>
                         <input type="number" readOnly  className="form-control col" id="totale" name="totaletotale"
                             value={Prix}    />
@@ -126,7 +126,7 @@ useEffect(()=> {
                     </div>
                     <div className="form-group row py-3">
                         <label className="form-label col col-lg-4 " htmlFor="password">le montant payé  :</label>
-                        <input type="number" max={(Prix - somme )} min={0} value={montantPaye} className={ montantPaye > (Prix -somme) ?"form-control col border border-danger":"form-control col border border-2"} id="montantPaye" name="montantPaye"  onChange={(event) =>
+                        <input type="number"  min={0} value={montantPaye} className={ montantPaye > (Prix -somme) ?"form-control col border border-danger":"form-control col border border-2"} id="montantPaye" name="montantPaye"  onChange={(event) =>
                         {
                             if (event.target.value <= (Prix -somme))
                                 setMontantPaye(event.target.value)
@@ -139,9 +139,10 @@ useEffect(()=> {
                         <input type="number" className="form-control col" readOnly={true} id="montantRestant" name="montantRestant"  value={montantRestant} />
                     </div>
 
+                 </div>
+                    <div  className="row  w-100  d-flex justify-content-between border " style={{position:"absolute",left:"1%",bottom:"1%"}}>
 
-                    <div className="row  " style={{position:"absolute",width:"90%", bottom:"5px"}}>
-                        <div className="col">
+                    <div className="col">
                             <button onClick={Annuler} style={{color:"white",background:"#ee9b57"}} className="btn  w-100">
                                 Annuler
                             </button>
@@ -153,8 +154,8 @@ useEffect(()=> {
                             </button>
                         </div>
                     </div>
-                </div>
-                </div>
+
+
         </div>
 
     )

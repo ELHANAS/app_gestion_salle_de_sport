@@ -1,75 +1,102 @@
-import React from "react";
-export default function ModifierEmployer (){
+import React ,{useEffect,useState} from "react";
+import axios from "axios";
+export default function ModifierEmployer(prop){
+    const id = prop.employe ;
+    const [employe,setEmploye] = useState('');
+    const  [salaire,setSalaire]=useState('');
+    const [specialite,setSpecialite] = useState()
+    const [disciplines,setDisciplines] = useState([])
+    const [message , setMessage] = useState('');
+    useEffect(()=>{
+        axios.post('/api/user/'+ id).then(
+            (res)=>{
+                setEmploye(res.data);
+     
+            }
+        )
+    },[prop.random]);
+    useEffect(()=>{
+        axios.post('/api/disciplines').then(
+            (res) => setDisciplines(res.data.discipline)
+        )
+    })
     return(
-        <>
-            <div className="p-5">
-                <h3 className={"my-5 text-center "} style={{color:"#BC2D00"}} ><span className={""} > Modifier  un Employer</span> </h3>
-                <form className="row" >
-                    <div className="col-6">
-                        <div className="form-group  row">
-                            <label className="col" htmlFor="name">Name : </label>
-                            <input type="text" className="form-control  col" id="name" value=""
-                                   name="name" placeholder="entrer your  Name ..."/>
-                        </div>
-                        <div className="form-group row mt-3">
-                            <label htmlFor="dat_naiss" className="col"> Email :</label>
-                            <input type="email" className="form-control col" id="email" name="emailparticipant"
-                                   placeholder="entrer your email" value=""/>
+        <div style={{position:"relative",height:"100%",width:"100%"}}  className='container p-0 text-center'>
+            <button className="btn"  style={{position:"absolute",top:"0",right:"0"}} onClick={()=>store.none("none")}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-x"
+                     viewBox="0 0 16 16">
+                    <path
+                        d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                </svg>
+            </button>
+            {message?
+                <p className={"text-center alert alert-success   fs-5     py-lg-5 py-1"} style={{position:"absolute",width:"50%",left:"25%", top:"25%",zIndex:"3"}}>{message}
+                    <br/>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                         className="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                        <path
+                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                    </svg>
+                </p>
+                :null
+            }
+
+            <h2 className="h4 text-center m-auto  w-75 p-2 bg-light" style={{borderRadius:"0 0 10px 10px "}} >Ajouter employé</h2>
+            <form  onSubmit={(event)=>submite(event)}>
+                <div style={{overflow:"auto",position:"absolute",height:"80%",top:"50px",width:"100%",zIndex:"2",fontSize:"5px"}} className={"p-2 "}>
 
 
-                        </div>
-                        <div className="form-group row mt-3"><label className="form-label col" htmlFor="password">Password
-                            :</label>
-                            <input type="password" className="form-control col" id="password-employer" name="password-employer" value="" />
-                        </div>
-                        <div className="form-group row mt-3">
-                            <label htmlFor="dat_naiss" className="col">Date de Naissance :</label>
-                            <input type="date" className="form-control col" id="dat_naiss" name="dat_naiss"
-                                   placeholder="entrer your dat_naiss" value=""/>
+                            <div className="row mt-3 mt-lg-5">
+                                <label className="col-lg-4 col text-start form-label">Salaire :</label>
+                                <input  type="text" className="form-control form-control-sm col  "
+                                        placeholder="000 000"
+                                        value={salaire}
+                                        name="salaire"
+                                        onChange={(event)=> setSalaire(event.target.value)}
+                                />
+                            </div>
+                            <div className="row mt-3 mt-lg-5 ">
+                                <label className="col-lg-4 col text-start form-label ">spécialité :</label>
+
+                                <select className="form-select col"
+
+                                        onChange={(event)=> setSpecialite(event.target.value)}>
+                                    <option value={""}>Choisir la fonction</option>
+                                    {
+                                        disciplines?
+                                            disciplines.map((disc)=>{
+                                                return    <option key={disc.codeD} value={disc.codeD}>{disc.libelle}</option>
+                                            })
+                                            :null
+                                    }
+
+                                    <option value={"Entraîneur"}>entraîneur</option>
+                                    <option value={"Admin"}>admin</option>
+                                </select>
 
 
-                        </div>
+                            </div>
+
+
+
+                 </div>
+                <div  className="row  w-100  d-flex justify-content-between " style={{position:"absolute",left:"1%",bottom:"1%"}}>
+                    <div className="col">
+                        <button  style={{color:"white",background:"#ee9b57"}} className="btn  w-100">
+                            Annuler
+                        </button>
+                    </div>
+                    <div className="col">
+
+                        <button style={{color:"white",background:"#ee9b57"}} type="submit" className="btn  w-100" >
+                            Enregistrer
+                        </button>
 
 
                     </div>
-                    <div className="col-6">
-                        <div className="form-group row">
-                            <label htmlFor="adress" className="col">Adress:</label>
-                            <input type="text" className="form-control col" id="Adress" name="Adress"
-                                   placeholder="entrer your Adress" value="" />
+                </div>
+            </form>
 
-                        </div>
-                        <div className="form-group row mt-3">
-                            <label htmlFor="Telephone" className="col">Salaire : </label>
-                            <input type="text" className="form-control col" name="salaire" id="salaire" value="" placeholder="salaire ..." />
-                        </div>
-                        <div className="col">
-                            <div className="form-group row mt-3">
-                                <label htmlFor="dat_inscription" className="col">Fonction:</label>
-                                <input type="text" className="form-control col" id="fonction" name="fonction"
-                                       placeholder="entrer fonction" value=""/>
-
-                            </div>
-                        </div>
-                        <div className="col">
-                            <div className="form-group row mt-3">
-                                <label htmlFor="PHOTO" className="col">PHOTO :</label>
-                                <input type="file" className="form-control col" id="photo" name="photo"
-                                       value=""/>
-
-                            </div>
-                        </div>
-                    </div>
-                    <button type="submit" className="btn mt-5 m-auto  "  style={{background:"#BC2D00" , width:"30%", borderRadius:"20 px"}}>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                             className="bi bi-check-all" viewBox="0 0 16 16">
-                            <path
-                                d="M8.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"/>
-                        </svg>
-                        Enregistrer
-                    </button>
-                </form>
-            </div>
-        </>
+        </div>
     )
 }

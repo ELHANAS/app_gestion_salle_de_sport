@@ -11,17 +11,15 @@ export default function Employe(prop){
     const [search,setSearch] = useState(null);
 
     function Search(){
-        if (search){
+
             axios.post('/api/user/search',{'search' : search}).then(
                 (res) => setEmployes(res.data)
             )
-        }else{
-            navigate('/Employes')
-        }
+
     }
     useEffect(()=>{
         axios.post('/api/users').then(
-            (res) => setEmployes(res.data.user)
+            (res) =>{ setEmployes(res.data.user)}
 
     )
     },[prop.random])
@@ -33,12 +31,9 @@ function getEmploye(id){
     return (
         <div >
             <div id={"secondHeader"}  className="row p-2 d-flex  justify-content-between">
-                <div className="col-lg-3  col">
-                    <div className="input-group w-100">
-                        <div id="search-autocomplete" className="form-outline">
-                            <input type="search" id="form1" onChange={(event)=> setSearch(event.target.value)}
-                                   placeholder="rechercher..." className="form-control"/>
-                        </div>
+                <div className="col-lg-3  col-8">
+                    <div className="input-group text-end w-100">
+
                         <button type="button"  onClick={Search}  className="btn ">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                  className="bi bi-search" viewBox="0 0 16 16">
@@ -46,6 +41,10 @@ function getEmploye(id){
                                     d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
                             </svg>
                         </button>
+                        <div id="search-autocomplete" className="form-outline">
+                            <input type="search" id="form1" onChange={(event)=> setSearch(event.target.value)}
+                                   placeholder="rechercher..." className="form-control"/>
+                        </div>
                     </div>
                 </div>
                 <div className={"col col-lg-3 text-end"}>
@@ -67,7 +66,7 @@ function getEmploye(id){
 
                 </div>
                 <div className="col col-lg-4">
-                    <Profil employe = {employe}/>
+                    <Profil employe = {employe} />
                 </div>
             </div>
 
@@ -114,6 +113,7 @@ function ListeEmlpoye(prop){
 
 function Profil(prop){
     const employe = prop.employe ;
+    const {user} = AuthUser();
     return (
         <div  className="profil">
         {employe?
@@ -128,12 +128,11 @@ function Profil(prop){
                     </div>
                     <ul className="list-group list-group-flush">
                         <li className="list-group-item">{employe.name}</li>
+                        <li className="list-group-item">{employe.fonction}</li>
                         <li className="list-group-item">{employe.cin}</li>
                         <li className="list-group-item">{employe.email}</li>
                         <li className="list-group-item">{employe.tel?employe.tel : "aucun telephone"}</li>
-                        <li className="list-group-item">{employe.fonction}</li>
                     </ul>
-
 
             </div>
                 :

@@ -66,9 +66,12 @@ Route::post('/ajouterAbonnement', [\App\Http\Controllers\AbonnementController::c
 Route::post('/abonnements', [\App\Http\Controllers\AbonnementController::class , 'index']);
 Route::post('/getPaiements/{id}', [\App\Http\Controllers\AbonnementController::class , 'getPaiements']);
 Route::post('/getAbonnementParId/{id}', [\App\Http\Controllers\AbonnementController::class , 'getAbonnementParId']);
+Route::post('/searchAbonnement', [\App\Http\Controllers\AbonnementController::class , 'searchAbonnement']);
 
 //PAIEIEMENT
 Route::post('/ajouterPaiement', [\App\Http\Controllers\PaiementController::class , 'store']);
 Route::post('/paiements', [\App\Http\Controllers\PaiementController::class , 'index']);
 Route::post('/paiementStatistique/{year}', [\App\Http\Controllers\PaiementController::class , 'getPaiementParYear']);
 Route::post('/paiementStatistiqueMonth/{month}', [\App\Http\Controllers\PaiementController::class , 'getPaiementParMonth']);
+
+Route::post('/images',[\App\Http\Controllers\ImageController::class,'index']);

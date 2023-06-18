@@ -24,7 +24,7 @@ import AjouterPaiement from "@/compenent/ajouterPaiement";
 import AjouterDiscipline from "@/compenent/AjouterDicipline";
 import Statistique from "@/compenent/statistique";
 import Notification from "@/compenent/notification";
-
+import  ModifierEmployer from  './compenent/ModifierEmployer'
 
  function App(){
     const {getToken,user} = AuthUser();
@@ -36,7 +36,9 @@ import Notification from "@/compenent/notification";
      const [opacity ,setOpacity] = useState("1");
      const  [showMenu , setShowMenu] = useState({display: "none"});
      const [showNotification , setShowNotification] = useState("none")
-
+     const [showModifierEmploye , setShowModifierEmploye] = useState("none")
+    const [ModiferEmploye,setModifierEmploye]=useState(null);
+     const [images,setImages] = useState([]) ;
 
      const [idparticipant , setIdParticipant] = useState(null) ;
      const [idAbonnement , setIdAbonnement] = useState() ;
@@ -67,6 +69,14 @@ useEffect(()=>{
             console.log(res.data)
         }
     );
+    axios.post('/api/images').then(
+        (res)=> {
+
+            setImages(res.data.map((data)=> data.image));
+            console.log(res.data.map((data)=> data.image))
+        }
+    );
+
 
 },[])
 
@@ -79,7 +89,7 @@ useEffect(()=>{
              }
          );
 
-     }, 60000);
+     }, 120000);
      function ajouter(style){
 
          if(style === "Employe"){
@@ -128,9 +138,19 @@ useEffect(()=>{
          }else{
              setRandom(Math.random() * 10);
              setShowPaiement("none");
-             setShowE("none");
-             setShowAbennement("none")
-             setShowParticipant("none");
+
+             setOpacity("1");
+         }
+     }
+     function handModiferEmploye(id){
+         setModifierEmploye(id) ;
+         if (id){
+             setShowModifierEmploye('block') ;
+             setRandom(Math.random() * 100);
+             setOpacity("0.2");
+         }else{
+             setRandom(Math.random() * 100);
+             setShowModifierEmploye('none') ;
              setOpacity("1");
          }
      }
@@ -148,9 +168,9 @@ useEffect(()=>{
     return (
         <div className={"h-100 w-100"}>
             {
-                1?
+                images.length?
                     <>
-                        <div id="app" style={{opacity:opacity,paddingTop:"70px"}}>
+                        <div id="app" style={{opacity:opacity,paddingTop:"60px"}}>
                             <Header ShowMenu={ShowMenu} notification={notification} setShowNotification = {handlShowNotification}/>
 
                             <div  style={{height:"100%",borderBottom:"10px solid #ee9b57"}}  className="row m-0 ">
@@ -164,9 +184,9 @@ useEffect(()=>{
 
                                     <div id="main" className="m-0 ">
                                         <Routes>
-                                            <Route  path="/" element= {<Home  />} />
+                                            <Route  path="/" element= {<Home images={images} />} />
 
-                                                <Route path="/Employes" element= {<Employe random={random}  ajouterEmploye={ajouter}/>} />
+                                                <Route path="/Employes" element= {<Employe random={random}   ajouterEmploye={ajouter}/>} />
                                                 <Route path="/statistiques" element= {<Statistique   />} />
 
 
@@ -191,13 +211,13 @@ useEffect(()=>{
                             <AjouterParticipantes none={ajouter}/>
                         </div>
 
-                        <div className="Ajouter" style={{display:showAbennement,overflow:"auto"}}>
+                        <div className="Ajouter" style={{display:showAbennement}}>
                             <AjouterAbonnement none={ajouterAbonnement} id={idparticipant}  />
                         </div>
-                        <div className="Ajouter" style={{display:showDiscipline,overflow:"auto"}}>
+                        <div className="Ajouter" style={{display:showDiscipline}}>
                             <AjouterDiscipline none={ajouter} />
                         </div>
-                        <div className="Ajouter" style={{display:showPaiement,overflow:"auto"}}>
+                        <div className="Ajouter" style={{display:showPaiement}}>
                             <AjouterPaiement random={random}   none = {ajouterPiement}  idAbonnement = {idAbonnement}/>
                         </div>
                             <div id={"notification"} style={{display:showNotification,overflow:"auto"}}>

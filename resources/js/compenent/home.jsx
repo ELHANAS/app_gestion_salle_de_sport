@@ -1,28 +1,28 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {Link, useHref} from "react-router-dom";
+import axios from "axios";
 
 export default function Home(prop){
+    const  images= prop.images;
+    const [currentIndex, setCurrentIndex] = useState(0);
+    setTimeout(()=>{
+        const random =Math.floor( Math.random()* images.length  );
+
+        setCurrentIndex(random );
+        console.log(random)
+
+    },30000)
+
+
     return (
-        <div style={{background:"transparent"}}>
-
-            <div className={"container-fluid  text-dark h-100"} style={{paddingTop: '100 px',background:"transparent"}}>
-                <div className={"row d-flex justify-content-between  m-5 "} style={{height:"40%"}}  id="rowHome">
-
-
-
-
-
-                </div>
-                <div className={"m-5  d-flex justify-content-between row d-none d-lg-block"} style={{background: "linear-gradient(to  left, #f9a25e ,white,white,white)",height:"40%"}}>
-
-                        <img  className={"col-lg-4 w-50 h-100"} src={useHref(("images/GYM.png"))} alt="logo"/>
-
-                    <h2 className={"col-lg-8 border"}></h2>
-                </div>
+        <div className={"w-100 text-white   h-100 text-center"} style={{textShadow:"3px 3px 3px black"}}>
+            <img src={images[currentIndex]} style={{position:"absolute",top:"0",left:"0",zIndex:"0",opacity:"0.5"}} className={"w-100 h-100"} alt="image"/>
+            <div className={"m-auto d-flex justify-content-center row p-5 w-auto"} style={{position:"absolute",height:"50%",top:"25%",background:"transparent"}}>
+                <h1 >GYM MANAGEMENT</h1>
+                <p className={"p "}>Application de gestion salle de sport la plus facil</p>
+<p className={"text-light col-lg-6 col"}>c'est une application qui permet suivre les participant et les employés en plus que ça vous pouvez consulter les statstique de votre salle de sport facillement</p>
             </div>
-
         </div>
-
 
     )
 }

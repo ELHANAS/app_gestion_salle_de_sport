@@ -55,7 +55,7 @@ class AbonnementController extends Controller
         }
         if(count($nams)){
 
-            if( in_array(1,$etat) ||  in_array(1,$etat)){
+            if( in_array(1,$etat) ||  in_array(2,$etat)){
                 return response()->json(["message" => "Cet abonnement existe déjà "  , "style" => 'danger']) ;
 
             }elseif(in_array($request->duree , $dure)) {
@@ -125,5 +125,10 @@ public  function  getAbonnementParId($id){
         $abonnement = Abonnement::getAbonnementParId($id) ;
         return ['paiements' => $paiements ,
                 'abonnements' => $abonnement ];
+    }
+    public function searchAbonnement(Request $request){
+        $word = $request->search ;
+        $abonnements = Abonnement::searchAbonnement($word);
+        return $abonnements ;
     }
 }

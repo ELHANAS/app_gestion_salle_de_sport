@@ -60,7 +60,9 @@ const [participant,setParticipant] = useState('')
                                  <td>{abn.dateCreationA}</td>
                                  <td>{abn.duree}</td>
                                 <td>
-                                    <button onClick={()=> prop.ajouterPiement(abn.codeA)} className={"btn w-75 text-center "}
+                                    <button onClick={()=> {
+                                        if(abn.etat !== 2)
+                                            prop.ajouterPiement(abn.codeA)} }className={"btn w-75 text-center "}
                                              style={{
                                                  color: abn.etat ===1? 'white' : abn.etat ===2? 'green': 'red',
                                                 backgroundColor:" #ef9c57",
