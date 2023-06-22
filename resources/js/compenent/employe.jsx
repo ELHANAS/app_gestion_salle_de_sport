@@ -138,7 +138,7 @@ function Profil(prop){
                 :
 
                 <div style={{width:"100%",height:"100%"}} className={"   d-flex justify-content-center align-content-md-center"}>
-                    <img  src='images/GYM.png' style={{width:"100%",margin:"auto auto" }} alt="logo"/>
+                    <img  src='images/GYMM.png' style={{width:"50%",margin:"auto auto" }} alt="logo"/>
 
                 </div>
 

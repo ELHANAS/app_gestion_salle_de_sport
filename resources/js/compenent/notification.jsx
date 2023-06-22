@@ -18,9 +18,11 @@ function  supprimerNot(id){
     )
 }
     return (
-        <div style={{position:"relative",height:"100%",width:"100%"}} className={"text-center "}>
+        <div style={{position:"relative",height:"100%",width:"100%"}}  onAuxClick={()=>{
+            if(showNotification === "block")
+                prop.none()}}  className={"text-center "}>
 
-            <p className={" border-bottom p-2"}>notification</p>
+            <p className={"  p-2 bg-light"}>notification</p>
             {
               notification.length?
                     <div  className={" w-100 bg-primary  text-end"}>

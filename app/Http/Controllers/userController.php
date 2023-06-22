@@ -131,6 +131,19 @@ class userController extends Controller
             ->get();
         return $users ;
     }
+public  function updateMe(Request $request){
+        $user = User::find($request->id);
+        if(Hash::check($request->oldPassword,$user->password)){
+            $user->email = $request->email ;
+            if($request->NouveauPass){
+                $user->password = Hash::make($request->NouveauPass);
+            }
+            $user->save();
+            return response()->json(["message" => "a été modifié avec succès", "style" => 'success']) ;
 
+        }
+    return response()->json(["message" => "Mot de passe incorrect", "style" => 'danger']) ;
+
+}
 
 }

@@ -31,8 +31,8 @@ public  static  function  getMembers(){
     $memebres = DB::table('membres')
                 ->orderBy('id', 'desc')
                 ->select('*')
-            ->limit(20)
-        ->get();
+                ->limit(20)
+                ->get() ;
     return $memebres ;
 }
     public  static  function  getMembreParMois($month){

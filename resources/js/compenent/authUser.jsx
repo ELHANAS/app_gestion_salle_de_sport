@@ -30,7 +30,7 @@ export default function AuthUser(){
         baseURL :"/api" ,
         headers:{
             "Content-Type" :"application/json",
-"Authorization" : getToken()
+            "Authorization" :`Bearer ${token}`
 
         }
     });

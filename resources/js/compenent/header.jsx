@@ -21,10 +21,11 @@ useEffect(()=>{
                     <path fillRule="evenodd"
                           d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
                 </svg></button>
-            <h1 className={"h1 col-lg-3 col  "} id={"logo"}>    <Link to={"/"}>
+
+            <h1 className={"h1 col-lg-3 col  "} id={"logo"}  onClick={()=>navigate(("/"))}>
 
     <img className={"w-50"} src={useHref("images/logo.png")} style={{height:"50px",margin:"5px"}} alt="logo"/>
-  </Link></h1>
+</h1>
 
         <h2 className="col-lg-6 col pt-2 d-none d-lg-block  h1 fs-1 text-center" style={{fontWeight:"bold"}}>{
             location.pathname.toString().slice(1,16) === "ListeAbonnement" ?
@@ -40,7 +41,7 @@ useEffect(()=>{
 
         }</h2>
         <div className="col-lg-3  col-6 ">
-            <div id={"listHeader"} className="row d-flex justify-content-end ">
+            <div id={"listHeader"} className="row d-flex justify-content-end pe-2 ">
                 <button className={"col-3  btn  text-center  "}
                         onClick={()=>{prop.setShowNotification();change()}}  style={{position:"relative"}}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"

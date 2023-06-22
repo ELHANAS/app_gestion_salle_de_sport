@@ -223,7 +223,7 @@ function  handlPeriode(e){
             <div id={"secondHeader"}  className="row p-2 d-flex  justify-content-between">
                 <div className="col-lg-3  col">
                     <div className="input-group w-100">
-                        <input type="month" name="yearMonth" id="yearMonth" value="mai 2023"   onChange={(event)=> changeDate(event)}/>
+                        <input type="month" name="yearMonth" id="yearMonth"    onChange={(event)=> changeDate(event)}/>
                     </div>
                 </div>
                 <div className={"col col-lg-3 text-end"}>

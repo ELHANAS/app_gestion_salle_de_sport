@@ -16,7 +16,8 @@ class MembreController extends Controller
     public function index()
     {
         Membre::changeEtat();
-        return [ "membre" => Membre::getMembers()] ;
+        $membres = Membre::getMembers();
+        return response()->json($membres);
     }
 
     /**

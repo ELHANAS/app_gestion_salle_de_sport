@@ -44,7 +44,16 @@ import  ModifierEmployer from  './compenent/ModifierEmployer'
      const [idAbonnement , setIdAbonnement] = useState() ;
      const  [random , setRandom] = useState() ;
      const  [notification , setNotification] = useState([]) ;
+     const [currentIndex, setCurrentIndex] = useState(0);
+     setTimeout(()=>{
+         var random =currentIndex +1;
+         if(random >= images.length)
+             random = 0 ;
 
+         setCurrentIndex(random );
+         console.log(random)
+
+     },30000)
      function handlShowNotification(){
          if(showNotification === "none"){
              setShowNotification("block")
@@ -168,7 +177,7 @@ useEffect(()=>{
     return (
         <div className={"h-100 w-100"}>
             {
-                images.length?
+                1?
                     <>
                         <div id="app" style={{opacity:opacity,paddingTop:"60px"}}>
                             <Header ShowMenu={ShowMenu} notification={notification} setShowNotification = {handlShowNotification}/>
@@ -184,7 +193,7 @@ useEffect(()=>{
 
                                     <div id="main" className="m-0 ">
                                         <Routes>
-                                            <Route  path="/" element= {<Home images={images} />} />
+                                            <Route  path="/" element= {<Home currentIndex={currentIndex} images={images} />} />
 
                                                 <Route path="/Employes" element= {<Employe random={random}   ajouterEmploye={ajouter}/>} />
                                                 <Route path="/statistiques" element= {<Statistique   />} />
@@ -193,7 +202,7 @@ useEffect(()=>{
                                             <Route path="/participants" element= {<Participant random={random}  ajouterParticipant={ajouter}/>} />
                                             <Route path="/abonnements" element= {<Abonnement    ajouterAbonnement={ajouter}/>} />
                                             <Route path="/disciplines" element= {<Discipline random={random} ajouter={ajouter}/>}  />
-                                            <Route path="/profil" element= {<Profil />} />
+                                            <Route path="/profil" element= {<Profil opcity={setOpacity}/>} />
                                             <Route path="/paiements" element= {<Paiement  />} />
                                             <Route path="/ListeAbonnement/:id" element= {<AbonnementsdeParticipant  random={random}  ajouterPiement = {ajouterPiement}  ajouterAbonnement ={ajouterAbonnement}/>} />
                                         </Routes>

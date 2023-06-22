@@ -29,7 +29,9 @@ Route::group(['middleware','api'],function () {
     Route::post('refresh', [AuthController::class , 'refresh']);
     Route::post('me', [AuthController::class , 'me']);
 
+
 }) ;
+Route::post('/participants', [\App\Http\Controllers\MembreController::class , 'index']);
 
 //users
 Route::post('/registre', [userController::class , 'store']);
@@ -38,11 +40,11 @@ Route::post('/numberUsers', [userController::class , 'getNumberUsers']);
 Route::post('/users', [userController::class , 'index']);
 Route::post('/user/{user}', [userController::class , 'show']);
 Route::post('/user/changePhoto/{user}', [userController::class , 'updateImage']);
-
+Route::post('/update/me',[userController::class,'updateMe']) ;
 
 //membres
+
 Route::post('/AjouterParticipant', [\App\Http\Controllers\MembreController::class , 'store']);
-Route::post('/participants', [\App\Http\Controllers\MembreController::class , 'index']);
 Route::post('/participant/{membre}', [\App\Http\Controllers\MembreController::class , 'show']);
 Route::post('/getAbonnement/{id}', [\App\Http\Controllers\MembreController::class , 'getAbonnement']);
 Route::post('/member/search', [\App\Http\Controllers\MembreController::class , 'search']);

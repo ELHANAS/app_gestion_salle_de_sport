@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import AuthUser from "@/compenent/authUser";
 
 export default function Participant(prop){
     const [participant, setParticipant] = useState(null) ;
     const [participants, setParticipants] =useState([]);
     const [search,setSearch] = useState();
-
+const  {http,token,getToken} = AuthUser();
     function Search(){
 
             axios.post('/api/member/search',{'search' : search}).then(
@@ -17,15 +18,19 @@ export default function Participant(prop){
                 })
 
     }
-useEffect(()=>{
-    axios.post('/api/participants').then(
-        (res) =>{
-            setParticipants(res.data.membre);
-            const  noAcfif = res.data.membre.filter((p)=> p.etat === 0);
 
-            noAcfif.forEach(paritipant =>{
-                console.log(paritipant);
-            })
+useEffect(()=>{
+    axios.post('/api/participants',{
+        headers:{
+            "Content-Type" :"application/json",
+            "Authorization" :`Bearer ${token}`
+        },
+        }
+        ).then(
+        (res) =>{
+            setParticipants(res.data);
+            console.log(res.data)
+
         }
     )
 },[prop.random])
@@ -36,6 +41,7 @@ useEffect(()=>{
 
     return (
         <div >
+
             <div id={"secondHeader"} className="row p-2 d-flex  justify-content-between">
                 <div className="col-lg-3  col-8">
                     <div className="input-group w-100">
@@ -147,7 +153,7 @@ function Profil(prop){
                 :     <div  className="profil">
 
                     <div style={{width:"100%",height:"100%"}} className={"   d-flex justify-content-center align-content-md-center"}>
-                        <img  src='images/GYM.png' style={{width:"100%",margin:"auto auto" }} alt="logo"/>
+                        <img  src='images/GYMM.png' style={{width:"50%",margin:"auto auto" }} alt="logo"/>
 
                     </div>
                 </div>
